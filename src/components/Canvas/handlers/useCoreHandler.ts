@@ -18,6 +18,43 @@ function useCoreHandler() {
   } = useCanvasContext()
 
   /**
+   * Update Canvas size
+   */
+  const updateCanvasSize = useCallback(
+    ({
+      nextWidth,
+      nextHeight,
+      canvas,
+    }: {
+      nextWidth: any
+      nextHeight: any
+      canvas?: any
+    }) => {
+      if (canvas) {
+        // const width = nextWidth * zoomRatio
+        // const height = nextHeight * zoomRatio
+
+        // canvas.setHeight(height).setWidth(width)
+        // canvas.setZoom(zoomRatio)
+        // canvas.setDimensions({
+        //   width: nextWidth,
+        //   height: nextHeight,
+        // })
+        canvas?.setWidth(nextWidth).setHeight(nextHeight)
+        canvas?.renderAll()
+        //@ts-ignore
+        const diffWidth = nextWidth / 2 - canvas?.getWidth() / 2
+        //@ts-ignore
+        const diffHeight = nextHeight / 2 - canvas?.getHeight() / 2
+        // const deltaPoint = new fabric.Point(diffWidth, diffHeight)
+        // canvas?.relativePan(deltaPoint)
+
+        console.log("resize", nextWidth!, nextHeight, canvas?.getWidth())
+      }
+    },
+    [canvas]
+  )
+  /**
    * Update format size
    */
   const updateFormatSize = useCallback(
@@ -226,6 +263,7 @@ function useCoreHandler() {
     deleteObject,
     setCanvasBackgroundColor,
     updateFormatSize,
+    updateCanvasSize,
     calculateZoomFitRatio,
     importTemplate,
     updateObject,

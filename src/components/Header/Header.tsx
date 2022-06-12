@@ -25,7 +25,18 @@ const Container = styled.div`
 function Header() {
   const { canvas, formatSize } = useCanvasContext()
   const downloadImage = () => {
-    const data = canvas?.toDataURL({ multiplier: 3 })
+    const activeObject = canvas?.getObjects()?.[0]?.getBoundingRect()
+    //@ts-ignore
+    const height = activeObject?.width * activeObject?.scaleX
+    //@ts-ignore
+    const width = activeObject?.height * activeObject?.scaleY
+    const data = canvas?.toDataURL({
+      multiplier: 3,
+      top: activeObject?.top,
+      left: activeObject?.left,
+      width: activeObject?.width,
+      height: activeObject?.height,
+    })
     if (data) {
       const a = document.createElement("a")
       a.href = data

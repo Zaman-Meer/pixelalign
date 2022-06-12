@@ -5,6 +5,7 @@ import { Scrollbars } from "react-custom-scrollbars"
 import ResizeObserver from "resize-observer-polyfill"
 import styled from "@emotion/styled"
 import {
+  useCoreHandler,
   useCustomizationHandler,
   useEventsHandler,
   useGridHandler,
@@ -21,33 +22,42 @@ const Container = styled.div`
 
 function Canvas() {
   const { setCanvas, setAreaDimension, canvas } = useCanvasContext()
-  const containerRef = useRef<any>()
+  const { updateCanvasSize } = useCoreHandler()
+  const containerRef = useRef<any>(null)
   useCustomizationHandler()
   useEventsHandler()
   useZoomHandler()
   useGuidelinesHandler()
-  useGridHandler()
-  useEffect(() => {
-    setCanvas(
-      new fabric.Canvas("canvas", {
-        height: 400,
-        width: 600,
-        backgroundColor: "#ffffff",
-        fireRightClick: true,
-      })
-    )
-  }, [setCanvas])
+  // useGridHandler()
+  // useEffect(() => {
+  //   setCanvas(
+  //     new fabric.Canvas("canvas", {
+  //       height: containerRef.current?.clientHeight,
+  //       width: containerRef.current?.clientWidth,
+  //       backgroundColor: "#dbd0d0",
+  //       // fireRightClick: true,
+  //     })
+  //   )
+  // }, [setCanvas])
 
   useEffect(() => {
+    const canvas = new fabric.Canvas("canvas", {
+      height: containerRef.current?.clientHeight,
+      width: containerRef.current?.clientWidth,
+      backgroundColor: "#E1E3E9",
+      fireRightClick: true,
+    })
+    setCanvas(canvas)
     const initialHeight = containerRef.current?.clientHeight
-    const intialWidth = containerRef.current?.clientWidth
-    setAreaDimension({ width: intialWidth! - 32, height: initialHeight! - 32 })
-
+    const initialWidth = containerRef.current?.clientWidth
+    setAreaDimension({ width: initialWidth! - 32, height: initialHeight! - 32 })
     const resizeObserver = new ResizeObserver(
       (entries: ResizeObserverEntry[]) => {
-        const { width = intialWidth, height = initialHeight } =
+        const { width = initialWidth, height = initialHeight } =
           (entries[0] && entries[0].contentRect) || {}
-        setAreaDimension({ width: width! - 32, height: height! - 32 })
+
+        updateCanvasSize({ nextWidth: width, nextHeight: height, canvas })
+        // setAreaDimension({ width: width! - 32, height: height! - 32 })
       }
     )
     resizeObserver.observe(containerRef.current!)
@@ -55,6 +65,7 @@ function Canvas() {
       resizeObserver.unobserve(containerRef.current!)
     }
   }, [])
+
   useEffect(() => {
     containerRef.current.addEventListener("mousedown", (e: any) => {
       if (e.target.localName === "div") {
@@ -66,45 +77,22 @@ function Canvas() {
   }, [canvas])
 
   return (
-    <Container>
+    <div
+      id="xdsakcasncasncjxx"
+      onContextMenu={(e) => e.preventDefault()}
+      ref={containerRef}
+      style={{ position: "relative", flex: 1, backgroundColor: "pink" }}
+    >
       <div
-        id="xdsakcasncasncjxx"
-        onContextMenu={(e) => e.preventDefault()}
-        ref={containerRef}
-        style={{ position: "relative", flex: 1 }}
+        style={{
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+        }}
       >
-        <Scrollbars autoHide>
-          <div
-            style={{
-              height: "100%",
-              width: "100%",
-              position: "absolute",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                margin: "auto",
-                flex: "1",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  padding: "1rem",
-                  position: "relative",
-                }}
-              >
-                <ContextMenu />
-                <canvas id="canvas"></canvas>
-              </div>
-            </div>
-          </div>
-        </Scrollbars>
+        <canvas id="canvas"></canvas>
       </div>
-    </Container>
+    </div>
   )
 }
 
