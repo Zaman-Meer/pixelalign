@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react"
 import { useCanvasContext } from "@components/Canvas/hooks"
 import { isArrow, isCtrlShiftZ, isCtrlZ } from "../utils/keyboard"
-
+import  { fabric } from "fabric"
 function useEventHandlers() {
   const {
     canvas,
@@ -60,13 +60,33 @@ function useEventHandlers() {
         const delta = event.e.deltaY
         let zoomRatio = canvas.getZoom()
         if (delta > 0) {
-          zoomRatio -= 0.04
+          zoomRatio -= 0.03
         } else {
-          zoomRatio += 0.04
+          zoomRatio += 0.03
         }
-        setZoomRatio(zoomRatio)
+        zoomRatio *= 0.99 ** delta;
+        if (zoomRatio > 3) zoomRatio = 20;
+        if (zoomRatio < 0.01) zoomRatio = 0.01;
+        //@ts-ignore
+        canvas.zoomToPoint(new fabric.Point(event.e.offsetX, event.e.offsetY), parseFloat(zoomRatio.toFixed(2)))
+         setZoomRatio(zoomRatio)
         event.e.preventDefault()
         event.e.stopPropagation()
+      }
+      else {
+        if(canvas) {
+        var e = event.e;
+        var vpt = canvas.viewportTransform;
+        //@ts-ignore
+        vpt[4] -= e.deltaX;
+        //@ts-ignore
+        vpt[5] -= e.deltaY;
+        
+        canvas?.requestRenderAll();
+        event.e.preventDefault()
+        event.e.stopPropagation()
+       
+        }
       }
     },
     [canvas]
@@ -74,7 +94,7 @@ function useEventHandlers() {
 
   useEffect(() => {
     if (canvas) {
-      canvas.on("mouse:wheel", onMouseWheel)
+      canvas.on("mouse:wheel", onMouseWheel, )
     }
     return () => {
       if (canvas) {
@@ -120,6 +140,8 @@ function useEventHandlers() {
    */
 
   const undo = useCallback(() => {
+    //@ts-ignore
+    console.log("History", canvas?.historyUndo)
     // @ts-ignore
     canvas?.undo()
   }, [canvas])

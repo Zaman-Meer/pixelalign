@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react"
+import { fabric } from 'fabric'
 import { Scrollbars } from "react-custom-scrollbars"
 import { getPixabayImages } from "@services/pixabay"
 import { Input } from "@chakra-ui/react"
 import { useDebounce } from "use-debounce"
 import PanelContainer from "../../ScrollContainer/ScrollContainer"
 import useCoreHandler from "@/components/Canvas/handlers/useCoreHandler"
+import { useCanvasContext } from '@/components/Canvas/hooks'
 interface Image {
   id: string
   preview: string
   original: string
 }
 function PanelImage() {
+  const { canvas } = useCanvasContext()
   const [images, setImages] = useState<Image[]>([])
   const [query, setQuery] = useState("")
   const [value] = useDebounce(query, 1500)
@@ -40,7 +43,18 @@ function PanelImage() {
       type: "image",
       url,
     }
-    addObject(options)
+    fabric?.Image.fromURL(url, objectsImage => {
+      //@ts-ignore
+      const workarea = canvas.getObjects().find(obj => obj.id === 'workarea')
+      objectsImage.scale(0.4)
+      canvas?.add(objectsImage)
+      objectsImage.clipPath = workarea
+      objectsImage.center()
+      canvas?.setActiveObject(objectsImage)
+     
+      canvas?.renderAll()
+    }, { crossOrigin: 'anonymous' })
+  //  addObject(options)
     // fabric.Image.fromURL(url, (img) => {
     //   if (canvas) {
     //     img.scaleToHeight(200)

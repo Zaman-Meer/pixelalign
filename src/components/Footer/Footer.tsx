@@ -41,7 +41,8 @@ function Footer() {
   const zoomString = parseFloat(option.zoomValue.toFixed(2))
 
   const handleUndo = useCallback(() => {
-    if (canvas) {
+
+    if (canvas ) {
       //@ts-ignore
       canvas?.undo();
     }
@@ -84,7 +85,7 @@ function Footer() {
         >
           <Slider
             min={0}
-            max={300}
+            max={2000}
             value={option.zoomValue}
             onChange={(e) => onSlideChange(e)}
             colorScheme="gray"
@@ -101,7 +102,7 @@ function Footer() {
               }}
             />
           </Slider>
-          <div style={{ paddingLeft: "1rem" }}>{zoomString}%</div>
+          <div style={{ paddingLeft: "1rem" }}>{Math.round(zoomString)}%</div>
         </div>
       </div>
     </Container>

@@ -7,6 +7,12 @@ import CanvasObjects, {
 } from "@components/Canvas/CanvasObjects"
 import { fabric } from "fabric"
 
+interface WorkAreaZoomProps {
+  width: number
+  height: number
+  canvas?: fabric.Canvas
+}
+
 function useCoreHandler() {
   const {
     canvas,
@@ -15,6 +21,7 @@ function useCoreHandler() {
     setFormatSize,
     areaDimension,
     clipBoards,
+    setZoomRatio,
   } = useCanvasContext()
 
   /**
@@ -40,20 +47,37 @@ function useCoreHandler() {
         //   width: nextWidth,
         //   height: nextHeight,
         // })
+         //@ts-ignore
+         const diffWidth = nextWidth / 2 - canvas?.getWidth() / 2
+         //@ts-ignore
+         const diffHeight = nextHeight / 2 - canvas?.getHeight() / 2
         canvas?.setWidth(nextWidth).setHeight(nextHeight)
         canvas?.renderAll()
-        //@ts-ignore
-        const diffWidth = nextWidth / 2 - canvas?.getWidth() / 2
-        //@ts-ignore
-        const diffHeight = nextHeight / 2 - canvas?.getHeight() / 2
-        // const deltaPoint = new fabric.Point(diffWidth, diffHeight)
-        // canvas?.relativePan(deltaPoint)
-
-        console.log("resize", nextWidth!, nextHeight, canvas?.getWidth())
+       
+        const deltaPoint = new fabric.Point(diffWidth, diffHeight)
+        canvas?.relativePan(deltaPoint)
       }
     },
     [canvas]
   )
+
+  /**
+   * Update WorkAreaZoom
+   */
+
+   const updateWorkAreaZoom = ({width, height, canvas}: WorkAreaZoomProps) => {
+    
+    //@ts-ignore
+    const workArea = canvas?.getObjects().find((obj) => obj.id === "workarea")
+    if (workArea) {
+      
+      //@ts-ignore
+      const workAreaHeight = workArea?.height + 100;
+      const zoom = workAreaHeight && parseFloat((height / workAreaHeight).toFixed(2));
+      zoom && setZoomRatio(zoom);
+    }
+  }
+
   /**
    * Update format size
    */
@@ -264,6 +288,7 @@ function useCoreHandler() {
     setCanvasBackgroundColor,
     updateFormatSize,
     updateCanvasSize,
+    updateWorkAreaZoom,
     calculateZoomFitRatio,
     importTemplate,
     updateObject,

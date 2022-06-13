@@ -63,7 +63,7 @@ function Header() {
               marginRight: "2rem",
             }}
           >
-            <img src={logo} alt="logo" />
+            Pixel
           </div>
           <Menu>
             <MenuButton
@@ -75,7 +75,7 @@ function Header() {
                 </i>
               }
             >
-              Dosya
+              Upload
             </MenuButton>
             <MenuList>
               <MenuItem>Tasarım alanını temizle</MenuItem>
@@ -97,7 +97,7 @@ function Header() {
                 </i>
               }
             >
-              Tasarımı Kaydet
+              Save
             </MenuButton>
             <MenuList>
               <MenuItem>Download</MenuItem>
@@ -128,7 +128,7 @@ function Header() {
         </div>
       </div>
       <ButtonGroup>
-        <Menu>
+        {/* <Menu>
           <MenuButton
             variant="outline"
             as={Button}
@@ -138,7 +138,7 @@ function Header() {
               </i>
             }
           >
-            &nbsp;Paylaş
+            &nbsp;Share
           </MenuButton>
           <MenuList>
             <MenuItem>Facebook'da paylaş</MenuItem>
@@ -147,7 +147,7 @@ function Header() {
             <MenuItem>Pinterest'de Paylaş</MenuItem>
             <MenuItem>Linkedin'de Paylaş</MenuItem>
           </MenuList>
-        </Menu>
+        </Menu> */}
         <Button
           variant="outline"
           leftIcon={
@@ -158,10 +158,10 @@ function Header() {
           onClick={downloadImage}
         >
           {" "}
-          &nbsp;İndir
+          &nbsp;Download
         </Button>
 
-        <Button
+        {/* <Button
           leftIcon={
             <i
               style={{ fontSize: "16px" }}
@@ -173,8 +173,8 @@ function Header() {
           colorScheme="red"
           onClick={downloadImage}
         >
-          &nbsp;YÜKSELT
-        </Button>
+          &nbsp;Y
+        </Button> */}
       </ButtonGroup>
     </Container>
   )

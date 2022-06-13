@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useState } from "react"
 import ClosePanel from "./ClosePanel"
 import Panels from "./Panels"
+import { useCanvasContext } from '@/components/Canvas/hooks'
 
 interface ContainerProps {
   collapse: boolean
@@ -15,13 +16,14 @@ const Container = styled.div<ContainerProps>`
 `
 interface Props {
   activeTab: string
+
 }
 function PanelsList({ activeTab }: Props) {
-  const [collapse, setCollapse] = useState(true)
+  const { isSidePanelOpen, toggleSidePanel} = useCanvasContext()
 
   return (
-    <Container collapse={collapse}>
-      <ClosePanel closePanel={() => setCollapse(!collapse)} />
+    <Container collapse={isSidePanelOpen}>
+      <ClosePanel closePanel={() => toggleSidePanel(!isSidePanelOpen)} />
       {Panels[activeTab as "formats"]}
     </Container>
   )

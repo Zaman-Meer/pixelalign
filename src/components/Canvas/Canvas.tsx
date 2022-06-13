@@ -3,7 +3,6 @@ import { fabric } from "fabric"
 import { useCanvasContext } from "./hooks"
 import { Scrollbars } from "react-custom-scrollbars"
 import ResizeObserver from "resize-observer-polyfill"
-import styled from "@emotion/styled"
 import {
   useCoreHandler,
   useCustomizationHandler,
@@ -15,14 +14,10 @@ import {
 import ContextMenu from "@components/ContextMenu/ContextMenu"
 import "fabric-history"
 
-const Container = styled.div`
-  display: flex;
-  flex: 1;
-`
 
 function Canvas() {
   const { setCanvas, setAreaDimension, canvas } = useCanvasContext()
-  const { updateCanvasSize } = useCoreHandler()
+  const { updateCanvasSize, updateWorkAreaZoom } = useCoreHandler()
   const containerRef = useRef<any>(null)
   useCustomizationHandler()
   useEventsHandler()
@@ -47,16 +42,31 @@ function Canvas() {
       backgroundColor: "#E1E3E9",
       fireRightClick: true,
     })
+    const defaultWorkArea = new fabric.Rect({
+      //@ts-ignore
+      id: 'workarea',
+      width: 900,
+      height: 900,
+      absolutePositioned: true,
+      fill: '#ffffff',
+      selectable: false,
+      hoverCursor: 'default',
+    })
+    canvas.add(defaultWorkArea)
+    defaultWorkArea.center()
     setCanvas(canvas)
     const initialHeight = containerRef.current?.clientHeight
     const initialWidth = containerRef.current?.clientWidth
+    updateWorkAreaZoom({ width: initialWidth, height: initialHeight, canvas })
     setAreaDimension({ width: initialWidth! - 32, height: initialHeight! - 32 })
+
     const resizeObserver = new ResizeObserver(
       (entries: ResizeObserverEntry[]) => {
         const { width = initialWidth, height = initialHeight } =
           (entries[0] && entries[0].contentRect) || {}
 
         updateCanvasSize({ nextWidth: width, nextHeight: height, canvas })
+        updateWorkAreaZoom({ width, height, canvas })
         // setAreaDimension({ width: width! - 32, height: height! - 32 })
       }
     )
@@ -78,10 +88,10 @@ function Canvas() {
 
   return (
     <div
-      id="xdsakcasncasncjxx"
+      id="editor-container"
       onContextMenu={(e) => e.preventDefault()}
       ref={containerRef}
-      style={{ position: "relative", flex: 1, backgroundColor: "pink" }}
+      style={{ position: "relative", flex: 1 }}
     >
       <div
         style={{

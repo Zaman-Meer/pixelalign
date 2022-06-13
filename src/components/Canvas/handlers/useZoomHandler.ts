@@ -1,25 +1,22 @@
 import { useCallback, useEffect } from "react"
+import { fabric } from 'fabric'
 import { useCanvasContext } from "@components/Canvas/hooks"
 
 function useZoomHandler() {
-  const { canvas, zoomRatio, formatSize } = useCanvasContext()
+  const { canvas, zoomRatio } = useCanvasContext()
 
   const updateZoom = useCallback(
     (zoomRatio: number) => {
       if (canvas) {
-        const width = formatSize.width * zoomRatio
-        const height = formatSize.height * zoomRatio
-
-        canvas.setHeight(height).setWidth(width)
-        canvas.setZoom(zoomRatio)
+        canvas.zoomToPoint(new fabric.Point(canvas.getWidth() / 2, canvas.getHeight() / 2), zoomRatio)
       }
     },
-    [canvas, formatSize]
+    [canvas]
   )
 
   useEffect(() => {
     updateZoom(zoomRatio)
-  }, [zoomRatio])
+  }, [zoomRatio, updateZoom])
 }
 
 export default useZoomHandler

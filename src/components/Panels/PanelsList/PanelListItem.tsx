@@ -1,3 +1,4 @@
+import { useCanvasContext } from '@/components/Canvas/hooks'
 import styled from "styled-components"
 
 interface ContainerProps {
@@ -27,13 +28,18 @@ interface Props {
 }
 
 function PanelListItem({ name, icon, setActiveTab, activeTab, label }: Props) {
+  const { toggleSidePanel } = useCanvasContext()
   const isActive = name === activeTab
+  const  handleActive = (name: string) => {
+    toggleSidePanel(true)
+    setActiveTab(name)
+  }
   return (
     <Container
       isActive={isActive}
       className={`${isActive ? "PanelListItem active" : "PanelListItem"}`}
       key={name}
-      onClick={() => setActiveTab(name)}
+      onClick={() => handleActive(name)}
     >
       <i className="material-icons">{icon}</i>
       <div style={{ paddingTop: "0.4rem" }}>{label}</div>
