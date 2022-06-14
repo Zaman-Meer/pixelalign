@@ -25,6 +25,7 @@
     "focus-visible": "^5.2.0",
     "framer-motion": "^4",
     "i18next": "^20.2.2",
+    "material-icons": "^1.11.1",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
     "react-custom-scrollbars": "^4.2.1",
