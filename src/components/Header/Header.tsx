@@ -25,7 +25,8 @@ const Container = styled.div`
 function Header() {
   const { canvas, formatSize } = useCanvasContext()
   const downloadImage = () => {
-    const activeObject = canvas?.getObjects()?.[0]?.getBoundingRect()
+    //@ts-ignore
+    const activeObject = canvas?.getObjects()?.find(obj => obj?.id === "workarea")?.getBoundingRect()
     //@ts-ignore
     const height = activeObject?.width * activeObject?.scaleX
     //@ts-ignore

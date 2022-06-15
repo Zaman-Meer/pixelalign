@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { fabric } from 'fabric'
+import Masonry from 'react-masonry-css'
 import { Scrollbars } from "react-custom-scrollbars"
 import { getPixabayImages } from "@services/pixabay"
-import { Input } from "@chakra-ui/react"
+import { Box, Input, Image } from "@chakra-ui/react"
 import { useDebounce } from "use-debounce"
 import PanelContainer from "../../ScrollContainer/ScrollContainer"
 import useCoreHandler from "@/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from '@/components/Canvas/hooks'
+
 interface Image {
   id: string
   preview: string
@@ -66,49 +68,55 @@ function PanelImage() {
 
   return (
     <PanelContainer>
-      <Scrollbars autoHide>
-        <div
-          style={{
-            padding: "2rem 2rem 0",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "rebeccapurple",
-              display: "block",
-            }}
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems= "center"
+            padding={7}
+         
           >
             <Input
-              color="#333"
-              background="#fff"
+              color='gray.800'
+              backgroundColor="gray.100"
+              focusBorderColor='teal.500'
               value={query}
               onChange={handleChange}
               placeholder="Search images"
             />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-            padding: "2rem",
-          }}
+          </Box>
+
+      <Scrollbars autoHide>
+      
+        <Box
+          padding={7}
+          paddingBottom={0}
         >
-          {images.map((img) => (
-            <div
+          <Masonry
+          breakpointCols={2}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column">
+         
+         {images.map((img) => (
+            <Box
               key={img.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
+              border= "1px"
+              borderColor= "none"
+             cursor={'pointer'}
               onClick={() => addObjectToCanvas(img.original)}
+             _hover={{
+              border: "1px",
+              borderColor: "teal.500",
+              boxShadow: "8px 7px 5px -5px rgba(0,0,0,0.21)"
+             }}
+
             >
-              <img width="100%" src={img.preview} alt="preview" />
-            </div>
+              <Image boxSize="full" src={img?.preview} fallbackSrc='https://via.placeholder.com/150' />
+              {/* <img width="100%" src={img.preview} alt="preview" /> */}
+            </Box>
           ))}
-        </div>
+        </Masonry>
+          
+        </Box>
       </Scrollbars>
     </PanelContainer>
   )

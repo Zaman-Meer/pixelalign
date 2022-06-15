@@ -5,9 +5,10 @@ import { Scrollbars } from "react-custom-scrollbars"
 import i18n from "i18next"
 
 const Container = styled.div`
-  background: #0e1419;
+  background:  #ffffff;//#0e1419;
   width: 80px;
   display: flex;
+  border-right: 1px solid var(--chakra-colors-teal-600);
 `
 
 interface Props {

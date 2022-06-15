@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
+import Masonry from 'react-masonry-css'
 import { Scrollbars } from "react-custom-scrollbars"
 import { selectTextStyles } from "@store/reducers/text-style/selectors"
 import { useCoreHandler } from "@components/Canvas/handlers"
-import { Input } from "@chakra-ui/react"
+import { Box, Input, Image } from "@chakra-ui/react"
 import styled from "styled-components"
 import PanelContainer from "@components/ScrollContainer"
 
@@ -21,17 +22,19 @@ const BaseText = styled.div`
 const HeadingText = styled(BaseText)`
   font-weight: 700;
   font-size: 1.66rem;
+  color: #000000;
 `
 const SubHeadingText = styled(BaseText)`
   background: rgba(255, 255, 255, 0.1);
   font-size: 1.12rem;
   font-weight: 500;
+  color: #000000;
 `
 const BodyText = styled(BaseText)`
   background: rgba(255, 255, 255, 0.1);
   font-size: 0.76rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.9);
+  color: #000000;
 `
 
 const TextLabel = styled.div`
@@ -110,27 +113,24 @@ function PanelText() {
 
   return (
     <PanelContainer>
-      <Scrollbars autoHide>
-        <div
-          style={{
-            padding: "2rem 2rem 0",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "rebeccapurple",
-              display: "block",
-            }}
+      <Box
+            display="flex"
+            flexDirection="row"
+            alignItems= "center"
+            padding={7}
+         
           >
             <Input
-              color="#333"
-              background="#fff"
+              color='gray.800'
+              backgroundColor="gray.100"
+              focusBorderColor='teal.500'
               value={query}
               onChange={handleChange}
               placeholder="Search text"
             />
-          </div>
-        </div>
+          </Box>
+      <Scrollbars autoHide>
+        
         <TextLabel>Click text to add to page</TextLabel>
 
         <div style={{ display: "grid", gap: "0.6rem", padding: "1rem 2rem 0" }}>
