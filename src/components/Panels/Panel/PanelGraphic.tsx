@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Scrollbars } from "react-custom-scrollbars"
+import { Scrollbars } from "react-custom-scrollbars-2"
 import { Input, Select } from "@chakra-ui/react"
 import PanelContainer from "../../ScrollContainer/ScrollContainer"
 import useCoreHandler from "@/components/Canvas/handlers/useCoreHandler"

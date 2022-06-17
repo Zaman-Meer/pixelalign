@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import { useSelector } from "react-redux"
-import { Scrollbars } from "react-custom-scrollbars"
+import { Scrollbars } from "react-custom-scrollbars-2"
 import { useCoreHandler } from "@components/Canvas/handlers"
 import { Input } from "@chakra-ui/react"
 import { selectTemplates } from "@store/reducers/templates/selectors"
