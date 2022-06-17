@@ -130,7 +130,11 @@ function useCoreHandler() {
       const object = await CanvasObjects[type as CanvasObjectType].create(
         objectOptions
       )
+      //@ts-ignore
+      const workArea = canvas?.getObjects().find((obj) => obj.id === "workarea")
+        object.clipPath = workArea;
       if (canvas) {
+        
         if (object.type != "textbox") {
           object.scaleToHeight(160)
         }
