@@ -15,7 +15,7 @@ function ClosePanel({ closePanel }: ClosePanelProp) {
         >
           <path
             d="M2 1.006C2.001 4.507 2.916 10.402 6.571 14L7.099 14.518C11.262 18.605 13.875 21.17 13.996 28H14V68C14 75.207 11.361 77.798 7.098 81.982L6.571 82.5C2.916 86.098 2.001 91.993 2 95.494V96H0V0H2V1.006Z"
-            fill="#29303a"
+            fill="currentColor"
           />
         </svg>
       </div>

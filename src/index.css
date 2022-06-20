@@ -10,10 +10,10 @@ body {
   position: relative;
 }
 .PanelListItem.active {
-  background: #293039;
+  background:  var(--chakra-colors-teal-50);
 }
 
-.PanelListItem.active::after {
+/* .PanelListItem.active::after {
   border-right: none !important;
   height: 100%;
   top: 8px;
@@ -47,7 +47,7 @@ body {
   height: 8px;
   width: 8px;
   overflow: hidden;
-}
+} */
 
 .PanelItemClose {
   cursor: pointer;
@@ -59,25 +59,45 @@ body {
 }
 
 .c1 {
-  margin-left: -6px;
+  margin-left: -7px;
   cursor: pointer;
   border: none;
   background: none;
   overflow: hidden;
   pointer-events: none;
   position: relative;
-  color: #fff;
+  color: #ffff;
   right: -5px;
 }
 
 .c2 {
   margin-left: -6px;
   border: none;
-  right: 8px;
+  right: 5px;
   position: relative;
   justify-content: center;
   position: absolute;
-  color: #fff;
+  color: var(--chakra-colors-teal-700);
   top: 50%;
   transform: translate(100%, -50%);
+}
+
+
+/* Masonry style */
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -10px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 10px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  margin-bottom: 10px;
 }

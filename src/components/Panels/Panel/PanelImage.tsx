@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
-import { fabric } from 'fabric'
-import { Scrollbars } from "react-custom-scrollbars"
+import { fabric } from "fabric"
+import Masonry from "react-masonry-css"
+import { Scrollbars } from "react-custom-scrollbars-2"
 import { getPixabayImages } from "@services/pixabay"
-import { Input } from "@chakra-ui/react"
+import { Box, Input, Image } from "@chakra-ui/react"
 import { useDebounce } from "use-debounce"
 import PanelContainer from "../../ScrollContainer/ScrollContainer"
 import useCoreHandler from "@/components/Canvas/handlers/useCoreHandler"
-import { useCanvasContext } from '@/components/Canvas/hooks'
+import { useCanvasContext } from "@/components/Canvas/hooks"
+
 interface Image {
   id: string
   preview: string
@@ -43,18 +45,25 @@ function PanelImage() {
       type: "image",
       url,
     }
-    fabric?.Image.fromURL(url, objectsImage => {
-      //@ts-ignore
-      const workarea = canvas.getObjects().find(obj => obj.id === 'workarea')
-      objectsImage.scale(0.4)
-      canvas?.add(objectsImage)
-      objectsImage.clipPath = workarea
-      objectsImage.center()
-      canvas?.setActiveObject(objectsImage)
-     
-      canvas?.renderAll()
-    }, { crossOrigin: 'anonymous' })
-  //  addObject(options)
+    fabric?.Image.fromURL(
+      url,
+      (objectsImage) => {
+        //@ts-ignore
+        const workarea = canvas
+          .getObjects()
+          //@ts-ignore
+          .find((obj) => obj.id === "workarea")
+        objectsImage.scale(0.4)
+        canvas?.add(objectsImage)
+        objectsImage.clipPath = workarea
+        objectsImage.center()
+        canvas?.setActiveObject(objectsImage)
+
+        canvas?.renderAll()
+      },
+      { crossOrigin: "anonymous" }
+    )
+    //  addObject(options)
     // fabric.Image.fromURL(url, (img) => {
     //   if (canvas) {
     //     img.scaleToHeight(200)
@@ -66,49 +75,47 @@ function PanelImage() {
 
   return (
     <PanelContainer>
+      <Box display="flex" flexDirection="row" alignItems="center" padding={7}>
+        <Input
+          color="gray.800"
+          backgroundColor="gray.100"
+          focusBorderColor="teal.500"
+          value={query}
+          onChange={handleChange}
+          placeholder="Search images"
+        />
+      </Box>
+
       <Scrollbars autoHide>
-        <div
-          style={{
-            padding: "2rem 2rem 0",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "rebeccapurple",
-              display: "block",
-            }}
+        <Box padding={7} overflow="auto">
+          <Masonry
+            breakpointCols={2}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
           >
-            <Input
-              color="#333"
-              background="#fff"
-              value={query}
-              onChange={handleChange}
-              placeholder="Search images"
-            />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-            padding: "2rem",
-          }}
-        >
-          {images.map((img) => (
-            <div
-              key={img.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-              onClick={() => addObjectToCanvas(img.original)}
-            >
-              <img width="100%" src={img.preview} alt="preview" />
-            </div>
-          ))}
-        </div>
+            {images.map((img) => (
+              <Box
+                key={img.id}
+                border="1px"
+                borderColor="none"
+                cursor={"pointer"}
+                onClick={() => addObjectToCanvas(img.original)}
+                _hover={{
+                  border: "1px",
+                  borderColor: "teal.500",
+                  boxShadow: "8px 7px 5px -5px rgba(0,0,0,0.21)",
+                }}
+              >
+                <Image
+                  boxSize="full"
+                  src={img?.preview}
+                  fallbackSrc="https://via.placeholder.com/150"
+                />
+                {/* <img width="100%" src={img.preview} alt="preview" /> */}
+              </Box>
+            ))}
+          </Masonry>
+        </Box>
       </Scrollbars>
     </PanelContainer>
   )

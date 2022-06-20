@@ -73,7 +73,7 @@ function Editor() {
         <SectionThree>
           <Menu />
           <Canvas />
-          <Footer />
+          {/* <Footer /> */}
         </SectionThree>
       </SectionOne>
     </Container>

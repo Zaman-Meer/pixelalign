@@ -10,9 +10,13 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
   display: flex;
   position: relative;
-  background: #29303a;
+  background:  #ffffff;//#29303a;
   transition: width 0.4s;
   width: ${(props) => (props.collapse ? "370px" : "0px")};
+  box-shadow: 9px -5px 5px -9px rgba(0,0,0,0.21);
+-webkit-box-shadow: 9px -5px 5px -9px rgba(0,0,0,0.21);
+-moz-box-shadow: 9px -5px 5px -9px rgba(0,0,0,0.21);
+  border-right: 1px solid var(--chakra-colors-teal-600);
 `
 interface Props {
   activeTab: string

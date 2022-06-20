@@ -1,26 +1,10 @@
-import styled from "styled-components"
-
-const Container = styled.div`
-  color: #ffffff;
-  display: flex;
-  flex: 1;
-`
+import { Box } from "@chakra-ui/react"
 
 function ScrollContainer({ children }: any) {
   return (
-    <Container>
-      <div style={{ position: "relative", flex: 1 }}>
-        <div
-          style={{
-            position: "absolute",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    </Container>
+    <Box display="flex" flexDirection="column" flex={1}>
+      {children}
+    </Box>
   )
 }
 

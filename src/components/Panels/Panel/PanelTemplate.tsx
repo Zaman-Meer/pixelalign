@@ -1,8 +1,8 @@
 import { useState, useRef } from "react"
 import { useSelector } from "react-redux"
-import { Scrollbars } from "react-custom-scrollbars"
+import { Scrollbars } from "react-custom-scrollbars-2"
 import { useCoreHandler } from "@components/Canvas/handlers"
-import { Input } from "@chakra-ui/react"
+import { Box, Input, Text, SimpleGrid, Image } from "@chakra-ui/react"
 import { selectTemplates } from "@store/reducers/templates/selectors"
 import { getTemplateObject } from "@services/api"
 import PanelContainer from "@components/ScrollContainer"
@@ -63,28 +63,17 @@ function PanelTemplate() {
 
   return (
     <PanelContainer>
+      <Box display="flex" flexDirection="row" alignItems="center" padding={7}>
+        <Input
+          color="gray.800"
+          backgroundColor="gray.100"
+          focusBorderColor="teal.500"
+          onChange={handleChange}
+          placeholder="Search templates"
+        />
+      </Box>
       <Scrollbars autoHide>
-        <div
-          style={{
-            padding: "2rem 2rem 0",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "rebeccapurple",
-              display: "block",
-            }}
-          >
-            <Input
-              color="#333"
-              background="#fff"
-              value={query}
-              onChange={handleChange}
-              placeholder="Search templates"
-            />
-          </div>
-        </div>
-        <div
+        {/* <div
           style={{
             padding: "0.8rem 2rem 0",
           }}
@@ -109,32 +98,31 @@ function PanelTemplate() {
             ref={inputFile}
             style={{ display: "none" }}
           />
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-            padding: "2rem",
-          }}
-        >
+        </div> */}
+        <SimpleGrid columns={2} spacing={2} padding={7}>
           {templates
             .filter((template) => isFiltered(template.name))
             .map((template) => (
-              <div
+              <Box
                 key={template.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0 0 1rem 0",
-                }}
+                border="1px"
+                borderColor="none"
+                cursor={"pointer"}
                 onClick={() => addTemplateToCanvas(template.id, template.path)}
+                _hover={{
+                  border: "1px",
+                  borderColor: "teal.500",
+                  boxShadow: "8px 7px 5px -5px rgba(0,0,0,0.21)",
+                }}
               >
-                <img src={template.image} />
-              </div>
+                <Image
+                  boxSize="full"
+                  src={template.image}
+                  fallbackSrc="https://via.placeholder.com/150"
+                />
+              </Box>
             ))}
-        </div>
+        </SimpleGrid>
       </Scrollbars>
     </PanelContainer>
   )

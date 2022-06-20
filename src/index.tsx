@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom"
+import 'material-icons/iconfont/material-icons.css';
 import reportWebVitals from "./reportWebVitals"
 import Editor from "@components/Editor"
 import { ChakraProvider } from "@chakra-ui/react"

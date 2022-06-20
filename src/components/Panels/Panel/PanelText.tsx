@@ -1,46 +1,12 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { Scrollbars } from "react-custom-scrollbars"
+import Masonry from "react-masonry-css"
+import { Scrollbars } from "react-custom-scrollbars-2"
 import { selectTextStyles } from "@store/reducers/text-style/selectors"
 import { useCoreHandler } from "@components/Canvas/handlers"
-import { Input } from "@chakra-ui/react"
-import styled from "styled-components"
+import { Box, Input, Text, VStack, Image } from "@chakra-ui/react"
 import PanelContainer from "@components/ScrollContainer"
 
-const BaseText = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  height: 50px;
-  display: flex;
-  align-items: center;
-  padding-left: 1rem;
-  cursor: pointer;
-  transition: background 0.4s;
-  font-family: "Lexend";
-`
-
-const HeadingText = styled(BaseText)`
-  font-weight: 700;
-  font-size: 1.66rem;
-`
-const SubHeadingText = styled(BaseText)`
-  background: rgba(255, 255, 255, 0.1);
-  font-size: 1.12rem;
-  font-weight: 500;
-`
-const BodyText = styled(BaseText)`
-  background: rgba(255, 255, 255, 0.1);
-  font-size: 0.76rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.9);
-`
-
-const TextLabel = styled.div`
-  font-weight: 600;
-  padding: 0.8rem 0;
-  font-size: 0.84rem;
-  padding: 1rem 2rem 0;
-  font-family: "Lexend";
-`
 function PanelText() {
   const [query, setQuery] = useState("")
   const handleChange = (event: any) => setQuery(event.target.value)
@@ -110,73 +76,94 @@ function PanelText() {
 
   return (
     <PanelContainer>
+      <Box display="flex" flexDirection="row" alignItems="center" padding={7}>
+        <Input
+          color="gray.800"
+          backgroundColor="gray.100"
+          focusBorderColor="teal.500"
+          value={query}
+          onChange={handleChange}
+          placeholder="Search text"
+        />
+      </Box>
       <Scrollbars autoHide>
-        <div
-          style={{
-            padding: "2rem 2rem 0",
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "rebeccapurple",
-              display: "block",
-            }}
-          >
-            <Input
-              color="#333"
-              background="#fff"
-              value={query}
-              onChange={handleChange}
-              placeholder="Search text"
-            />
-          </div>
-        </div>
-        <TextLabel>Click text to add to page</TextLabel>
-
-        <div style={{ display: "grid", gap: "0.6rem", padding: "1rem 2rem 0" }}>
-          <HeadingText
-            onClick={addHeading}
-            className="add-text-item add-heading"
-          >
-            Add a heading
-          </HeadingText>
-          <SubHeadingText
-            onClick={addSubheading}
-            className="add-text-item add-subheading"
-          >
-            Add a subheading
-          </SubHeadingText>
-          <BodyText
-            onClick={addTextBody}
-            className="add-text-item add-body-text"
-          >
-            Add a litle bit of body text
-          </BodyText>
-        </div>
-        <TextLabel>Popular items</TextLabel>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-            padding: "2rem",
-          }}
-        >
-          {textStyles.map((textStyle) => (
-            <div
-              key={textStyle.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0 0 1rem 0",
-              }}
-              onClick={() => addTextToCanvas(textStyle.json)}
+        <Box padding={7}>
+          <VStack spacing={4} align="left">
+            <Text
+              onClick={addHeading}
+              backgroundColor="gray.100"
+              padding={2}
+              borderRadius={6}
+              fontSize="4xl"
+              fontWeight="bold"
+              color="black"
+              fontFamily="Lexend"
+              cursor="pointer"
             >
-              <img src={textStyle.svg} />
-            </div>
-          ))}
-        </div>
+              Add a heading
+            </Text>
+            <Text
+              onClick={addSubheading}
+              backgroundColor="gray.100"
+              padding={2}
+              borderRadius={6}
+              fontSize="2xl"
+              fontWeight="bold"
+              color="black"
+              cursor="pointer"
+            >
+              Add a subheading
+            </Text>
+            <Text
+              onClick={addTextBody}
+              backgroundColor="gray.100"
+              padding={2}
+              borderRadius={6}
+              fontSize="md"
+              color="black"
+              cursor="pointer"
+            >
+              Add a litle bit of body text
+            </Text>
+          </VStack>
+          <Text
+            fontSize="2xl"
+            fontWeight="bold"
+            color="gray.700"
+            align="left"
+            paddingY={4}
+          >
+            Popular items
+          </Text>
+          <Masonry
+            breakpointCols={2}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {textStyles.map((textStyle) => (
+              <Box
+                key={textStyle?.id}
+                border="1px"
+                borderColor="gray.200"
+                cursor={"pointer"}
+                backgroundColor="gray.50"
+                onClick={() => addTextToCanvas(textStyle.json)}
+                _hover={{
+                  border: "1px",
+                  borderColor: "teal.500",
+                  boxShadow: "8px 7px 5px -5px rgba(0,0,0,0.21)",
+                }}
+              >
+                <Image
+                  boxSize="150px"
+                  src={textStyle?.svg}
+                  backgroundColor="white"
+                  fallbackSrc="https://via.placeholder.com/150"
+                />
+              </Box>
+            ))}
+          </Masonry>
+        </Box>
       </Scrollbars>
     </PanelContainer>
   )

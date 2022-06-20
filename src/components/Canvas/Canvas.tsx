@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react"
 import { fabric } from "fabric"
 import { useCanvasContext } from "./hooks"
-import { Scrollbars } from "react-custom-scrollbars"
 import ResizeObserver from "resize-observer-polyfill"
 import {
   useCoreHandler,
@@ -13,7 +12,6 @@ import {
 } from "./handlers"
 import ContextMenu from "@components/ContextMenu/ContextMenu"
 import "fabric-history"
-
 
 function Canvas() {
   const { setCanvas, setAreaDimension, canvas } = useCanvasContext()
@@ -44,13 +42,13 @@ function Canvas() {
     })
     const defaultWorkArea = new fabric.Rect({
       //@ts-ignore
-      id: 'workarea',
+      id: "workarea",
       width: 900,
       height: 900,
       absolutePositioned: true,
-      fill: '#ffffff',
+      fill: "#ffffff",
       selectable: false,
-      hoverCursor: 'default',
+      hoverCursor: "default",
     })
     canvas.add(defaultWorkArea)
     defaultWorkArea.center()
