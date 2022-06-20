@@ -143,6 +143,7 @@ export function getTemplateObject(templateid: any, jsonpath: any) {
     axios
       .get(`${SERVER_URL}/gettemplate.php?path=${jsonpath}`)
       .then((response) => {
+        console.log("Template", response.data)
         resolve(response.data)
       })
       .catch((err) => reject(err))

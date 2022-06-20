@@ -1,6 +1,9 @@
 import styled from "styled-components"
+import { Box } from "@chakra-ui/react"
 import Header from "@components/Header"
 import Panels from "@components/Panels"
+import PagesPanel from "@components/Panels/PagesPanel"
+import PagesToggleButton from "@components/Panels/PagesPanel/PagesToggleButton"
 import Menu from "@components/Menu"
 import Canvas from "@components/Canvas"
 import Footer from "@components/Footer"
@@ -72,7 +75,11 @@ function Editor() {
         <Panels />
         <SectionThree>
           <Menu />
-          <Canvas />
+          <Box display="flex" flex="1">
+            <Canvas />
+            <PagesPanel />
+          </Box>
+          <PagesToggleButton />
           {/* <Footer /> */}
         </SectionThree>
       </SectionOne>

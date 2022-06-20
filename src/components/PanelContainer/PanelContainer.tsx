@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react"
 
-function ScrollContainer({ children }: any) {
+function PanelContainer({ children }: any) {
   return (
     <Box display="flex" flexDirection="column" flex={1}>
       {children}
@@ -8,4 +8,4 @@ function ScrollContainer({ children }: any) {
   )
 }
 
-export default ScrollContainer
+export default PanelContainer

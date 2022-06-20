@@ -5,7 +5,7 @@ import { Scrollbars } from "react-custom-scrollbars-2"
 import { getPixabayImages } from "@services/pixabay"
 import { Box, Input, Image } from "@chakra-ui/react"
 import { useDebounce } from "use-debounce"
-import PanelContainer from "../../ScrollContainer/ScrollContainer"
+import PanelContainer from "../../PanelContainer/PanelContainer"
 import useCoreHandler from "@/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/components/Canvas/hooks"
 

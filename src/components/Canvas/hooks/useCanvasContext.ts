@@ -34,9 +34,9 @@ function useCanvasContext() {
     pages,
     addPage,
     removePage,
-    activePage,
-    setActivePage,
-    togglePage
+    activePageId,
+    setActivePageId,
+    togglePage,
   } = useContext(CanvasContext)
 
   return {
@@ -71,9 +71,9 @@ function useCanvasContext() {
     pages,
     addPage,
     removePage,
-    activePage,
-    setActivePage,
-    togglePage
+    activePageId,
+    setActivePageId,
+    togglePage,
   }
 }
 

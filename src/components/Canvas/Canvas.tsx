@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import { fabric } from "fabric"
 import { useCanvasContext } from "./hooks"
 import ResizeObserver from "resize-observer-polyfill"
+import { v4 as uuidv4 } from "uuid"
 import {
   useCoreHandler,
   useCustomizationHandler,
@@ -68,9 +69,9 @@ function Canvas() {
         // setAreaDimension({ width: width! - 32, height: height! - 32 })
       }
     )
-    resizeObserver.observe(containerRef.current!)
+    resizeObserver.observe(containerRef?.current!)
     return () => {
-      resizeObserver.unobserve(containerRef.current!)
+      resizeObserver.unobserve(containerRef?.current!)
     }
   }, [])
 

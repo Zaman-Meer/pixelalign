@@ -5,7 +5,7 @@ import { Scrollbars } from "react-custom-scrollbars-2"
 import { selectTextStyles } from "@store/reducers/text-style/selectors"
 import { useCoreHandler } from "@components/Canvas/handlers"
 import { Box, Input, Text, VStack, Image } from "@chakra-ui/react"
-import PanelContainer from "@components/ScrollContainer"
+import PanelContainer from "@/components/PanelContainer"
 
 function PanelText() {
   const [query, setQuery] = useState("")

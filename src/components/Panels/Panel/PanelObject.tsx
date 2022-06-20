@@ -2,7 +2,7 @@ import { useState } from "react"
 import { objects } from "@constants/objects"
 import { Scrollbars } from "react-custom-scrollbars-2"
 import { Input } from "@chakra-ui/react"
-import PanelContainer from "../../ScrollContainer/ScrollContainer"
+import PanelContainer from "../../PanelContainer/PanelContainer"
 import useCoreHandler from "@/components/Canvas/handlers/useCoreHandler"
 
 function PanelObject() {

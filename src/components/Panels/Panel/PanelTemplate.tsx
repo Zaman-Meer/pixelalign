@@ -5,7 +5,7 @@ import { useCoreHandler } from "@components/Canvas/handlers"
 import { Box, Input, Text, SimpleGrid, Image } from "@chakra-ui/react"
 import { selectTemplates } from "@store/reducers/templates/selectors"
 import { getTemplateObject } from "@services/api"
-import PanelContainer from "@components/ScrollContainer"
+import PanelContainer from "../../PanelContainer/PanelContainer"
 import { fabric } from "fabric"
 import { useCanvasContext } from "@/components/Canvas/hooks"
 
