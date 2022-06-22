@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit"
-import { getTemplates } from "@store/reducers/templates/thunks"
+import { getTemplates, addTemplate } from "@store/reducers/templates/thunks"
 import { ITemplateState } from "./types"
 
 const initialState: ITemplateState = {
@@ -26,4 +26,11 @@ export const templatesReducer = createReducer(initialState, (builder) => {
       }
     }
   )
+  builder.addCase(addTemplate.pending, (state, payload) => {
+    console.log("DD")
+    if (state.loading === false) {
+      state.loading = true
+    }
+  })
+  builder.addCase(addTemplate.fulfilled, () => {})
 })

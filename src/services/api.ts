@@ -6,6 +6,7 @@ import {
   IWordArtCategory,
   IWordArtSubcategory,
 } from "@/store/reducers/wordarts/types"
+import propertiesToInclude from "@constants/workspace"
 import _ from "lodash"
 
 const ADONIS_APP = "http://localhost:3333"
@@ -15,7 +16,7 @@ const TEMPLATES_URL = ADONIS_APP + "/api/templates"
 const PIXABAY_KEY = "20824871-7548337191755cbbef05230ed"
 const SERVER_CANVAS_SAVE = ADONIS_APP + "/api/save-canvas"
 const SERVER_URL = "http://165.227.50.244/designer/"
-
+const EDITOR_SERVER_URL = "http://localhost:8000"
 export function getTemplates(): Promise<ITemplate[]> {
   return new Promise((resolve, reject) => {
     axios
@@ -162,6 +163,23 @@ export const saveCanvas = async (base64: string) => {
         // @ts-ignore
         height: window.canvas.height,
       })
+      .then((response) => {
+        resolve(response)
+      })
+      .catch((err) => reject(err))
+  })
+}
+
+export const saveTemplate = async () => {
+  return new Promise((resolve, reject) => {
+    const template = {
+      title: "facebook post",
+      categories: ["facebook-post"],
+      // @ts-ignore
+      data: JSON.stringify(window.canvas.toJSON(propertiesToInclude)),
+    }
+    axios
+      .post(EDITOR_SERVER_URL, template)
       .then((response) => {
         resolve(response)
       })

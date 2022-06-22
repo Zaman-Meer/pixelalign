@@ -6,12 +6,17 @@ import {
   ButtonGroup,
   Input,
 } from "@chakra-ui/react"
+import * as api from "@/services/api"
+import { AppDispatch } from "@store/store"
+import { useDispatch } from "react-redux"
+import { addTemplate, getTemplates } from "@store/reducers/templates/thunks"
 import styled from "styled-components"
 import { Button } from "@chakra-ui/react"
 import { useCanvasContext } from "../Canvas/hooks"
 import logo from "@assets/images/logo-35.png"
 import { saveCanvas } from "@services/api"
-
+import axios from "axios"
+import propertiesToInclude from "@constants/workspace"
 const Container = styled.div`
   height: 60px;
   border-bottom: 1px solid rgba(57, 76, 96, 0.15);
@@ -24,9 +29,14 @@ const Container = styled.div`
 
 function Header() {
   const { canvas, formatSize } = useCanvasContext()
+  const dispatch: AppDispatch = useDispatch()
   const downloadImage = () => {
     //@ts-ignore
-    const activeObject = canvas?.getObjects()?.find(obj => obj?.id === "workarea")?.getBoundingRect()
+    const activeObject = canvas
+      ?.getObjects()
+      //@ts-ignore
+      ?.find((obj) => obj?.id === "workarea")
+      ?.getBoundingRect()
     //@ts-ignore
     const height = activeObject?.width * activeObject?.scaleX
     //@ts-ignore
@@ -47,10 +57,24 @@ function Header() {
   }
 
   const onSave = async () => {
-    let base64 = btoa(JSON.stringify(canvas?.toJSON()))
-    let baseParsed = `data:image/png;base64,${base64}`
+    console.log("H")
+    const EDITOR_SERVER_URL = "http://localhost:8000/api/template"
+    const template = {
+      title: "facebook post",
+      categories: ["facebook-post"],
+      // @ts-ignore
+      data: JSON.stringify(canvas?.toJSON(propertiesToInclude)),
+    }
+    try {
+      const response = axios.post(EDITOR_SERVER_URL, template)
+    } catch (error) {
+      console.log(error)
+    }
+    //  dispatch(getTemplates)
+    // let base64 = btoa(JSON.stringify(canvas?.toJSON()))
+    // let baseParsed = `data:image/png;base64,${base64}`
 
-    const savedJson = (await saveCanvas(baseParsed)) as any
+    // const savedJson = (await saveCanvas(baseParsed)) as any
   }
 
   return (
@@ -87,9 +111,9 @@ function Header() {
               <MenuItem>Yardım</MenuItem>
             </MenuList>
           </Menu>
+          <Button onClick={onSave}>Save</Button>
           <Menu>
             <MenuButton
-              onClick={onSave}
               variant="outline"
               as={Button}
               leftIcon={

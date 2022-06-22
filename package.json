@@ -21,7 +21,7 @@
     "@types/uuid": "^8.3.4",
     "@types/webfontloader": "^1.6.32",
     "axios": "^0.21.1",
-    "fabric": "^4.4.0",
+    "fabric": "^5.2.1",
     "fabric-history": "^1.6.0",
     "focus-visible": "^5.2.0",
     "framer-motion": "^4",
