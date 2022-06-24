@@ -6,10 +6,10 @@ import {
   ButtonGroup,
   Input,
 } from "@chakra-ui/react"
+import b64toBlob from "b64-to-blob"
+import Resizer from "react-image-file-resizer"
+import { v4 as uuidv4 } from "uuid"
 import * as api from "@/services/api"
-import { AppDispatch } from "@store/store"
-import { useDispatch } from "react-redux"
-import { addTemplate, getTemplates } from "@store/reducers/templates/thunks"
 import styled from "styled-components"
 import { Button } from "@chakra-ui/react"
 import { useCanvasContext } from "../Canvas/hooks"
@@ -27,9 +27,25 @@ const Container = styled.div`
   padding: 0 1.5rem;
 `
 
+const resizeFile = (file: any, width: number, height: number) =>
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      width,
+      height,
+      "JPEG",
+      10,
+      0,
+      (uri) => {
+        resolve(uri)
+      },
+      "base64"
+    )
+  })
+
 function Header() {
   const { canvas, formatSize } = useCanvasContext()
-  const dispatch: AppDispatch = useDispatch()
+
   const downloadImage = () => {
     //@ts-ignore
     const activeObject = canvas
@@ -42,7 +58,8 @@ function Header() {
     //@ts-ignore
     const width = activeObject?.height * activeObject?.scaleY
     const data = canvas?.toDataURL({
-      multiplier: 3,
+      multiplier: 1,
+      quality: 0.1,
       top: activeObject?.top,
       left: activeObject?.left,
       width: activeObject?.width,
@@ -58,18 +75,59 @@ function Header() {
 
   const onSave = async () => {
     console.log("H")
-    const EDITOR_SERVER_URL = "http://localhost:8000/api/template"
-    const template = {
-      title: "facebook post",
-      categories: ["facebook-post"],
-      // @ts-ignore
-      data: JSON.stringify(canvas?.toJSON(propertiesToInclude)),
-    }
-    try {
-      const response = axios.post(EDITOR_SERVER_URL, template)
-    } catch (error) {
-      console.log(error)
-    }
+    //@ts-ignore
+    const activeObject = canvas
+      ?.getObjects()
+      //@ts-ignore
+      ?.find((obj) => obj?.id === "workarea")
+      ?.getBoundingRect()
+    //@ts-ignore
+    const height = activeObject?.width * activeObject?.scaleX
+    //@ts-ignore
+    const width = activeObject?.height * activeObject?.scaleY
+    const dataImage = canvas?.toDataURL({
+      format: "jpeg",
+      multiplier: 1,
+      quality: 0.1,
+      top: activeObject?.top,
+      left: activeObject?.left,
+      width: activeObject?.width,
+      height: activeObject?.height,
+    })
+    // var data = dataImage && dataImage.replace("data:image/png;base64,", "")
+    // //@ts-ignore
+    // // var blob = b64toBlob(data, "image/png")
+    // let blobData = [data]
+    // var blobUrl = URL.createObjectURL(
+    //   //@ts-ignore
+    //   new Blob(blobData, { type: "image/png" })
+
+    // )
+    //@ts-ignore
+
+    fetch(dataImage).then((response) => {
+      console.log("Blob", response?.blob())
+      const image = resizeFile(response?.blob(), width, height)
+      const EDITOR_SERVER_URL = "http://localhost:8000/api/template"
+      const template = {
+        title: "facebook post",
+        categories: ["facebook-post"],
+        thumbnail: image,
+        // @ts-ignore
+        pages: [
+          {
+            id: uuidv4(),
+            content: JSON.stringify(canvas?.toJSON(propertiesToInclude)),
+          },
+        ],
+      }
+      try {
+        const response = axios.post(EDITOR_SERVER_URL, template)
+      } catch (error) {
+        console.log(error)
+      }
+    })
+
     //  dispatch(getTemplates)
     // let base64 = btoa(JSON.stringify(canvas?.toJSON()))
     // let baseParsed = `data:image/png;base64,${base64}`

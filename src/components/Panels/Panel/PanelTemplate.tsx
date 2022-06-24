@@ -1,9 +1,7 @@
 import { useState, useRef } from "react"
-import { useSelector } from "react-redux"
 import { Scrollbars } from "react-custom-scrollbars-2"
 import { useCoreHandler } from "@components/Canvas/handlers"
 import { Box, Input, Text, SimpleGrid, Image } from "@chakra-ui/react"
-import { selectTemplates } from "@store/reducers/templates/selectors"
 import { getTemplateObject } from "@services/api"
 import PanelContainer from "../../PanelContainer/PanelContainer"
 import { fabric } from "fabric"
@@ -13,7 +11,7 @@ function PanelTemplate() {
   const [query, setQuery] = useState("")
   const inputFile = useRef<HTMLInputElement>(null)
   const handleChange = (event: any) => setQuery(event.target.value)
-  const templates = useSelector(selectTemplates)
+  const templates: any = []
   const { importTemplate, calculateZoomFitRatio, updateFormatSize } =
     useCoreHandler()
   const { canvas } = useCanvasContext()
@@ -101,8 +99,8 @@ function PanelTemplate() {
         </div> */}
         <SimpleGrid columns={2} spacing={2} padding={7}>
           {templates
-            .filter((template) => isFiltered(template.name))
-            .map((template) => (
+            .filter((template: any) => isFiltered(template.name))
+            .map((template: any) => (
               <Box
                 key={template.id}
                 border="1px"
