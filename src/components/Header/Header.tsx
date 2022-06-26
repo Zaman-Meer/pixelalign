@@ -6,7 +6,6 @@ import {
   ButtonGroup,
   Input,
 } from "@chakra-ui/react"
-import b64toBlob from "b64-to-blob"
 import Resizer from "react-image-file-resizer"
 import { v4 as uuidv4 } from "uuid"
 import * as api from "@/services/api"
@@ -34,12 +33,14 @@ const resizeFile = (file: any, width: number, height: number) =>
       width,
       height,
       "JPEG",
-      10,
+      300,
       0,
-      (uri) => {
+      (uri: unknown) => {
         resolve(uri)
       },
-      "base64"
+      "base64",
+     500,
+      400,
     )
   })
 
@@ -88,46 +89,38 @@ function Header() {
     const dataImage = canvas?.toDataURL({
       format: "jpeg",
       multiplier: 1,
-      quality: 0.1,
+      quality: 1,
       top: activeObject?.top,
       left: activeObject?.left,
       width: activeObject?.width,
       height: activeObject?.height,
     })
-    // var data = dataImage && dataImage.replace("data:image/png;base64,", "")
-    // //@ts-ignore
-    // // var blob = b64toBlob(data, "image/png")
-    // let blobData = [data]
-    // var blobUrl = URL.createObjectURL(
-    //   //@ts-ignore
-    //   new Blob(blobData, { type: "image/png" })
-
-    // )
     //@ts-ignore
-
-    fetch(dataImage).then((response) => {
-      console.log("Blob", response?.blob())
-      const image = resizeFile(response?.blob(), width, height)
-      const EDITOR_SERVER_URL = "http://localhost:8000/api/template"
-      const template = {
-        title: "facebook post",
-        categories: ["facebook-post"],
-        thumbnail: image,
-        // @ts-ignore
-        pages: [
-          {
-            id: uuidv4(),
-            content: JSON.stringify(canvas?.toJSON(propertiesToInclude)),
-          },
-        ],
-      }
-      try {
-        const response = axios.post(EDITOR_SERVER_URL, template)
-      } catch (error) {
-        console.log(error)
-      }
-    })
-
+      fetch(dataImage).then((response) => response.blob()).then( async (blob) => {
+        console.log("Blob", blob)
+        const image = await resizeFile(blob, width, height)
+        console.log("Images", image)
+        const EDITOR_SERVER_URL = "http://localhost:8000/api/template"
+        const template = {
+          title: "facebook post",
+          categories: ["facebook-post"],
+          thumbnail: image,
+          // @ts-ignore
+          pages: [
+            {
+              id: uuidv4(),
+              content: JSON.stringify(canvas?.toJSON(propertiesToInclude)),
+            },
+          ],
+        }
+        try {
+          const response = axios.post(EDITOR_SERVER_URL, template)
+        } catch (error) {
+          console.log(error)
+        }
+      })
+   
+  
     //  dispatch(getTemplates)
     // let base64 = btoa(JSON.stringify(canvas?.toJSON()))
     // let baseParsed = `data:image/png;base64,${base64}`

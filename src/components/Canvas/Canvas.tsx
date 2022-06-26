@@ -45,7 +45,7 @@ function Canvas() {
       //@ts-ignore
       id: "workarea",
       width: 900,
-      height: 900,
+      height: 600,
       absolutePositioned: true,
       fill: "#ffffff",
       selectable: false,
