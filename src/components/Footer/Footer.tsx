@@ -41,17 +41,16 @@ function Footer() {
   const zoomString = parseFloat(option.zoomValue.toFixed(2))
 
   const handleUndo = useCallback(() => {
-
-    if (canvas ) {
+    if (canvas) {
       //@ts-ignore
-      canvas?.undo();
+      canvas?.undo()
     }
   }, [canvas])
 
   const handleRedo = useCallback(() => {
     if (canvas) {
       //@ts-ignore
-      canvas?.redo();
+      canvas?.redo()
     }
   }, [canvas])
 
@@ -81,6 +80,7 @@ function Footer() {
             width: "240px",
             display: "grid",
             gridTemplateColumns: "1fr 60px",
+            marginRight: "100px",
           }}
         >
           <Slider

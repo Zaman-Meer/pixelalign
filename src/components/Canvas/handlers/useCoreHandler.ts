@@ -47,13 +47,13 @@ function useCoreHandler() {
         //   width: nextWidth,
         //   height: nextHeight,
         // })
-         //@ts-ignore
-         const diffWidth = nextWidth / 2 - canvas?.getWidth() / 2
-         //@ts-ignore
-         const diffHeight = nextHeight / 2 - canvas?.getHeight() / 2
+        //@ts-ignore
+        const diffWidth = nextWidth / 2 - canvas?.getWidth() / 2
+        //@ts-ignore
+        const diffHeight = nextHeight / 2 - canvas?.getHeight() / 2
         canvas?.setWidth(nextWidth).setHeight(nextHeight)
         canvas?.renderAll()
-       
+
         const deltaPoint = new fabric.Point(diffWidth, diffHeight)
         canvas?.relativePan(deltaPoint)
       }
@@ -65,16 +65,20 @@ function useCoreHandler() {
    * Update WorkAreaZoom
    */
 
-   const updateWorkAreaZoom = ({width, height, canvas}: WorkAreaZoomProps) => {
-    
+  const updateWorkAreaZoom = ({ width, height, canvas }: WorkAreaZoomProps) => {
     //@ts-ignore
     const workArea = canvas?.getObjects().find((obj) => obj.id === "workarea")
     if (workArea) {
-      
       //@ts-ignore
-      const workAreaHeight = workArea?.height + 100;
-      const zoom = workAreaHeight && parseFloat((height / workAreaHeight).toFixed(2));
-      zoom && setZoomRatio(zoom);
+      const workAreaHeight = workArea?.height + 0
+      //@ts-ignore
+      const workAreaWidth = workArea?.width - 50
+
+      const ratio =
+        parseFloat((height / workAreaHeight).toFixed(2)) /
+        parseFloat((width / workAreaWidth).toFixed(2))
+
+      ratio && setZoomRatio(parseFloat(ratio.toFixed(2)))
     }
   }
 
@@ -132,9 +136,8 @@ function useCoreHandler() {
       )
       //@ts-ignore
       const workArea = canvas?.getObjects().find((obj) => obj.id === "workarea")
-        object.clipPath = workArea;
+      object.clipPath = workArea
       if (canvas) {
-        
         if (object.type != "textbox") {
           object.scaleToHeight(160)
         }

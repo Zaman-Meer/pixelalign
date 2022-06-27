@@ -8,12 +8,15 @@ import { CanvasProvider } from "@components/Canvas"
 import "focus-visible/dist/focus-visible"
 import "./i18n/index"
 import "./index.css"
+import TemplateProvider from "@context/templateContext"
 
 ReactDOM.render(
   <CanvasProvider>
-    <ChakraProvider>
-      <Editor />
-    </ChakraProvider>
+    <TemplateProvider>
+      <ChakraProvider>
+        <Editor />
+      </ChakraProvider>
+    </TemplateProvider>
   </CanvasProvider>,
   document.getElementById("root")
 )

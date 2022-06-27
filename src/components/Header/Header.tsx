@@ -15,7 +15,9 @@ import { useCanvasContext } from "../Canvas/hooks"
 import logo from "@assets/images/logo-35.png"
 import { saveCanvas } from "@services/api"
 import axios from "axios"
+import Formats from "@constants/formats"
 import propertiesToInclude from "@constants/workspace"
+import useTemplateContext from "@/hooks/useTemplateContext"
 const Container = styled.div`
   height: 60px;
   border-bottom: 1px solid rgba(57, 76, 96, 0.15);
@@ -39,14 +41,14 @@ const resizeFile = (file: any, width: number, height: number) =>
         resolve(uri)
       },
       "base64",
-     500,
-      400,
+      500,
+      400
     )
   })
 
 function Header() {
   const { canvas, formatSize } = useCanvasContext()
-
+  const { addWorkspace } = useTemplateContext()
   const downloadImage = () => {
     //@ts-ignore
     const activeObject = canvas
@@ -58,9 +60,10 @@ function Header() {
     const height = activeObject?.width * activeObject?.scaleX
     //@ts-ignore
     const width = activeObject?.height * activeObject?.scaleY
+    console.log("data", JSON.stringify(canvas?.toJSON(propertiesToInclude)))
     const data = canvas?.toDataURL({
+      format: "png",
       multiplier: 1,
-      quality: 0.1,
       top: activeObject?.top,
       left: activeObject?.left,
       width: activeObject?.width,
@@ -96,7 +99,9 @@ function Header() {
       height: activeObject?.height,
     })
     //@ts-ignore
-      fetch(dataImage).then((response) => response.blob()).then( async (blob) => {
+    fetch(dataImage)
+      .then((response) => response.blob())
+      .then(async (blob) => {
         console.log("Blob", blob)
         const image = await resizeFile(blob, width, height)
         console.log("Images", image)
@@ -119,8 +124,7 @@ function Header() {
           console.log(error)
         }
       })
-   
-  
+
     //  dispatch(getTemplates)
     // let base64 = btoa(JSON.stringify(canvas?.toJSON()))
     // let baseParsed = `data:image/png;base64,${base64}`
@@ -142,24 +146,26 @@ function Header() {
             Pixel
           </div>
           <Menu>
-            <MenuButton
-              variant="outline"
-              as={Button}
-              leftIcon={
-                <i style={{ fontSize: "16px" }} className="material-icons">
-                  insert_drive_file
-                </i>
-              }
-            >
-              Upload
+            <MenuButton variant="outline" as={Button}>
+              Formats
             </MenuButton>
-            <MenuList>
-              <MenuItem>Tasarım alanını temizle</MenuItem>
-              <MenuItem>Tasarımımı Kaydet</MenuItem>
-              <MenuItem>Kaydedilen tasarımlarım</MenuItem>
-              <MenuItem>Yeniden Boyutlandır</MenuItem>
-              <MenuItem>Tasarımımı indir</MenuItem>
-              <MenuItem>Yardım</MenuItem>
+            <MenuList height={300} overflow="scroll">
+              {Formats?.map((format, index) => (
+                <MenuItem
+                  textTransform="capitalize"
+                  borderBottom="1px solid"
+                  borderColor="gray.100"
+                  fontWeight="bold"
+                  color="gray.600"
+                  _hover={{
+                    backgroundColor: "rgba(57, 76, 96, 0.15)",
+                  }}
+                  key={index}
+                  onClick={() =>
+                    addWorkspace(format?.size?.width, format?.size?.height)
+                  }
+                >{`${format?.label}-${format?.size?.width}x${format?.size?.height}`}</MenuItem>
+              ))}
             </MenuList>
           </Menu>
           <Button onClick={onSave}>Save</Button>

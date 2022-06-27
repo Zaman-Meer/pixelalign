@@ -9,7 +9,9 @@
       "@scenes/*": ["src/scenes/*"],
       "@store/*": ["src/store/*"],
       "@services/*": ["src/services/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@context/*": ["src/context/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   }
 }

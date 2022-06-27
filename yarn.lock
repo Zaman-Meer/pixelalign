@@ -2619,11 +2619,6 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/pica@^9.0.1":
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/@types/pica/-/pica-9.0.1.tgz#adbdfc1190bb33a9da68d1fe501c2483dae3b142"
-  integrity sha512-hTsYxcy0MqIOKzeALuh3zOHyozBlndxV/bX9X52GBFq2XUQchZF6T0vcRYeT5P1ggmswi2LlIwHAH+bKWxxalg==
-
 "@types/prettier@^2.0.0":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.2.1.tgz#374e31645d58cb18a07b3ecd8e9dede4deb2cccd"
@@ -3537,11 +3532,6 @@ axobject-query@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-2.2.0.tgz#943d47e10c0b704aa42275e20edf3722648989be"
   integrity sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==
-
-b64-to-blob@^1.2.19:
-  version "1.2.19"
-  resolved "https://registry.yarnpkg.com/b64-to-blob/-/b64-to-blob-1.2.19.tgz#157d85fdc8811665b9a35d29ffbc6a522ba28fbe"
-  integrity sha512-L3nSu8GgF4iEyNYakCQSfL2F5GI5aCXcot9mNTf+4N0/BMhpxqqHyOb6jIR24iq2xLjQZLG8FOt3gnUcV+9NVg==
 
 babel-eslint@^10.1.0:
   version "10.1.0"
@@ -6660,11 +6650,6 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-glur@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/glur/-/glur-1.1.2.tgz#f20ea36db103bfc292343921f1f91e83c3467689"
-  integrity sha512-l+8esYHTKOx2G/Aao4lEQ0bnHWg4fWtJbVoZZT9Knxi01pB8C80BR85nONLFwkkQoFRCmXY+BUcGZN3yZ2QsRA==
-
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
@@ -8869,14 +8854,6 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
-multimath@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/multimath/-/multimath-2.0.0.tgz#0d37acf67c328f30e3d8c6b0d3209e6082710302"
-  integrity sha512-toRx66cAMJ+Ccz7pMIg38xSIrtnbozk0dchXezwQDMgQmbGpfxjtv68H+L00iFL8hxDaVjrmwAFSb3I6bg8Q2g==
-  dependencies:
-    glur "^1.1.2"
-    object-assign "^4.1.1"
-
 nan@^2.12.1, nan@^2.14.0:
   version "2.14.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
@@ -9640,16 +9617,6 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
-
-pica@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/pica/-/pica-9.0.1.tgz#9ba5a5e81fc09dca9800abef9fb8388434b18b2f"
-  integrity sha512-v0U4vY6Z3ztz9b4jBIhCD3WYoecGXCQeCsYep+sXRefViL+mVVoTL+wqzdPeE+GpBFsRUtQZb6dltvAt2UkMtQ==
-  dependencies:
-    glur "^1.1.2"
-    multimath "^2.0.0"
-    object-assign "^4.1.1"
-    webworkify "^1.5.0"
 
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1, picomatch@^2.2.2:
   version "2.2.2"
@@ -13243,11 +13210,6 @@ websocket-extensions@>=0.1.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
-
-webworkify@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/webworkify/-/webworkify-1.5.0.tgz#734ad87a774de6ebdd546e1d3e027da5b8f4a42c"
-  integrity sha512-AMcUeyXAhbACL8S2hqqdqOLqvJ8ylmIbNwUIqQujRSouf4+eUFaXbG6F1Rbu+srlJMmxQWsiU7mOJi0nMBfM1g==
 
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.5:
   version "1.0.5"

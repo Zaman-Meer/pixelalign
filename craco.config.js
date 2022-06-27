@@ -13,6 +13,8 @@ module.exports = {
       "@store": resloveSrc("store"),
       "@services": resloveSrc("services"),
       "@utils": resloveSrc("utils"),
+      "@context": resloveSrc("context"),
+      "@hooks": resloveSrc("hooks"),
     },
   },
 }

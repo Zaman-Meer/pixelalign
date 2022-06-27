@@ -21,14 +21,12 @@
     "@types/uuid": "^8.3.4",
     "@types/webfontloader": "^1.6.32",
     "axios": "^0.21.1",
-    "b64-to-blob": "^1.2.19",
     "fabric": "^5.2.1",
     "fabric-history": "^1.6.0",
     "focus-visible": "^5.2.0",
     "framer-motion": "^4",
     "i18next": "^20.2.2",
     "material-icons": "^1.11.1",
-    "pica": "^9.0.1",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
     "react-custom-scrollbars-2": "^4.5.0",
@@ -70,7 +68,6 @@
     ]
   },
   "devDependencies": {
-    "@types/pica": "^9.0.1",
     "@types/react-custom-scrollbars": "^4.0.7",
     "@types/styled-components": "^5.1.9"
   }

@@ -15,7 +15,7 @@ interface Image {
   original: string
 }
 function PanelImage() {
-  const { canvas } = useCanvasContext()
+  const { canvas, isSidePanelOpen } = useCanvasContext()
   const [images, setImages] = useState<Image[]>([])
   const [query, setQuery] = useState("")
   const [value] = useDebounce(query, 1500)
@@ -83,6 +83,7 @@ function PanelImage() {
           value={query}
           onChange={handleChange}
           placeholder="Search images"
+          display={isSidePanelOpen ? "block" : "none"}
         />
       </Box>
 
