@@ -1,6 +1,7 @@
 export interface TemplateType {
   id: string
   categories: string[]
+  formatType: string
   no_of_pages: number
   thumbnail: string
 }
@@ -15,6 +16,7 @@ export interface PageType {
 
 export interface TemplateDesignType {
   id: string
+  formatType: string
   categories: string[]
   no_of_pages: number
   pages: PageType[]

@@ -15,7 +15,8 @@ import ContextMenu from "@components/ContextMenu/ContextMenu"
 import "fabric-history"
 
 function Canvas() {
-  const { setCanvas, setAreaDimension, canvas } = useCanvasContext()
+  const { setCanvas, setAreaDimension, canvas, pages, activePageId } =
+    useCanvasContext()
   const { updateCanvasSize, updateWorkAreaZoom } = useCoreHandler()
   const containerRef = useRef<any>(null)
   useCustomizationHandler()
@@ -44,14 +45,14 @@ function Canvas() {
     const defaultWorkArea = new fabric.Rect({
       //@ts-ignore
       id: "workarea",
-      width: 900,
+      width: 600,
       height: 600,
       absolutePositioned: true,
       fill: "#ffffff",
       selectable: false,
       hoverCursor: "default",
     })
-    canvas.add(defaultWorkArea)
+    canvas?.add(defaultWorkArea)
     defaultWorkArea.center()
     setCanvas(canvas)
     const initialHeight = containerRef.current?.clientHeight
@@ -71,9 +72,37 @@ function Canvas() {
     )
     resizeObserver.observe(containerRef?.current!)
     return () => {
-      resizeObserver.unobserve(containerRef?.current!)
+      containerRef?.current && resizeObserver.unobserve(containerRef?.current!)
     }
   }, [])
+
+  useEffect(() => {
+    if (pages.length > 0) {
+      const pageData = pages?.filter((page) => page.id === activePageId)[0]
+      const defaultWorkArea =
+        pageData?.content &&
+        //@ts-ignore
+        pageData.content?.objects?.filter(
+          (item: any) => item.id === "workarea"
+        )[0]
+      console.log("Work", defaultWorkArea)
+      // canvas?.add(defaultWorkArea)
+      // defaultWorkArea?.center()
+      canvas?.loadFromJSON(pageData?.content, () => {})
+      const initialHeight = containerRef.current?.clientHeight
+      const initialWidth = containerRef.current?.clientWidth
+      canvas &&
+        updateWorkAreaZoom({
+          width: initialWidth,
+          height: initialHeight,
+          canvas,
+        })
+      setAreaDimension({
+        width: initialWidth! - 32,
+        height: initialHeight! - 32,
+      })
+    }
+  }, [activePageId])
 
   useEffect(() => {
     containerRef.current.addEventListener("mousedown", (e: any) => {

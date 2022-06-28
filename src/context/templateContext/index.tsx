@@ -1,11 +1,16 @@
-import React, { createContext } from "react"
+import React, { createContext, useCallback, useEffect } from "react"
 import { fabric } from "fabric"
+import { v4 as uuidv4 } from "uuid"
+import { PageType } from "@/types/template"
 import { useCanvasContext } from "@/components/Canvas/hooks"
+import propertiesToInclude from "@/constants/workspace"
 interface ContextType {
   saveTemplate: () => void
   loadTemplate: () => void
   getTemplates: (category: string) => void
   addWorkspace: (width: number, height: number) => void
+  generateThumbnail: () => void
+  convertCanvasToPage: () => void
 }
 
 export const TemplateContext = createContext<ContextType>({
@@ -13,32 +18,86 @@ export const TemplateContext = createContext<ContextType>({
   loadTemplate: () => {},
   getTemplates: () => {},
   addWorkspace: () => {},
+  generateThumbnail: () => {},
+  convertCanvasToPage: () => {},
 })
 
 const TemplateProvider: React.FC = ({ children }) => {
-  const { canvas, activePageId, pages } = useCanvasContext()
+  const { canvas, activePageId, pages, setPages, setActivePageId } =
+    useCanvasContext()
 
-  const addWorkspace = (width: number, height: number) => {
-    canvas?.clear()
-    const workspace = new fabric.Rect({
+  const convertCanvasToPage = () => {
+    const jsonData = canvas?.toJSON(propertiesToInclude)
+    return jsonData
+  }
+
+  const handleAddPages = useCallback(() => {
+    const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
+    staticCanvas.setDimensions({
+      width: 900,
+      height: 600,
+    })
+    const defaultWorkArea = new fabric.Rect({
       //@ts-ignore
-      id: "workspace",
-      width: width,
-      height: height,
+      id: "workarea",
+      width: 900,
+      height: 600,
+      absolutePositioned: true,
       fill: "#ffffff",
       selectable: false,
       hoverCursor: "default",
     })
-    canvas?.add(workspace)
-    workspace.center()
-  }
-  const generateThumnail = () => {
+    staticCanvas?.add(defaultWorkArea)
+    defaultWorkArea.center()
+    const newPage: PageType = {
+      id: uuidv4(),
+      size: {
+        width: 940,
+        height: 788,
+      },
+      content: staticCanvas?.toJSON(propertiesToInclude),
+    }
+    console.log("default", staticCanvas?.toJSON(propertiesToInclude))
+    setPages([newPage])
+    setActivePageId(newPage?.id)
+  }, [canvas])
+  useEffect(() => {
+    handleAddPages()
+  }, [])
+
+  const addWorkspace = useCallback(
+    (width: number, height: number) => {
+      canvas?.clear()
+      const workspace = new fabric.Rect({
+        //@ts-ignore
+        id: "workspace",
+        width: width,
+        height: height,
+        fill: "#ffffff",
+        selectable: false,
+        hoverCursor: "default",
+      })
+      canvas?.add(workspace)
+      workspace.center()
+    },
+    [canvas]
+  )
+  const generateThumbnail = () => {
+    const activePageData = pages?.filter((page) => page.id === activePageId)
     const staticCanvas = new fabric.StaticCanvas("staticCanvas")
     staticCanvas.setDimensions({
       width: 900,
       height: 600,
     })
+    staticCanvas?.loadFromJSON(activePageData?.[0]?.content, () => {
+      const image = staticCanvas?.toDataURL({
+        format: "png",
+        quality: 1,
+      })
+      console.log(image)
+    })
   }
+
   const saveTemplate = () => {}
   const loadTemplate = () => {}
   const getTemplates = (category: string) => {}
@@ -49,6 +108,8 @@ const TemplateProvider: React.FC = ({ children }) => {
         loadTemplate,
         getTemplates,
         addWorkspace,
+        generateThumbnail,
+        convertCanvasToPage,
       }}
     >
       {children}

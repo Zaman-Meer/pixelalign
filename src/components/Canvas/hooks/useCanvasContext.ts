@@ -33,10 +33,13 @@ function useCanvasContext() {
     toggleSidePanel,
     pages,
     addPage,
+    setPages,
     removePage,
     activePageId,
     setActivePageId,
     togglePage,
+    setFormatType,
+    formatType,
   } = useContext(CanvasContext)
 
   return {
@@ -69,11 +72,14 @@ function useCanvasContext() {
     isSidePanelOpen,
     toggleSidePanel,
     pages,
+    setPages,
     addPage,
     removePage,
     activePageId,
     setActivePageId,
     togglePage,
+    setFormatType,
+    formatType,
   }
 }
 

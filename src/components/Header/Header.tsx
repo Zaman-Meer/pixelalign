@@ -18,6 +18,7 @@ import axios from "axios"
 import Formats from "@constants/formats"
 import propertiesToInclude from "@constants/workspace"
 import useTemplateContext from "@/hooks/useTemplateContext"
+import { fabric } from "fabric"
 const Container = styled.div`
   height: 60px;
   border-bottom: 1px solid rgba(57, 76, 96, 0.15);
@@ -55,19 +56,24 @@ function Header() {
       ?.getObjects()
       //@ts-ignore
       ?.find((obj) => obj?.id === "workarea")
-      ?.getBoundingRect()
     //@ts-ignore
     const height = activeObject?.width * activeObject?.scaleX
     //@ts-ignore
     const width = activeObject?.height * activeObject?.scaleY
-    console.log("data", JSON.stringify(canvas?.toJSON(propertiesToInclude)))
-    const data = canvas?.toDataURL({
+    const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
+    //console.log("data", JSON.stringify(canvas?.toJSON(propertiesToInclude)))
+    // staticCanvas.setDimensions({
+    //   width: 900,
+    //   height: 600,
+    // })
+    staticCanvas.loadFromJSON(canvas?.toJSON(propertiesToInclude), () => {})
+    const data = staticCanvas?.toDataURL({
       format: "png",
       multiplier: 1,
       top: activeObject?.top,
       left: activeObject?.left,
-      width: activeObject?.width,
-      height: activeObject?.height,
+      width: 900,
+      height: 600,
     })
     if (data) {
       const a = document.createElement("a")

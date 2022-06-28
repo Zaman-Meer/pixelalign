@@ -9,23 +9,22 @@ import PanelContainer from "../../PanelContainer/PanelContainer"
 import useCoreHandler from "@/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/components/Canvas/hooks"
 
-interface Image {
+interface ImageType {
   id: string
   preview: string
   original: string
 }
 function PanelImage() {
   const { canvas, isSidePanelOpen } = useCanvasContext()
-  const [images, setImages] = useState<Image[]>([])
+  const [images, setImages] = useState<ImageType[]>([])
   const [query, setQuery] = useState("")
   const [value] = useDebounce(query, 1500)
   const { addObject } = useCoreHandler()
-  useEffect(() => {
-    getImages("top")
-  }, [])
 
   useEffect(() => {
-    getImages(value)
+    if (value) {
+      getImages(value)
+    } else getImages("flowers")
   }, [value])
 
   const handleChange = (event: any) => setQuery(event.target.value)
@@ -100,6 +99,7 @@ function PanelImage() {
                 border="1px"
                 borderColor="none"
                 cursor={"pointer"}
+                display={isSidePanelOpen ? "block" : "none"}
                 onClick={() => addObjectToCanvas(img.original)}
                 _hover={{
                   border: "1px",

@@ -1,5 +1,5 @@
 import { FC, createContext, useState } from "react"
-
+import { PageType } from "@/types/template"
 interface FabricObject extends fabric.Object {
   groupType?: string
   _objects?: fabric.Object[]
@@ -19,11 +19,6 @@ interface Grid {
   color: string
   name: string
   snap: boolean
-}
-
-interface PagesProps {
-  id: string
-  data: any
 }
 
 interface ICanvasContext {
@@ -64,10 +59,13 @@ interface ICanvasContext {
   toggleSidePanel: (open: boolean) => void
   activePageId: string | null
   setActivePageId: (id: string) => void
-  pages: PagesProps[]
-  addPage: (page: PagesProps, oldPage?: any) => void
-  removePage: (page: PagesProps) => void
-  togglePage: (page: PagesProps) => void
+  pages: PageType[]
+  setPages: (pages: PageType[]) => void
+  addPage: (page: PageType, oldPage?: any) => void
+  removePage: (page: PageType) => void
+  togglePage: (page: PageType) => void
+  setFormatType: (type: string) => void
+  formatType: string | null
 }
 
 type ContextMenuType = "canvas" | "object"
@@ -116,9 +114,12 @@ export const CanvasContext = createContext<ICanvasContext>({
   activePageId: null,
   setActivePageId: () => {},
   pages: [],
+  setPages: () => {},
   addPage: () => {},
   removePage: () => {},
   togglePage: () => {},
+  setFormatType: () => {},
+  formatType: null,
 })
 
 export const CanvasProvider: FC = ({ children }) => {
@@ -148,34 +149,34 @@ export const CanvasProvider: FC = ({ children }) => {
   })
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(true)
   const [isPagesPanelOpen, setPagesPanelOpen] = useState(true)
-  const [pages, setPages] = useState<any[]>([])
+  const [pages, setPages] = useState<PageType[]>([])
   const [activePageId, setActivePageId] = useState<string | null>(null)
-
+  const [formatType, setFormatType] = useState<string | null>(null)
   const toggleSidePanel = (open: boolean) => setIsSidePanelOpen(open)
   const togglePagesPanel = () => setPagesPanelOpen(!isPagesPanelOpen)
 
   const addPage = (newPage: any, oldPage?: any) => {
-    if (oldPage?.id) {
-      const index = pages.findIndex((page) => page.id === oldPage.id)
-      const newPages = [...pages]
-      newPages[index] = oldPage
-
-      setPages(
-        Array.from(
-          new Set([
-            ...newPages,
-            {
-              id: newPage.id,
-              json: newPage.json,
-            },
-          ])
-        )
-      )
-    } else {
-      setPages(Array.from(new Set([...pages, newPage])))
-    }
-    setActivePageId(newPage)
-    canvas?.loadFromJSON(newPage.json, canvas.renderAll.bind(canvas), () => {})
+    // if (oldPage?.id) {
+    //   const index = pages.findIndex((page) => page.id === oldPage.id)
+    //   const newPages = [...pages]
+    //   newPages[index] = oldPage
+    //   setPages(
+    //     Array.from(
+    //       new Set([
+    //         ...newPages,
+    //         {
+    //           id: newPage.id,
+    //           name: `Page ${pages?.length + 1}`,
+    //           jsonData: newPage.json,
+    //         },
+    //       ])
+    //     )
+    //   )
+    // } else {
+    //   setPages(Array.from(new Set([...pages, newPage])))
+    // }
+    // setActivePageId(newPage)
+    // canvas?.loadFromJSON(newPage.json, canvas.renderAll.bind(canvas), () => {})
   }
 
   const removePage = (page: any) => {
@@ -183,27 +184,25 @@ export const CanvasProvider: FC = ({ children }) => {
   }
 
   const togglePage = (page: any) => {
-    canvas?.loadFromJSON(page.json, canvas.renderAll.bind(canvas), () => {})
-    const canvasObjects: any = canvas?.toJSON()
-    console.log("TTT", canvasObjects)
-    const canvasPage: any = canvasObjects?.objects?.filter(
-      (object: any) => object.type === "rect"
-    )
-    // const oldCanvasObjects = canvasObjects?.objects?.filter(object => object.type !== 'rect');
-    canvasPage[0].selectable = false
-    canvasPage[0].absolutePositioned = true
-    canvasPage[0].hoverCursor = false
-    const oldPages = pages?.filter((p) => p.id !== activePageId)
-
-    setPages([
-      ...oldPages,
-      {
-        id: activePageId,
-        json: { objects: canvasObjects?.objects },
-      },
-    ])
-
-    setActivePageId(page)
+    // canvas?.loadFromJSON(page.json, canvas.renderAll.bind(canvas), () => {})
+    // const canvasObjects: any = canvas?.toJSON()
+    // console.log("TTT", canvasObjects)
+    // const canvasPage: any = canvasObjects?.objects?.filter(
+    //   (object: any) => object.type === "rect"
+    // )
+    // // const oldCanvasObjects = canvasObjects?.objects?.filter(object => object.type !== 'rect');
+    // canvasPage[0].selectable = false
+    // canvasPage[0].absolutePositioned = true
+    // canvasPage[0].hoverCursor = false
+    // const oldPages = pages?.filter((p) => p.id !== activePageId)
+    // setPages([
+    //   ...oldPages,
+    //   {
+    //     id: activePageId,
+    //     json: { objects: canvasObjects?.objects },
+    //   },
+    // ])
+    // setActivePageId(page)
   }
 
   const removeActiveObject = (object?: fabric.Object) => {
@@ -255,11 +254,14 @@ export const CanvasProvider: FC = ({ children }) => {
     isSidePanelOpen,
     toggleSidePanel,
     pages,
+    setPages,
     addPage,
     removePage,
     activePageId,
     setActivePageId,
     togglePage,
+    setFormatType,
+    formatType,
   }
 
   return (
