@@ -2,7 +2,8 @@ import styled from "styled-components"
 import { useCanvasContext } from "@/components/Canvas/hooks"
 import { Box, SimpleGrid, Image, Button, CloseButton } from "@chakra-ui/react"
 import { Scrollbars } from "react-custom-scrollbars-2"
-const imageUrl =
+import PageImageItem from "@/components/commen/PageImageItem"
+const imageUrlll =
   "https://images.unsplash.com/photo-1655644663701-014906c43860?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
 interface ContainerProps {
   collapse: boolean
@@ -18,7 +19,8 @@ const Container = styled(Box)<ContainerProps>`
 `
 
 const PagesPanel = () => {
-  const { isPagesPanelOpen, togglePagesPanel } = useCanvasContext()
+  const { isPagesPanelOpen, togglePagesPanel, pages, activePageId } =
+    useCanvasContext()
   const handleClosePagePanel = () => togglePagesPanel()
 
   return (
@@ -39,12 +41,9 @@ const PagesPanel = () => {
         Add Page
       </Button>
       <Scrollbars autoHide>
-        <SimpleGrid padding={7} paddingTop={2} spacing="10px">
-          <Image src={imageUrl} boxSize="full" />
-          <Image src={imageUrl} boxSize="full" />
-          <Image src={imageUrl} boxSize="full" />
-          <Image src={imageUrl} boxSize="full" />
-          <Image src={imageUrl} boxSize="full" />
+        <SimpleGrid padding={4} paddingTop={2} spacing="10px">
+          {pages &&
+            pages.map((page) => <PageImageItem key={page?.id} page={page} />)}
         </SimpleGrid>
       </Scrollbars>
     </Container>

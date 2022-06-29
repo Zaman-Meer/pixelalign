@@ -70,7 +70,7 @@ function useCoreHandler() {
     const workArea = canvas?.getObjects().find((obj) => obj.id === "workarea")
     if (workArea) {
       //@ts-ignore
-      const workAreaHeight = workArea?.height + 0
+      const workAreaHeight = workArea?.height + 100
       //@ts-ignore
       const workAreaWidth = workArea?.width - 50
 
@@ -78,7 +78,7 @@ function useCoreHandler() {
         parseFloat((height / workAreaHeight).toFixed(2)) /
         parseFloat((width / workAreaWidth).toFixed(2))
 
-      ratio && setZoomRatio(parseFloat(ratio.toFixed(2)))
+      ratio && setZoomRatio(parseFloat((height / workAreaHeight).toFixed(2)))
     }
   }
 

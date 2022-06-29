@@ -51,33 +51,27 @@ function Header() {
   const { canvas, formatSize } = useCanvasContext()
   const { addWorkspace } = useTemplateContext()
   const downloadImage = () => {
-    //@ts-ignore
     const activeObject = canvas
       ?.getObjects()
       //@ts-ignore
       ?.find((obj) => obj?.id === "workarea")
+      ?.getBoundingRect()
     //@ts-ignore
     const height = activeObject?.width * activeObject?.scaleX
     //@ts-ignore
     const width = activeObject?.height * activeObject?.scaleY
-    const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
-    //console.log("data", JSON.stringify(canvas?.toJSON(propertiesToInclude)))
-    // staticCanvas.setDimensions({
-    //   width: 900,
-    //   height: 600,
-    // })
-    staticCanvas.loadFromJSON(canvas?.toJSON(propertiesToInclude), () => {})
-    const data = staticCanvas?.toDataURL({
-      format: "png",
+    const dataImage = canvas?.toDataURL({
+      format: "jpeg",
       multiplier: 1,
+      quality: 1,
       top: activeObject?.top,
       left: activeObject?.left,
-      width: 900,
-      height: 600,
+      width: activeObject?.width,
+      height: activeObject?.height,
     })
-    if (data) {
+    if (dataImage) {
       const a = document.createElement("a")
-      a.href = data
+      a.href = dataImage
       a.download = "drawing.png"
       a.click()
     }

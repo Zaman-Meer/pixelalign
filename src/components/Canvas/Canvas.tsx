@@ -42,18 +42,6 @@ function Canvas() {
       backgroundColor: "#E1E3E9",
       fireRightClick: true,
     })
-    const defaultWorkArea = new fabric.Rect({
-      //@ts-ignore
-      id: "workarea",
-      width: 600,
-      height: 600,
-      absolutePositioned: true,
-      fill: "#ffffff",
-      selectable: false,
-      hoverCursor: "default",
-    })
-    canvas?.add(defaultWorkArea)
-    defaultWorkArea.center()
     setCanvas(canvas)
     const initialHeight = containerRef.current?.clientHeight
     const initialWidth = containerRef.current?.clientWidth

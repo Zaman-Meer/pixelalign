@@ -48,10 +48,7 @@ function PanelImage() {
       url,
       (objectsImage) => {
         //@ts-ignore
-        const workarea = canvas
-          .getObjects()
-          //@ts-ignore
-          .find((obj) => obj.id === "workarea")
+        const workarea = canvas.getObjects()[0]
         objectsImage.scale(0.4)
         canvas?.add(objectsImage)
         objectsImage.clipPath = workarea

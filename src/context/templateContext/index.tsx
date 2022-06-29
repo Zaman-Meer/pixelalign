@@ -65,37 +65,47 @@ const TemplateProvider: React.FC = ({ children }) => {
     handleAddPages()
   }, [])
 
-  const addWorkspace = useCallback(
-    (width: number, height: number) => {
-      canvas?.clear()
-      const workspace = new fabric.Rect({
-        //@ts-ignore
-        id: "workspace",
-        width: width,
-        height: height,
-        fill: "#ffffff",
-        selectable: false,
-        hoverCursor: "default",
-      })
-      canvas?.add(workspace)
-      workspace.center()
-    },
-    [canvas]
-  )
-  const generateThumbnail = () => {
-    const activePageData = pages?.filter((page) => page.id === activePageId)
-    const staticCanvas = new fabric.StaticCanvas("staticCanvas")
-    staticCanvas.setDimensions({
-      width: 900,
-      height: 600,
+  const addWorkspace = (width: number, height: number) => {
+    canvas?.clear()
+    // const workspace = new fabric.Rect({
+    //   //@ts-ignore
+    //   id: "workarea",
+    //   width: width,
+    //   height: height,
+    //   fill: "#ffffff",
+    //   selectable: false,
+    //   hoverCursor: "default",
+    // })
+    // canvas?.add(workspace)
+    // workspace.center()
+    canvas?.requestRenderAll()
+  }
+  const generateThumbnail = (): string | undefined => {
+    // const activePageData = pages?.filter((page) => page.id === activePageId)
+    // const staticCanvas = new fabric.StaticCanvas("staticCanvas")
+    // staticCanvas.setDimensions({
+    //   width: 900,
+    //   height: 600,
+    // })
+    // staticCanvas?.loadFromJSON(activePageData?.[0]?.content, () => {
+    //   const image = staticCanvas?.toDataURL({
+    //     format: "png",
+    //     quality: 1,
+    //   })
+    const activeObject = canvas
+      ?.getObjects()
+      //@ts-ignore
+      ?.find((obj) => obj?.id === "workarea")
+
+    const dataImage = canvas?.toDataURL({
+      format: "png",
+      top: activeObject?.top,
+      left: activeObject?.left,
+      width: activeObject?.width,
+      height: activeObject?.height,
     })
-    staticCanvas?.loadFromJSON(activePageData?.[0]?.content, () => {
-      const image = staticCanvas?.toDataURL({
-        format: "png",
-        quality: 1,
-      })
-      console.log(image)
-    })
+    console.log(dataImage)
+    return dataImage
   }
 
   const saveTemplate = () => {}
