@@ -15,7 +15,7 @@ import ContextMenu from "@components/ContextMenu/ContextMenu"
 import "fabric-history"
 
 function Canvas() {
-  const { setCanvas, setAreaDimension, canvas, pages, activePageId } =
+  const { setCanvas, setAreaDimension, setCanvasContainerDem, canvas, pages, activePageId } =
     useCanvasContext()
   const { updateCanvasSize, updateWorkAreaZoom } = useCoreHandler()
   const containerRef = useRef<any>(null)
@@ -42,17 +42,19 @@ function Canvas() {
       backgroundColor: "#E1E3E9",
       fireRightClick: true,
     })
+    console.log("canvas", canvas)
     setCanvas(canvas)
+    
     const initialHeight = containerRef.current?.clientHeight
     const initialWidth = containerRef.current?.clientWidth
     updateWorkAreaZoom({ width: initialWidth, height: initialHeight, canvas })
     setAreaDimension({ width: initialWidth! - 32, height: initialHeight! - 32 })
-
+    setCanvasContainerDem( initialWidth, initialHeight )
     const resizeObserver = new ResizeObserver(
       (entries: ResizeObserverEntry[]) => {
         const { width = initialWidth, height = initialHeight } =
           (entries[0] && entries[0].contentRect) || {}
-
+          setCanvasContainerDem( width, height )
         updateCanvasSize({ nextWidth: width, nextHeight: height, canvas })
         updateWorkAreaZoom({ width, height, canvas })
         // setAreaDimension({ width: width! - 32, height: height! - 32 })

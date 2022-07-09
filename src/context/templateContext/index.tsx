@@ -23,7 +23,7 @@ export const TemplateContext = createContext<ContextType>({
 })
 
 const TemplateProvider: React.FC = ({ children }) => {
-  const { canvas, activePageId, pages, setPages, setActivePageId } =
+  const { canvas, setCanvas, canvasContainer , activePageId, pages, setPages, setActivePageId } =
     useCanvasContext()
 
   const convertCanvasToPage = () => {
@@ -66,18 +66,26 @@ const TemplateProvider: React.FC = ({ children }) => {
   }, [])
 
   const addWorkspace = (width: number, height: number) => {
+    const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
+    staticCanvas.setDimensions({
+      width: 900,
+      height: 600,
+    })
+    const workArea = new fabric.Rect({
+      //@ts-ignore
+      id: "workarea",
+      width: width,
+      height: height,
+      absolutePositioned: true,
+      fill: "#ffffff",
+      selectable: false,
+      hoverCursor: "default",
+    })
+    staticCanvas?.add(workArea)
+    workArea.center()
     canvas?.clear()
-    // const workspace = new fabric.Rect({
-    //   //@ts-ignore
-    //   id: "workarea",
-    //   width: width,
-    //   height: height,
-    //   fill: "#ffffff",
-    //   selectable: false,
-    //   hoverCursor: "default",
-    // })
-    // canvas?.add(workspace)
-    // workspace.center()
+    canvas?.requestRenderAll()
+    canvas?.loadFromJSON(staticCanvas?.toJSON(propertiesToInclude), () => {})
     canvas?.requestRenderAll()
   }
   const generateThumbnail = (): string | undefined => {

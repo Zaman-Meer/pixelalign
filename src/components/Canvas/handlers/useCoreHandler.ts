@@ -10,8 +10,11 @@ import { fabric } from "fabric"
 interface WorkAreaZoomProps {
   width: number
   height: number
-  canvas?: fabric.Canvas
+  canvas?: any
 }
+
+
+
 
 function useCoreHandler() {
   const {
@@ -22,6 +25,8 @@ function useCoreHandler() {
     areaDimension,
     clipBoards,
     setZoomRatio,
+    setCanvas,
+    canvasContainer
   } = useCanvasContext()
 
   /**

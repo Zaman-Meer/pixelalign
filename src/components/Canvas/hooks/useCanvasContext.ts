@@ -40,6 +40,8 @@ function useCanvasContext() {
     togglePage,
     setFormatType,
     formatType,
+    setCanvasContainerDem,
+    canvasContainer
   } = useContext(CanvasContext)
 
   return {
@@ -80,6 +82,8 @@ function useCanvasContext() {
     togglePage,
     setFormatType,
     formatType,
+    setCanvasContainerDem,
+    canvasContainer
   }
 }
 

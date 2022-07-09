@@ -66,6 +66,8 @@ interface ICanvasContext {
   togglePage: (page: PageType) => void
   setFormatType: (type: string) => void
   formatType: string | null
+  setCanvasContainerDem : (width: number, height: number) => void
+  canvasContainer: { width: number, height: number }
 }
 
 type ContextMenuType = "canvas" | "object"
@@ -120,6 +122,8 @@ export const CanvasContext = createContext<ICanvasContext>({
   togglePage: () => {},
   setFormatType: () => {},
   formatType: null,
+  setCanvasContainerDem: () => {},
+  canvasContainer: { width: 0, height: 0 },
 })
 
 export const CanvasProvider: FC = ({ children }) => {
@@ -152,8 +156,17 @@ export const CanvasProvider: FC = ({ children }) => {
   const [pages, setPages] = useState<PageType[]>([])
   const [activePageId, setActivePageId] = useState<string | null>(null)
   const [formatType, setFormatType] = useState<string | null>(null)
+  const [canvasContainer, setCanvasContainer] = useState({
+    width: 0,
+    height: 0,
+  })
+const setCanvasContainerDem =(width: number, height: number) => {
+  setCanvasContainer({width, height})
+}
+
   const toggleSidePanel = (open: boolean) => setIsSidePanelOpen(open)
   const togglePagesPanel = () => setPagesPanelOpen(!isPagesPanelOpen)
+
 
   const addPage = (newPage: any, oldPage?: any) => {
     // if (oldPage?.id) {
@@ -262,6 +275,8 @@ export const CanvasProvider: FC = ({ children }) => {
     togglePage,
     setFormatType,
     formatType,
+    setCanvasContainerDem,
+    canvasContainer
   }
 
   return (
