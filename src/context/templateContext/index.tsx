@@ -4,11 +4,15 @@ import { v4 as uuidv4 } from "uuid"
 import { PageType } from "@/types/template"
 import { useCanvasContext } from "@/components/Canvas/hooks"
 import propertiesToInclude from "@/constants/workspace"
+
+import { cloneDeep } from "lodash"
 interface ContextType {
   saveTemplate: () => void
   loadTemplate: () => void
   getTemplates: (category: string) => void
   addWorkspace: (width: number, height: number) => void
+  handleAddNewPage: () => void
+  handleTogglePage: (pageId: string) => void
   generateThumbnail: () => void
   convertCanvasToPage: () => void
 }
@@ -18,12 +22,14 @@ export const TemplateContext = createContext<ContextType>({
   loadTemplate: () => {},
   getTemplates: () => {},
   addWorkspace: () => {},
+  handleAddNewPage: () => {},
+  handleTogglePage: () => {},
   generateThumbnail: () => {},
   convertCanvasToPage: () => {},
 })
 
 const TemplateProvider: React.FC = ({ children }) => {
-  const { canvas, setCanvas, canvasContainer , activePageId, pages, setPages, setActivePageId } =
+  const { canvas, setCanvas, isLoading, setIsLoading, canvasContainer , activePageId, pages, setPages, setActivePageId } =
     useCanvasContext()
 
   const convertCanvasToPage = () => {
@@ -31,7 +37,18 @@ const TemplateProvider: React.FC = ({ children }) => {
     return jsonData
   }
 
-  const handleAddPages = useCallback(() => {
+  const saveCurrentPage = useCallback(() => {
+    const activePageData = pages?.filter((page) => page.id === activePageId)[0]
+    //@ts-ignore
+    const modifiedPage: PageType = {...activePageData, content: canvas?.toJSON(propertiesToInclude)}
+    const activePageIndex = pages?.findIndex((page) => page.id === activePageId)
+    const newPages = [...pages]
+    newPages[activePageIndex] = modifiedPage
+    setPages(newPages)
+    console.log("Updated")
+  }, [])
+
+  const handleAddInitialPages = useCallback(() => {
     const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
     staticCanvas.setDimensions({
       width: 900,
@@ -57,13 +74,53 @@ const TemplateProvider: React.FC = ({ children }) => {
       },
       content: staticCanvas?.toJSON(propertiesToInclude),
     }
-    console.log("default", staticCanvas?.toJSON(propertiesToInclude))
     setPages([newPage])
     setActivePageId(newPage?.id)
   }, [canvas])
   useEffect(() => {
-    handleAddPages()
+    handleAddInitialPages()
   }, [])
+
+// add new page 
+const handleAddNewPage =() => {
+  setIsLoading(true)
+  const activePageData = pages?.filter((page) => page.id === activePageId)[0]
+  //@ts-ignore
+  const modifiedPage: PageType = {...activePageData, content: canvas?.toJSON(propertiesToInclude)}
+  const activePageIndex = pages?.findIndex((page) => page.id === activePageId)
+  const newPages = cloneDeep(pages)
+  newPages[activePageIndex] = modifiedPage
+  const newPage: PageType = {
+    id: uuidv4(),
+    size: {
+      //@ts-ignore
+      width: activePageData?.size?.width,
+      //@ts-ignore
+      height: activePageData?.size?.height,
+    },
+    //@ts-ignore
+    content: {...canvas?.toJSON(propertiesToInclude), objects:[canvas?.toJSON(propertiesToInclude)?.objects[0]] },
+  }
+ 
+  canvas?.clear()
+  setPages([...newPages, newPage])
+  
+  setActivePageId(newPage?.id)
+  setIsLoading(false)
+}
+
+const handleTogglePage = (pageId: string) => {
+  if (activePageId !== pageId) {
+    const activePageData = pages?.filter((page) => page.id === activePageId)[0]
+  //@ts-ignore
+  const modifiedPage: PageType = {...activePageData, content: canvas?.toJSON(propertiesToInclude)}
+  const activePageIndex = pages?.findIndex((page) => page.id === activePageId)
+  const newPages = [...pages]
+  newPages[activePageIndex] = modifiedPage
+  setPages(newPages)
+  setActivePageId(pageId)
+  }
+}
 
   const addWorkspace = (width: number, height: number) => {
     const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
@@ -112,9 +169,26 @@ const TemplateProvider: React.FC = ({ children }) => {
       width: activeObject?.width,
       height: activeObject?.height,
     })
-    console.log(dataImage)
+   // console.log(dataImage)
     return dataImage
   }
+ 
+
+  useEffect(() => {
+    //  canvas?.on("object:added", saveCurrentPage)
+        canvas?.on("object:modified",  saveCurrentPage)
+    // canvas?.on("object:rotating", saveCurrentPage)
+    // canvas?.on("object:scaling", saveCurrentPage)
+    //canvas?.on("object:moving", saveCurrentPage)
+    // canvas?.on("object:resizing", saveCurrentPage)
+    // canvas?.on("object:skewing", saveCurrentPage)
+    // canvas?.on("selection:updated", saveCurrentPage)
+    // canvas?.on("path:created", saveCurrentPage)
+    // canvas?.on("event:drop", saveCurrentPage)
+    // canvas?.on("event:dragover", saveCurrentPage)
+
+   
+  },[canvas, saveCurrentPage])
 
   const saveTemplate = () => {}
   const loadTemplate = () => {}
@@ -126,6 +200,8 @@ const TemplateProvider: React.FC = ({ children }) => {
         loadTemplate,
         getTemplates,
         addWorkspace,
+        handleAddNewPage,
+        handleTogglePage,
         generateThumbnail,
         convertCanvasToPage,
       }}

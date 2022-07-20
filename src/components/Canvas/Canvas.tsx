@@ -15,7 +15,7 @@ import ContextMenu from "@components/ContextMenu/ContextMenu"
 import "fabric-history"
 
 function Canvas() {
-  const { setCanvas, setAreaDimension, setCanvasContainerDem, canvas, pages, activePageId } =
+  const { setCanvas, isLoading, setAreaDimension, setCanvasContainerDem, canvas, pages, activePageId } =
     useCanvasContext()
   const { updateCanvasSize, updateWorkAreaZoom } = useCoreHandler()
   const containerRef = useRef<any>(null)
@@ -67,7 +67,7 @@ function Canvas() {
   }, [])
 
   useEffect(() => {
-    if (pages.length > 0) {
+    if (pages.length > 0 && !isLoading) {
       const pageData = pages?.filter((page) => page.id === activePageId)[0]
       const defaultWorkArea =
         pageData?.content &&
@@ -75,7 +75,7 @@ function Canvas() {
         pageData.content?.objects?.filter(
           (item: any) => item.id === "workarea"
         )[0]
-      console.log("Work", defaultWorkArea)
+      
       // canvas?.add(defaultWorkArea)
       // defaultWorkArea?.center()
       canvas?.loadFromJSON(pageData?.content, () => {})
@@ -92,6 +92,7 @@ function Canvas() {
         height: initialHeight! - 32,
       })
     }
+    console.log("Pages", pages)
   }, [activePageId])
 
   useEffect(() => {

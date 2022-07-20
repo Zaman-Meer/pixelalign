@@ -5,6 +5,8 @@ function useCanvasContext() {
   const {
     canvas,
     setCanvas,
+    isLoading,
+    setIsLoading,
     activeObject,
     setActiveObject,
     zoomRatio,
@@ -47,6 +49,8 @@ function useCanvasContext() {
   return {
     canvas,
     setCanvas,
+    isLoading,
+    setIsLoading,
     activeObject,
     setActiveObject,
     zoomRatio,

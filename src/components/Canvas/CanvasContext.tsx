@@ -22,6 +22,8 @@ interface Grid {
 }
 
 interface ICanvasContext {
+  isLoading: boolean,
+  setIsLoading: (isLoading: boolean) => void,
   zoomRatio: number
   setZoomRatio: (value: number) => void
   zoomFitRatio: number
@@ -85,6 +87,8 @@ export type FormatSize = Dimension
 export type AreaDimension = Dimension
 
 export const CanvasContext = createContext<ICanvasContext>({
+  isLoading: false,
+  setIsLoading: () => {},
   zoomRatio: 1,
   setZoomRatio: () => {},
   zoomFitRatio: 1,
@@ -128,6 +132,7 @@ export const CanvasContext = createContext<ICanvasContext>({
 
 export const CanvasProvider: FC = ({ children }) => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [activeObject, setActiveObject] = useState<FabricObject | null>(null)
   const [zoomRatio, setZoomRatio] = useState(1)
   const [zoomFitRatio, setZoomFitRatio] = useState(1)
@@ -240,6 +245,8 @@ const setCanvasContainerDem =(width: number, height: number) => {
   const context = {
     canvas,
     setCanvas,
+    isLoading,
+    setIsLoading,
     activeObject,
     setActiveObject,
     zoomRatio,
