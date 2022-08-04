@@ -29,8 +29,17 @@ export const TemplateContext = createContext<ContextType>({
 })
 
 const TemplateProvider: React.FC = ({ children }) => {
-  const { canvas, setCanvas, isLoading, setIsLoading, canvasContainer , activePageId, pages, setPages, setActivePageId } =
-    useCanvasContext()
+  const {
+    canvas,
+    setCanvas,
+    isLoading,
+    setIsLoading,
+    canvasContainer,
+    activePageId,
+    pages,
+    setPages,
+    setActivePageId,
+  } = useCanvasContext()
 
   const convertCanvasToPage = () => {
     const jsonData = canvas?.toJSON(propertiesToInclude)
@@ -40,7 +49,11 @@ const TemplateProvider: React.FC = ({ children }) => {
   const saveCurrentPage = useCallback(() => {
     const activePageData = pages?.filter((page) => page.id === activePageId)[0]
     //@ts-ignore
-    const modifiedPage: PageType = {...activePageData, content: canvas?.toJSON(propertiesToInclude)}
+    const modifiedPage: PageType = {
+      ...activePageData,
+      //@ts-ignore
+      content: canvas?.toJSON(propertiesToInclude),
+    }
     const activePageIndex = pages?.findIndex((page) => page.id === activePageId)
     const newPages = [...pages]
     newPages[activePageIndex] = modifiedPage
@@ -81,46 +94,63 @@ const TemplateProvider: React.FC = ({ children }) => {
     handleAddInitialPages()
   }, [])
 
-// add new page 
-const handleAddNewPage =() => {
-  setIsLoading(true)
-  const activePageData = pages?.filter((page) => page.id === activePageId)[0]
-  //@ts-ignore
-  const modifiedPage: PageType = {...activePageData, content: canvas?.toJSON(propertiesToInclude)}
-  const activePageIndex = pages?.findIndex((page) => page.id === activePageId)
-  const newPages = cloneDeep(pages)
-  newPages[activePageIndex] = modifiedPage
-  const newPage: PageType = {
-    id: uuidv4(),
-    size: {
-      //@ts-ignore
-      width: activePageData?.size?.width,
-      //@ts-ignore
-      height: activePageData?.size?.height,
-    },
-    //@ts-ignore
-    content: {...canvas?.toJSON(propertiesToInclude), objects:[canvas?.toJSON(propertiesToInclude)?.objects[0]] },
-  }
- 
-  canvas?.clear()
-  setPages([...newPages, newPage])
-  
-  setActivePageId(newPage?.id)
-  setIsLoading(false)
-}
-
-const handleTogglePage = (pageId: string) => {
-  if (activePageId !== pageId) {
+  // add new page
+  const handleAddNewPage = () => {
+    setIsLoading(true)
     const activePageData = pages?.filter((page) => page.id === activePageId)[0]
-  //@ts-ignore
-  const modifiedPage: PageType = {...activePageData, content: canvas?.toJSON(propertiesToInclude)}
-  const activePageIndex = pages?.findIndex((page) => page.id === activePageId)
-  const newPages = [...pages]
-  newPages[activePageIndex] = modifiedPage
-  setPages(newPages)
-  setActivePageId(pageId)
+    //@ts-ignore
+    const modifiedPage: PageType = {
+      ...activePageData,
+      //@ts-ignore
+      content: canvas?.toJSON(propertiesToInclude),
+    }
+    const activePageIndex = pages?.findIndex((page) => page.id === activePageId)
+    const newPages = cloneDeep(pages)
+    newPages[activePageIndex] = modifiedPage
+    const newPage: PageType = {
+      id: uuidv4(),
+      size: {
+        //@ts-ignore
+        width: activePageData?.size?.width,
+        //@ts-ignore
+        height: activePageData?.size?.height,
+      },
+      //@ts-ignore
+      content: {
+        //@ts-ignore
+        ...canvas?.toJSON(propertiesToInclude),
+        //@ts-ignore
+        objects: [canvas?.toJSON(propertiesToInclude)?.objects[0]],
+      },
+    }
+
+    canvas?.clear()
+    setPages([...newPages, newPage])
+
+    setActivePageId(newPage?.id)
+    setIsLoading(false)
   }
-}
+
+  const handleTogglePage = (pageId: string) => {
+    if (activePageId !== pageId) {
+      const activePageData = pages?.filter(
+        (page) => page.id === activePageId
+      )[0]
+      //@ts-ignore
+      const modifiedPage: PageType = {
+        ...activePageData,
+        //@ts-ignore
+        content: canvas?.toJSON(propertiesToInclude),
+      }
+      const activePageIndex = pages?.findIndex(
+        (page) => page.id === activePageId
+      )
+      const newPages = [...pages]
+      newPages[activePageIndex] = modifiedPage
+      setPages(newPages)
+      setActivePageId(pageId)
+    }
+  }
 
   const addWorkspace = (width: number, height: number) => {
     const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
@@ -169,26 +199,23 @@ const handleTogglePage = (pageId: string) => {
       width: activeObject?.width,
       height: activeObject?.height,
     })
-   // console.log(dataImage)
+    // console.log(dataImage)
     return dataImage
   }
- 
 
   useEffect(() => {
-    //  canvas?.on("object:added", saveCurrentPage)
-        canvas?.on("object:modified",  saveCurrentPage)
+    // canvas?.on("object:added", saveCurrentPage)
+    // canvas?.on("object:modified",  saveCurrentPage)
     // canvas?.on("object:rotating", saveCurrentPage)
     // canvas?.on("object:scaling", saveCurrentPage)
-    //canvas?.on("object:moving", saveCurrentPage)
+    // canvas?.on("object:moving", saveCurrentPage)
     // canvas?.on("object:resizing", saveCurrentPage)
     // canvas?.on("object:skewing", saveCurrentPage)
     // canvas?.on("selection:updated", saveCurrentPage)
     // canvas?.on("path:created", saveCurrentPage)
     // canvas?.on("event:drop", saveCurrentPage)
     // canvas?.on("event:dragover", saveCurrentPage)
-
-   
-  },[canvas, saveCurrentPage])
+  }, [canvas, saveCurrentPage])
 
   const saveTemplate = () => {}
   const loadTemplate = () => {}
