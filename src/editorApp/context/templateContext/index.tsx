@@ -15,6 +15,11 @@ interface ContextType {
   handleTogglePage: (pageId: string) => void
   generateThumbnail: () => void
   convertCanvasToPage: () => void
+  handleAddBlankTemplatePage: (
+    width: number,
+    height: number,
+    format: string
+  ) => void
 }
 
 export const TemplateContext = createContext<ContextType>({
@@ -26,6 +31,7 @@ export const TemplateContext = createContext<ContextType>({
   handleTogglePage: () => {},
   generateThumbnail: () => {},
   convertCanvasToPage: () => {},
+  handleAddBlankTemplatePage: () => {},
 })
 
 const TemplateProvider: React.FC = ({ children }) => {
@@ -34,6 +40,8 @@ const TemplateProvider: React.FC = ({ children }) => {
     setCanvas,
     isLoading,
     setIsLoading,
+    setFormatType,
+    setFormatSize,
     canvasContainer,
     activePageId,
     pages,
@@ -61,7 +69,46 @@ const TemplateProvider: React.FC = ({ children }) => {
     console.log("Updated")
   }, [])
 
-  const handleAddInitialPages = useCallback(() => {
+  // const handleAddInitialPages = useCallback(() => {
+  //   const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
+  //   staticCanvas.setDimensions({
+  //     width: 900,
+  //     height: 600,
+  //   })
+  //   const defaultWorkArea = new fabric.Rect({
+  //     //@ts-ignore
+  //     id: "workarea",
+  //     width: 900,
+  //     height: 600,
+  //     absolutePositioned: true,
+  //     fill: "#ffffff",
+  //     selectable: false,
+  //     hoverCursor: "default",
+  //   })
+  //   staticCanvas?.add(defaultWorkArea)
+  //   defaultWorkArea.center()
+  //   const newPage: PageType = {
+  //     id: uuidv4(),
+  //     size: {
+  //       width: 940,
+  //       height: 600,
+  //     },
+  //     content: staticCanvas?.toJSON(propertiesToInclude),
+  //   }
+  //   setPages([newPage])
+  //   setActivePageId(newPage?.id)
+  // }, [canvas])
+
+  // useEffect(() => {
+  //   handleAddInitialPages()
+  // }, [])
+
+  // Add a blank template page to the canvas
+  const handleAddBlankTemplatePage = (
+    width: number,
+    height: number,
+    format: string
+  ) => {
     const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
     staticCanvas.setDimensions({
       width: 900,
@@ -70,8 +117,8 @@ const TemplateProvider: React.FC = ({ children }) => {
     const defaultWorkArea = new fabric.Rect({
       //@ts-ignore
       id: "workarea",
-      width: 900,
-      height: 600,
+      width,
+      height,
       absolutePositioned: true,
       fill: "#ffffff",
       selectable: false,
@@ -82,17 +129,16 @@ const TemplateProvider: React.FC = ({ children }) => {
     const newPage: PageType = {
       id: uuidv4(),
       size: {
-        width: 940,
-        height: 788,
+        width,
+        height,
       },
       content: staticCanvas?.toJSON(propertiesToInclude),
     }
+    setFormatType(format)
+    setFormatSize({ width, height })
     setPages([newPage])
     setActivePageId(newPage?.id)
-  }, [canvas])
-  useEffect(() => {
-    handleAddInitialPages()
-  }, [])
+  }
 
   // add new page
   const handleAddNewPage = () => {
@@ -231,6 +277,7 @@ const TemplateProvider: React.FC = ({ children }) => {
         handleTogglePage,
         generateThumbnail,
         convertCanvasToPage,
+        handleAddBlankTemplatePage,
       }}
     >
       {children}

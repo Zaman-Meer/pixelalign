@@ -1,6 +1,6 @@
 const Formats = [
   {
-    type: "facebook_post",
+    type: "facebook-post",
     label: "facebook post",
     size: {
       width: 940,
@@ -9,7 +9,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "facebook_page_cover",
+    type: "facebook-page-cover",
     label: "facebook page cover",
     size: {
       width: 851,
@@ -18,7 +18,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "facebook_profile_cover",
+    type: "facebook-profile-cover",
     label: "facebook profile cover",
     size: {
       width: 851,
@@ -27,7 +27,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "facebook_story",
+    type: "facebook-story",
     label: "facebook story",
     size: {
       width: 1080,
@@ -36,7 +36,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "facebook_ad",
+    type: "facebook-ad",
     label: "facebook ad",
     size: {
       width: 1200,
@@ -45,7 +45,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "facebook_event_cover",
+    type: "facebook-event-cover",
     label: "facebook event cover",
     size: {
       width: 1920,
@@ -54,7 +54,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "facebook_group_cover",
+    type: "facebook-group-cover",
     label: "facebook group cover",
     size: {
       width: 1640,
@@ -63,7 +63,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "instagram_post",
+    type: "instagram-post",
     label: "instagram post",
     size: {
       width: 1080,
@@ -73,7 +73,7 @@ const Formats = [
   },
 
   {
-    type: "instagram_story",
+    type: "instagram-story",
     label: "instagram story",
     size: {
       width: 1080,
@@ -82,7 +82,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "instagram_ad",
+    type: "instagram-ad",
     label: "instagram ad",
     size: {
       width: 1080,
@@ -92,7 +92,7 @@ const Formats = [
   },
 
   {
-    type: "twitter_post",
+    type: "twitter-post",
     label: "twitter post",
     size: {
       width: 1600,
@@ -101,7 +101,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "twitter_story",
+    type: "twitter-story",
     label: "twitter story",
     size: {
       width: 1080,
@@ -110,7 +110,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "twitter_ad",
+    type: "twitter-ad",
     label: "twitter ad",
     size: {
       width: 1080,
@@ -120,7 +120,7 @@ const Formats = [
   },
 
   {
-    type: "Pinterest Pin",
+    type: "linkedin-post",
     label: "linkedin post",
     size: {
       width: 1200,
@@ -129,7 +129,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "linkedin_banner",
+    type: "linkedin-banner",
     label: "linkedin banner",
     size: {
       width: 1584,
@@ -139,7 +139,7 @@ const Formats = [
   },
 
   {
-    type: "pinterest_pin",
+    type: "pinterest-pin",
     label: "pinterest pin",
     size: {
       width: 1000,
@@ -149,7 +149,7 @@ const Formats = [
   },
 
   {
-    type: "ecommerce_hero_image",
+    type: "ecommerce-hero-image",
     label: "ecommerce hero image",
     size: {
       width: 2000,
@@ -159,7 +159,7 @@ const Formats = [
   },
 
   {
-    type: "shopify_image",
+    type: "shopify-image",
     label: "shopify image",
     size: {
       width: 2048,
@@ -169,7 +169,7 @@ const Formats = [
   },
 
   {
-    type: "youtube_channel_art",
+    type: "youtube-channel-art",
     label: "youtube channel art",
     size: {
       width: 2560,
@@ -178,7 +178,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "youtube_end_screen",
+    type: "youtube-end-screen",
     label: "youtube end screen",
     size: {
       width: 1920,
@@ -187,7 +187,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "youtube_thumbnails",
+    type: "youtube-thumbnails",
     label: "youtube thumbnails",
     size: {
       width: 1280,
@@ -197,7 +197,7 @@ const Formats = [
   },
 
   {
-    type: "twitch_panel",
+    type: "twitch-panel",
     label: "twitch panel",
     size: {
       width: 320,
@@ -206,7 +206,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "twitch_offline_banner",
+    type: "twitch-offline-banner",
     label: "twitch offline banner",
     size: {
       width: 1920,
@@ -215,7 +215,7 @@ const Formats = [
     unit: "px",
   },
   {
-    type: "twitch_banner",
+    type: "twitch-banner",
     label: "twitch banner",
     size: {
       width: 1920,
@@ -225,7 +225,7 @@ const Formats = [
   },
 
   {
-    type: "blog_feature_image",
+    type: "blog-feature-image",
     label: "blog feature image",
     size: {
       width: 1200,
@@ -235,7 +235,7 @@ const Formats = [
   },
 
   {
-    type: "soundcloud_banner",
+    type: "soundcloud-banner",
     label: "soundcloud banner",
     size: {
       width: 2480,
@@ -245,7 +245,7 @@ const Formats = [
   },
 
   {
-    type: "email_header",
+    type: "email-header",
     label: "email header",
     size: {
       width: 600,
@@ -255,7 +255,7 @@ const Formats = [
   },
 
   {
-    type: "podcast_cover_art",
+    type: "podcast-cover-art",
     label: "podcast cover art",
     size: {
       width: 3000,
@@ -265,7 +265,7 @@ const Formats = [
   },
 
   {
-    type: "etsy_banner",
+    type: "etsy-banner",
     label: "etsy banner",
     size: {
       width: 3360,
@@ -275,7 +275,7 @@ const Formats = [
   },
 
   {
-    type: "patreon_banner",
+    type: "patreon-banner",
     label: "patreon banner",
     size: {
       width: 1600,
@@ -285,7 +285,7 @@ const Formats = [
   },
 
   {
-    type: "album_cover",
+    type: "album-cover",
     label: "album cover",
     size: {
       width: 3000,
@@ -295,7 +295,7 @@ const Formats = [
   },
 
   {
-    type: "ebook_cover",
+    type: "ebook-cover",
     label: "ebook cover",
     size: {
       width: 235,
@@ -305,7 +305,7 @@ const Formats = [
   },
 
   {
-    type: "kindle_cover",
+    type: "kindle-cover",
     label: "kindle cover",
     size: {
       width: 1600,
@@ -315,7 +315,7 @@ const Formats = [
   },
 
   {
-    type: "wattpad_cover",
+    type: "wattpad-cover",
     label: "wattpad cover",
     size: {
       width: 512,
@@ -325,7 +325,7 @@ const Formats = [
   },
 
   {
-    type: "medium_rectangle_ad",
+    type: "medium-rectangle-ad",
     label: "medium rectangle ad",
     size: {
       width: 300,
@@ -335,7 +335,7 @@ const Formats = [
   },
 
   {
-    type: "wide_skyscraper_ad",
+    type: "wide-skyscraper-ad",
     label: "wide skyscraper ad",
     size: {
       width: 160,
@@ -345,7 +345,7 @@ const Formats = [
   },
 
   {
-    type: "image_quote",
+    type: "image-quote",
     label: "image quote",
     size: {
       width: 1080,
@@ -355,7 +355,7 @@ const Formats = [
   },
 
   {
-    type: "spotify_cover_art",
+    type: "spotify-cover-art",
     label: "spotify cover art",
     size: {
       width: 640,
