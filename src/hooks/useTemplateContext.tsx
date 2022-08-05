@@ -1,4 +1,4 @@
-import { TemplateContext } from "@/context/templateContext"
+import { TemplateContext } from "@/editorApp/context/templateContext"
 import { useContext } from "react"
 
 const useTemplateContext = () => useContext(TemplateContext)
