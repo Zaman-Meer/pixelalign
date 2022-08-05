@@ -15,6 +15,10 @@ module.exports = {
       "@utils": resloveSrc("utils"),
       "@context": resloveSrc("context"),
       "@hooks": resloveSrc("hooks"),
+      "@pages": resloveSrc("pages"),
+      "@routes": resloveSrc("routes"),
+      "@icons": resloveSrc("icons"),
+      "@site-components": resloveSrc("site-components"),
     },
   },
 }
