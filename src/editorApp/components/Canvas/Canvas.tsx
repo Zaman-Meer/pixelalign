@@ -100,6 +100,7 @@ function Canvas() {
       })
     }
     console.log("Pages", pages)
+    console.group("ActiveId", activePageId)
   }, [activePageId])
 
   useEffect(() => {

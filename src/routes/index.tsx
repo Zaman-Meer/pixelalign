@@ -15,7 +15,9 @@ const CreateRoutes = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Editor />} />
+              <Route path="/editor" element={<Editor />} />
               <Route path="/templates" element={<TemplatesList />} />
+              <Route path="/templates/:format" element={<TemplatesList />} />
             </Routes>
           </BrowserRouter>
         </ChakraProvider>
