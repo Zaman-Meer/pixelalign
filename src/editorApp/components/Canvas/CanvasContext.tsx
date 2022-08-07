@@ -22,8 +22,8 @@ interface Grid {
 }
 
 interface ICanvasContext {
-  isLoading: boolean,
-  setIsLoading: (isLoading: boolean) => void,
+  isLoading: boolean
+  setIsLoading: (isLoading: boolean) => void
   zoomRatio: number
   setZoomRatio: (value: number) => void
   zoomFitRatio: number
@@ -68,8 +68,8 @@ interface ICanvasContext {
   togglePage: (page: PageType) => void
   setFormatType: (type: string) => void
   formatType: string | null
-  setCanvasContainerDem : (width: number, height: number) => void
-  canvasContainer: { width: number, height: number }
+  setCanvasContainerDem: (width: number, height: number) => void
+  canvasContainer: { width: number; height: number }
 }
 
 type ContextMenuType = "canvas" | "object"
@@ -165,13 +165,12 @@ export const CanvasProvider: FC = ({ children }) => {
     width: 0,
     height: 0,
   })
-const setCanvasContainerDem =(width: number, height: number) => {
-  setCanvasContainer({width, height})
-}
+  const setCanvasContainerDem = (width: number, height: number) => {
+    setCanvasContainer({ width, height })
+  }
 
   const toggleSidePanel = (open: boolean) => setIsSidePanelOpen(open)
   const togglePagesPanel = () => setPagesPanelOpen(!isPagesPanelOpen)
-
 
   const addPage = (newPage: any, oldPage?: any) => {
     // if (oldPage?.id) {
@@ -283,7 +282,7 @@ const setCanvasContainerDem =(width: number, height: number) => {
     setFormatType,
     formatType,
     setCanvasContainerDem,
-    canvasContainer
+    canvasContainer,
   }
 
   return (

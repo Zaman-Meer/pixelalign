@@ -4,7 +4,7 @@ import Header from "@/editorApp/components/Header"
 import Panels from "@/editorApp/components/Panels"
 import PagesPanel from "@/editorApp/components/Panels/PagesPanel"
 import PagesToggleButton from "@/editorApp/components/Panels/PagesPanel/PagesToggleButton"
-import Menu from "@/editorApp/components/Menu"
+import ToolBar from "@/editorApp/ToolBar"
 import Canvas from "@/editorApp/components/Canvas"
 import Footer from "@/editorApp/components/Footer"
 import WebFont from "webfontloader"
@@ -58,7 +58,7 @@ function Editor() {
       <SectionOne>
         <Panels />
         <SectionThree>
-          <Menu />
+          <ToolBar />
           <Box display="flex" flex="1">
             <Canvas />
             <PagesPanel />

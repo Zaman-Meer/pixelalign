@@ -54,7 +54,7 @@ function PanelImage() {
         objectsImage.clipPath = workarea
         objectsImage.center()
         canvas?.setActiveObject(objectsImage)
-
+        console.log("objectsImage", canvas?.getActiveObject())
         canvas?.renderAll()
       },
       { crossOrigin: "anonymous" }

@@ -109,9 +109,10 @@ function useEventHandlers() {
    */
 
   const onSelect = useCallback(
-    ({ target }) => {
-      if (target) {
+    ({ selected }) => {
+      if (selected) {
         if (canvas) {
+          console.log("AAA")
           setActiveObject(canvas.getActiveObject())
         }
       } else {
@@ -122,11 +123,10 @@ function useEventHandlers() {
   )
 
   useEffect(() => {
-    if (canvas) {
-      canvas.on("selection:created", onSelect)
-      canvas.on("selection:cleared", onSelect)
-      canvas.on("selection:updated", onSelect)
-    }
+    canvas?.on("selection:created", onSelect)
+    canvas?.on("selection:cleared", onSelect)
+    canvas?.on("selection:updated", onSelect)
+
     return () => {
       if (canvas) {
         canvas.off("selection:cleared", onSelect)

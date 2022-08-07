@@ -10,7 +10,13 @@ body {
   position: relative;
 }
 .PanelListItem.active {
-  background:  var(--chakra-colors-teal-50);
+  background: var(--chakra-colors-teal-50);
+}
+
+.icon-style svg path {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
 }
 
 /* .PanelListItem.active::after {
@@ -82,7 +88,6 @@ body {
   transform: translate(100%, -50%);
 }
 
-
 /* Masonry style */
 .my-masonry-grid {
   display: -webkit-box; /* Not needed if autoprefixing */
@@ -97,7 +102,8 @@ body {
 }
 
 /* Style your items */
-.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+.my-masonry-grid_column > div {
+  /* change div to reference your elements you put in <Masonry> */
   background: grey;
   margin-bottom: 10px;
 }
