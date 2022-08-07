@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useCanvasContext } from "@/editorApp/components/Canvas/hooks"
 import { Box, SimpleGrid, Image, Button, CloseButton } from "@chakra-ui/react"
 import { Scrollbars } from "react-custom-scrollbars-2"
-import PageImageItem from "@/editorApp/components/commen/PageImageItem"
+import PageImageItem from "@/editorApp/components/common/PageImageItem"
 import useTemplateContext from "@/hooks/useTemplateContext"
 const imageUrlll =
   "https://images.unsplash.com/photo-1655644663701-014906c43860?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"

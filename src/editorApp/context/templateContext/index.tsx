@@ -15,6 +15,7 @@ interface ContextType {
   handleTogglePage: (pageId: string) => void
   generateThumbnail: () => void
   convertCanvasToPage: () => void
+  handleAddInitialPages: () => void
   handleAddBlankTemplatePage: (
     width: number,
     height: number,
@@ -31,6 +32,7 @@ export const TemplateContext = createContext<ContextType>({
   handleTogglePage: () => {},
   generateThumbnail: () => {},
   convertCanvasToPage: () => {},
+  handleAddInitialPages: () => {},
   handleAddBlankTemplatePage: () => {},
 })
 
@@ -69,35 +71,35 @@ const TemplateProvider: React.FC = ({ children }) => {
     console.log("Updated")
   }, [])
 
-  // const handleAddInitialPages = useCallback(() => {
-  //   const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
-  //   staticCanvas.setDimensions({
-  //     width: 900,
-  //     height: 600,
-  //   })
-  //   const defaultWorkArea = new fabric.Rect({
-  //     //@ts-ignore
-  //     id: "workarea",
-  //     width: 900,
-  //     height: 600,
-  //     absolutePositioned: true,
-  //     fill: "#ffffff",
-  //     selectable: false,
-  //     hoverCursor: "default",
-  //   })
-  //   staticCanvas?.add(defaultWorkArea)
-  //   defaultWorkArea.center()
-  //   const newPage: PageType = {
-  //     id: uuidv4(),
-  //     size: {
-  //       width: 940,
-  //       height: 600,
-  //     },
-  //     content: staticCanvas?.toJSON(propertiesToInclude),
-  //   }
-  //   setPages([newPage])
-  //   setActivePageId(newPage?.id)
-  // }, [canvas])
+  const handleAddInitialPages = useCallback(() => {
+    const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
+    staticCanvas.setDimensions({
+      width: 900,
+      height: 600,
+    })
+    const defaultWorkArea = new fabric.Rect({
+      //@ts-ignore
+      id: "workarea",
+      width: 900,
+      height: 600,
+      absolutePositioned: true,
+      fill: "#ffffff",
+      selectable: false,
+      hoverCursor: "default",
+    })
+    staticCanvas?.add(defaultWorkArea)
+    defaultWorkArea.center()
+    const newPage: PageType = {
+      id: uuidv4(),
+      size: {
+        width: 940,
+        height: 600,
+      },
+      content: staticCanvas?.toJSON(propertiesToInclude),
+    }
+    setPages([newPage])
+    setActivePageId(newPage?.id)
+  }, [canvas])
 
   // useEffect(() => {
   //   handleAddInitialPages()
@@ -277,6 +279,7 @@ const TemplateProvider: React.FC = ({ children }) => {
         handleTogglePage,
         generateThumbnail,
         convertCanvasToPage,
+        handleAddInitialPages,
         handleAddBlankTemplatePage,
       }}
     >

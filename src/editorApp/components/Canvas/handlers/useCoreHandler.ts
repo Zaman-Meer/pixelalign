@@ -26,6 +26,53 @@ function useCoreHandler() {
     canvasContainer,
   } = useCanvasContext()
 
+  // Get object properties
+  const getProperty = useCallback(
+    (property) => {
+      if (activeObject) {
+        return activeObject?.get(property)
+      }
+    },
+    [activeObject, canvas]
+  )
+
+  // Update properties, optional set metadata if present
+  const setProperty = useCallback(
+    (property, value) => {
+      if (activeObject) {
+        activeObject.set(property, value)
+        activeObject.setCoords()
+        canvas?.requestRenderAll()
+      }
+    },
+    [activeObject, canvas]
+  )
+
+  // Update object layer in canvas
+  type layer = "sendToBack" | "sendBackwards" | "bringToFront" | "bringForward"
+  const setLayer = useCallback(
+    (layer: layer) => {
+      if (activeObject && canvas) {
+        if (layer === "bringToFront") {
+          canvas.bringToFront(activeObject)
+        } else if (layer === "bringForward") {
+          canvas.bringForward(activeObject)
+        } else if (layer === "sendToBack") {
+          canvas.sendToBack(activeObject)
+        } else if (layer === "sendBackwards") {
+          canvas.sendBackwards(activeObject)
+        }
+      }
+      //ts-ignore
+      const workArea = canvas
+        ?.getObjects()
+        ?.find((obj) => obj.type === "workarea")
+      workArea && canvas?.sendToBack(workArea)
+      canvas?.requestRenderAll()
+    },
+    [activeObject, canvas]
+  )
+
   /**
    * Update Canvas size
    */
@@ -294,6 +341,9 @@ function useCoreHandler() {
     addObject,
     cloneOject,
     deleteObject,
+    getProperty,
+    setProperty,
+    setLayer,
     setCanvasBackgroundColor,
     updateFormatSize,
     updateCanvasSize,

@@ -15,7 +15,8 @@
       "@pages/*": ["src/pages/*"],
       "@routes/*": ["src/routes/*"],
       "@icons/*": ["src/assets/icons/*"],
-      "@site-components/*": ["src/site-components/*"]
+      "@site-components/*": ["src/site-components/*"],
+      "@tools/*": ["src/editorApp/tools/*"]
     }
   }
 }

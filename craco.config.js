@@ -19,6 +19,7 @@ module.exports = {
       "@routes": resloveSrc("routes"),
       "@icons": resloveSrc("icons"),
       "@site-components": resloveSrc("site-components"),
+      "@tools": resloveSrc("tools"),
     },
   },
 }
