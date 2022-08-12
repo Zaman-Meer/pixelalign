@@ -42,7 +42,11 @@ const OpacityManager: React.FC = () => {
   }, [activeObject])
   console.log("Active", activeObject, canvas?.getActiveObject())
   return (
-    <IconMenuWrapper tLabel="Opacity" Icon={OpacityIcon} disabled={false}>
+    <IconMenuWrapper
+      tLabel="Opacity"
+      Icon={OpacityIcon}
+      disabled={!activeObject}
+    >
       <Stack
         direction={["column", "row"]}
         spacing={3}

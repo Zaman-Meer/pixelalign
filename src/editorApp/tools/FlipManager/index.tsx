@@ -39,7 +39,7 @@ const FlipManager = () => {
           tPosition="bottom-end"
           colorScheme="gray"
         >
-          <FlipHIcon width={20} height={20} />
+          <FlipHIcon width={24} height={24} />
         </IconButtonWrapper>
 
         <IconButtonWrapper
@@ -47,7 +47,7 @@ const FlipManager = () => {
           tLabel="Flip Vertically"
           tPosition="bottom-start"
         >
-          <FlipVIcon width={20} height={20} />
+          <FlipVIcon width={24} height={24} />
         </IconButtonWrapper>
       </Stack>
     </IconMenuWrapper>

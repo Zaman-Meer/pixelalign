@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path fill="currentColor" d="M2.4.96C1.607.96.96 1.607.96 2.4v7.68c0 .793.647 1.44 1.44 1.44h3.36v5.28c0 .79.65 1.44 1.44 1.44h5.28v3.36c0 .793.647 1.44 1.44 1.44h7.68c.793 0 1.44-.647 1.44-1.44v-7.68c0-.793-.647-1.44-1.44-1.44h-3.36V7.2c0-.79-.65-1.44-1.44-1.44h-5.28V2.4c0-.793-.647-1.44-1.44-1.44H2.4zm4.8 5.76h9.6c.272 0 .48.208.48.48v9.6c0 .272-.208.48-.48.48H7.2a.472.472 0 01-.48-.48V7.2c0-.272.208-.48.48-.48z"></path></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="76px" height="76px" viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" enable-background="new 0 0 76.00 76.00" xml:space="preserve">
+	<path fill="currentColor" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 25,25L 51,25L 51,51L 25,51L 25,25 Z M 17,17L 33,17L 33,24L 30,24L 30,20L 20,20L 20,30L 24,30L 24,33L 17,33L 17,17 Z M 59,43L 59,59L 43,59L 43,52L 46,52L 46,56L 56,56L 56,46L 52,46L 52,43L 59,43 Z "/>
+</svg>

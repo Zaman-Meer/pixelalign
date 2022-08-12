@@ -24,7 +24,7 @@ const LayerManager: React.FC = () => {
       <Stack
         direction={["column", "row"]}
         spacing={1}
-        width={120}
+        width={150}
         padding={0}
         align="center"
       >
@@ -34,26 +34,26 @@ const LayerManager: React.FC = () => {
           colorScheme="gray"
           onClick={() => setLayer("bringForward")}
         >
-          <MoveForwardIcon width={20} height={20} />
+          <MoveForwardIcon width={24} height={24} />
         </IconButtonWrapper>
         <IconButtonWrapper
           tLabel="Bring To Front"
           onClick={() => setLayer("bringToFront")}
         >
-          <MoveToFrontIcon width={20} height={20} />
+          <MoveToFrontIcon width={24} height={24} />
         </IconButtonWrapper>
         <IconButtonWrapper
           tLabel="Send Backward"
           onClick={() => setLayer("sendBackwards")}
         >
-          <SendBackwardIcon width={20} height={20} />
+          <SendBackwardIcon width={24} height={24} />
         </IconButtonWrapper>
         <IconButtonWrapper
           tLabel="Send To Back"
           tPosition="bottom-start"
           onClick={() => setLayer("sendToBack")}
         >
-          <SendToBackIcon width={20} height={20} />
+          <SendToBackIcon width={24} height={24} />
         </IconButtonWrapper>
       </Stack>
     </IconMenuWrapper>

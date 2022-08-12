@@ -1,6 +1,6 @@
 import { useState, CSSProperties, useEffect } from "react"
 import { useCoreHandler } from "../Canvas/handlers"
-//import { TwitterPicker } from "react-color"
+import { TwitterPicker } from "react-color"
 import emptyColorPlaceholder from "@/assets/images/base-color-picker.png"
 import { useCanvasContext } from "../Canvas/hooks"
 
@@ -89,10 +89,10 @@ function DefaultObject() {
         {dropdown.displayColorPicker ? (
           <div style={popover}>
             <div style={cover} onClick={handleClose} />
-            {/* <TwitterPicker
+            <TwitterPicker
               color={options.backgroundColor}
               onChange={onColorChange}
-            /> */}
+            />
           </div>
         ) : null}
       </div>
