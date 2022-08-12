@@ -79,7 +79,7 @@ const AlignManager = () => {
           tPosition="bottom-end"
           colorScheme="gray"
         >
-          <AlignLeft width={22} height={22} />
+          <AlignLeft width={24} height={24} />
         </IconButtonWrapper>
 
         <IconButtonWrapper
@@ -87,35 +87,35 @@ const AlignManager = () => {
           tLabel="Align Horizontally"
           tPosition="bottom-end"
         >
-          <AlignHorizontallyCenter width={22} height={22} />
+          <AlignHorizontallyCenter width={24} height={24} />
         </IconButtonWrapper>
         <IconButtonWrapper
           onClick={() => handleAlign("right")}
           tLabel="Align Right"
           tPosition="bottom-end"
         >
-          <AlignRight width={22} height={22} />
+          <AlignRight width={24} height={24} />
         </IconButtonWrapper>
         <IconButtonWrapper
           onClick={() => handleAlign("top")}
           tLabel="Align Top"
           tPosition="bottom-end"
         >
-          <AlignTop width={22} height={22} />
+          <AlignTop width={24} height={24} />
         </IconButtonWrapper>
         <IconButtonWrapper
           onClick={() => handleAlign("vertically")}
           tLabel="Align Vertically"
           tPosition="bottom-end"
         >
-          <AlignVerticallyCenter width={22} height={22} />
+          <AlignVerticallyCenter width={24} height={24} />
         </IconButtonWrapper>
         <IconButtonWrapper
           onClick={() => handleAlign("bottom")}
           tLabel="Align Bottom"
           tPosition="bottom-end"
         >
-          <AlignBottom width={22} height={22} />
+          <AlignBottom width={24} height={24} />
         </IconButtonWrapper>
       </Stack>
     </IconMenuWrapper>

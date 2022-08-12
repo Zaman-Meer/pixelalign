@@ -54,11 +54,15 @@ const ObjectLockManager = () => {
           color: "gray.400",
         }}
         size="sm"
-        fontSize={22}
+        fontSize={24}
         onClick={handleLock}
         disabled={nonSelectableObjects?.includes(activeObject as fabric.Object)}
       >
-        {isLocked ? <Lock /> : <Unlock />}
+        {isLocked ? (
+          <Lock width={24} height={24} />
+        ) : (
+          <Unlock width={24} height={24} />
+        )}
       </Button>
     </CustomToolTip>
   )

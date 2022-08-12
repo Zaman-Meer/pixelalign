@@ -21,7 +21,7 @@ const IconMenuWrapper: React.FC<Props> = ({
         <MenuButton
           as={IconButton}
           aria-label="Options"
-          icon={<Icon />}
+          icon={<Icon width={24} height={24} />}
           fontSize={22}
           color="gray.400"
           variant="outline"
