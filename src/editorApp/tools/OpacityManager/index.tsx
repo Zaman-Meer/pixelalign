@@ -40,7 +40,7 @@ const OpacityManager: React.FC = () => {
       setInputOpacity(getProperty("opacity") * 100)
     }
   }, [activeObject])
-  console.log("Active", activeObject, canvas?.getActiveObject())
+
   return (
     <IconMenuWrapper
       tLabel="Opacity"

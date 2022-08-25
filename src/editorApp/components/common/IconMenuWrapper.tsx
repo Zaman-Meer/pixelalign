@@ -5,6 +5,7 @@ interface Props {
   Icon: any
   tLabel: string
   minMenuW?: number | string
+  onClick?: () => void
   disabled?: boolean
 }
 
@@ -13,12 +14,14 @@ const IconMenuWrapper: React.FC<Props> = ({
   tLabel,
   disabled,
   minMenuW = 224,
+  onClick,
   children,
 }) => {
   return (
     <Menu>
       <CustomToolTip label={tLabel}>
         <MenuButton
+          onClick={onClick}
           as={IconButton}
           aria-label="Options"
           icon={<Icon width={24} height={24} />}

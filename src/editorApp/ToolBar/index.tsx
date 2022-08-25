@@ -1,9 +1,13 @@
-import { Box } from "@chakra-ui/react"
+import { Box, HStack } from "@chakra-ui/react"
 import React from "react"
 import AlignManager from "../tools/AlignManager"
+import BorderManager from "../tools/BorderManager"
+import CopyManager from "../tools/CopyManager"
 import FlipManager from "../tools/FlipManager"
+import GroupManager from "../tools/GroupManager"
 import LayerManager from "../tools/LayerManager"
 import OpacityManager from "../tools/OpacityManager"
+import ShadowManager from "../tools/ShadowManager"
 
 const ToolBar = () => {
   return (
@@ -17,12 +21,16 @@ const ToolBar = () => {
       <Box display="flex" justifyContent="flex-start" alignItems="center">
         Tool
       </Box>
-      <Box display="flex" justifyContent="flex-end" alignItems="center" gap="2">
+      <HStack spacing="5px">
+        <GroupManager />
+        <BorderManager />
+        <ShadowManager />
         <OpacityManager />
         <AlignManager />
         <LayerManager />
         <FlipManager />
-      </Box>
+        <CopyManager />
+      </HStack>
     </Box>
   )
 }

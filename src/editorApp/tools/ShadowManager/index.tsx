@@ -1,33 +1,65 @@
-import { useState } from "react"
-import {
-  Stack,
-  VStack,
-  Text,
-  Box,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  StackDivider,
-  Input,
-} from "@chakra-ui/react"
+import { useState, useEffect } from "react"
+import { VStack, Text, Box, StackDivider } from "@chakra-ui/react"
 import { ReactComponent as ShadowIcon } from "@/assets/icons/square-shadow.svg"
 import useCoreHandler from "@/editorApp/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/editorApp/components/Canvas/hooks"
 import IconMenuWrapper from "@/editorApp/components/common/IconMenuWrapper"
+import SliderWithInput from "@/editorApp/components/common/SliderWithInput"
+import ColorPicker from "@/editorApp/components/common/ColorPicker"
 
 const ShadowManager = () => {
-  const { activeObject, canvas } = useCanvasContext()
+  const { activeObject } = useCanvasContext()
   const { setProperty, getProperty } = useCoreHandler()
-  const [inputShadow, setInputShadow] = useState(0)
+  const [color, setColor] = useState<string>("#000000")
+  const [xShadow, setXShadow] = useState(0)
+  const [yShadow, setYShadow] = useState(0)
+  const [blur, setBlur] = useState(0)
 
   const handleShadow = () => {
-    if (getProperty("shadow")) {
-      setProperty("shadow", false)
+    setProperty("shadow", {
+      color,
+      offsetX: xShadow,
+      offsetY: yShadow,
+      blur,
+    })
+  }
+
+  const handleColorChange = (newColor: any) => {
+    setColor(newColor.hex)
+  }
+
+  const handleXShadow = (value: number) => {
+    setXShadow(value)
+  }
+
+  const handleYShadow = (value: number) => {
+    setYShadow(value)
+  }
+  const handleBlur = (value: number) => {
+    setBlur(value)
+  }
+  const handleInitialShadow = () => {
+    const shadow = getProperty("shadow")
+    if (shadow) {
+      setColor(shadow.color)
+      setXShadow(shadow.offsetX)
+      setYShadow(shadow.offsetY)
+      setBlur(shadow.blur)
     } else {
-      setProperty("shadow", true)
+      setColor("#000000")
+      setXShadow(0)
+      setYShadow(0)
+      setBlur(0)
     }
   }
+
+  useEffect(() => {
+    handleShadow()
+  }, [color, blur, xShadow, yShadow])
+
+  useEffect(() => {
+    handleInitialShadow()
+  }, [activeObject])
 
   return (
     <IconMenuWrapper
@@ -38,49 +70,65 @@ const ShadowManager = () => {
     >
       <VStack
         divider={<StackDivider borderColor="gray.200" />}
-        spacing={4}
+        spacing={2}
         align="start"
+        padding="10px"
+        width="280px"
       >
-        <Stack
-          direction={["row"]}
-          spacing={3}
-          padding={0}
-          height={7}
-          align="center"
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
         >
-          <Text fontSize="xs" fontWeight={500}>
-            x
+          <Text fontSize="md" fontWeight={600}>
+            Add Shadow
           </Text>
-          <Slider
-            aria-label="slider-ex-5"
+        </Box>
+        <VStack spacing={2} align="start" width="100%">
+          <Box
+            width="100%"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Text fontSize="sm" color="gray.600" fontWeight={500}>
+              Shadow Color
+            </Text>
+
+            <ColorPicker color={color} onChange={handleColorChange} />
+          </Box>
+          <SliderWithInput
+            tLabel="x"
+            textWidth={30}
+            step={1}
+            min={-100}
+            max={100}
             defaultValue={0}
-            value={inputShadow}
+            value={xShadow}
+            onChange={handleXShadow}
+          />
+          <SliderWithInput
+            tLabel="y"
+            textWidth={30}
+            step={1}
+            min={-100}
+            max={100}
+            defaultValue={0}
+            value={yShadow}
+            onChange={handleYShadow}
+          />
+          <SliderWithInput
+            tLabel="Blur"
+            textWidth={30}
+            step={1}
             min={0}
             max={100}
-            step={1}
-            className="slider"
-            focusThumbOnChange={false}
-            onChange={handleShadow}
-          >
-            <SliderTrack bg="gray.400" margin={0}>
-              <Box position="relative" />
-              <SliderFilledTrack bg="teal" />
-            </SliderTrack>
-            <SliderThumb boxSize={4} bg="teal.400" />
-          </Slider>
-          <Input
-            placeholder=""
-            size="xs"
-            type="number"
-            value={inputShadow}
-            onChange={handleShadow}
-            focusBorderColor="none"
-            width={70}
-            padding={2}
-            borderRadius={5}
-            style={{ textAlign: "center" }}
+            defaultValue={0}
+            value={blur}
+            onChange={handleBlur}
           />
-        </Stack>
+        </VStack>
       </VStack>
     </IconMenuWrapper>
   )

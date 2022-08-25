@@ -24,7 +24,7 @@ function PanelImage() {
   useEffect(() => {
     if (value) {
       getImages(value)
-    } else getImages("flowers")
+    } else getImages("beautiful")
   }, [value])
 
   const handleChange = (event: any) => setQuery(event.target.value)
@@ -54,7 +54,6 @@ function PanelImage() {
         objectsImage.clipPath = workarea
         objectsImage.center()
         canvas?.setActiveObject(objectsImage)
-        console.log("objectsImage", canvas?.getActiveObject())
         canvas?.renderAll()
       },
       { crossOrigin: "anonymous" }

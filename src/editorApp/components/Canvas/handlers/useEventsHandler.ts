@@ -112,7 +112,7 @@ function useEventHandlers() {
     ({ selected }) => {
       if (selected) {
         if (canvas) {
-          console.log("AAA")
+          console.log("ActiveObjects", canvas.getActiveObject())
           setActiveObject(canvas.getActiveObject())
         }
       } else {
