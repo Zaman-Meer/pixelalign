@@ -22,8 +22,6 @@ function useCoreHandler() {
     areaDimension,
     clipBoards,
     setZoomRatio,
-    setCanvas,
-    canvasContainer,
   } = useCanvasContext()
 
   // Get object properties
@@ -72,6 +70,21 @@ function useCoreHandler() {
     },
     [activeObject, canvas]
   )
+
+  // Clone active object
+  const cloneActiveObject = useCallback(() => {
+    let cloneObject = fabric.util.object.clone(canvas?.getActiveObject())
+    if (cloneObject.type === "activeSelection") {
+      return
+    } else {
+      cloneObject.set("top", cloneObject.top + 20)
+      cloneObject.set("left", cloneObject.left + 20)
+      canvas?.add(cloneObject)
+      canvas?.setActiveObject(cloneObject)
+    }
+
+    canvas?.requestRenderAll()
+  }, [canvas])
 
   /**
    * Update Canvas size
@@ -344,6 +357,7 @@ function useCoreHandler() {
     getProperty,
     setProperty,
     setLayer,
+    cloneActiveObject,
     setCanvasBackgroundColor,
     updateFormatSize,
     updateCanvasSize,

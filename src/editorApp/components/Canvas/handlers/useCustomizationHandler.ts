@@ -178,15 +178,15 @@ function useCustomizationHandler() {
     if (canvas) {
       canvas.on("selection:created", function (ev) {
         const objects = canvas.getActiveObjects()
-        if (objects.length > 1) {
-          ev.target.setControlsVisibility({
-            mt: false,
-            mb: false,
-            mr: false,
-            ml: false,
-          })
-          ev.target.borderDashArray = [7]
-        }
+        // if (objects.length > 1) {
+        //   ev.target.setControlsVisibility({
+        //     mt: false,
+        //     mb: false,
+        //     mr: false,
+        //     ml: false,
+        //   })
+        //   ev.target.borderDashArray = [7]
+        // }
       })
     }
   }, [canvas])
