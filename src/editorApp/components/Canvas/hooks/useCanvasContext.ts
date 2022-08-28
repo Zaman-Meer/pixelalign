@@ -25,8 +25,8 @@ function useCanvasContext() {
     setGrid,
     removeActiveObject,
     removeSelectedObjects,
-    nonSelectableObjects,
-    setNonSelectableObjects,
+    nonSelectableObjectsIds,
+    setNonSelectableObjectsIds,
     workArea,
     setWorkArea,
     isPagesPanelOpen,
@@ -44,6 +44,8 @@ function useCanvasContext() {
     formatType,
     setCanvasContainerDem,
     canvasContainer,
+    clickedObject,
+    setClickedObject,
   } = useContext(CanvasContext)
 
   return {
@@ -69,8 +71,8 @@ function useCanvasContext() {
     setGrid,
     removeActiveObject,
     removeSelectedObjects,
-    nonSelectableObjects,
-    setNonSelectableObjects,
+    nonSelectableObjectsIds,
+    setNonSelectableObjectsIds,
     workArea,
     setWorkArea,
     isPagesPanelOpen,
@@ -88,6 +90,8 @@ function useCanvasContext() {
     formatType,
     setCanvasContainerDem,
     canvasContainer,
+    clickedObject,
+    setClickedObject,
   }
 }
 

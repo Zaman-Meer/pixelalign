@@ -27,7 +27,7 @@ const BorderManager = () => {
   }
   const handleInitialShadow = () => {
     const stroke = getProperty("stroke")
-    console.log("Stroke", stroke)
+
     // if (shadow) {
     //   setColor(shadow.color)
     //   setBorder(shadow.offsetX)
@@ -47,7 +47,7 @@ const BorderManager = () => {
 
   return (
     <IconMenuWrapper
-      tLabel="shadow"
+      tLabel="Border"
       Icon={BorderIcon}
       disabled={!activeObject}
       minMenuW={"auto"}

@@ -16,7 +16,7 @@ const LayerManager: React.FC = () => {
 
   return (
     <IconMenuWrapper
-      tLabel="layers"
+      tLabel="Layers"
       Icon={LayersIcon}
       disabled={!activeObject}
       minMenuW={142}

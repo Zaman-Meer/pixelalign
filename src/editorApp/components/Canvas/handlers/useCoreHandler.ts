@@ -145,6 +145,36 @@ function useCoreHandler() {
   }
 
   /**
+   * Convert objects to group
+   */
+  const groupedObjects = () => {
+    if (!canvas?.getActiveObject()) {
+      return
+    }
+    if (canvas?.getActiveObject().type !== "activeSelection") {
+      return
+    }
+    //@ts-ignore
+    canvas?.getActiveObject()?.toGroup()
+    canvas?.requestRenderAll()
+  }
+
+  /**
+   * Convert objects to group
+   */
+  const unGroupObjects = () => {
+    if (!canvas?.getActiveObject()) {
+      return
+    }
+    if (canvas?.getActiveObject().type !== "group") {
+      return
+    }
+    //@ts-ignore
+    canvas?.getActiveObject()?.toActiveSelection()
+    canvas?.requestRenderAll()
+  }
+
+  /**
    * Update format size
    */
   const updateFormatSize = useCallback(
@@ -239,9 +269,12 @@ function useCoreHandler() {
   }, [canvas, activeObject, clipBoards])
 
   const deleteObject = useCallback(() => {
-    if (canvas && activeObject) {
-      canvas.remove(activeObject as fabric.Object)
-    }
+    console.log("OBjects1", activeObject?._objects)
+    if (activeObject?._objects) {
+      console.log("OBjects", activeObject?._objects)
+      activeObject?._objects?.forEach((value) => canvas?.remove(value))
+    } else canvas?.remove(activeObject as fabric.Object)
+    canvas?.discardActiveObject()
   }, [canvas, activeObject])
   /**
    * Update selected object
@@ -357,6 +390,8 @@ function useCoreHandler() {
     getProperty,
     setProperty,
     setLayer,
+    groupedObjects,
+    unGroupObjects,
     cloneActiveObject,
     setCanvasBackgroundColor,
     updateFormatSize,

@@ -1,18 +1,43 @@
+import { useState, useEffect } from "react"
 import CustomToolTip from "../../components/common/CustomToolTip"
 import { IconButton } from "@chakra-ui/react"
-import { ReactComponent as GroupIcon } from "@/assets/icons/ungroup-icon.svg"
+import { ReactComponent as GroupIcon } from "@/assets/icons/group-icon.svg"
+import { ReactComponent as UnGroupIcon } from "@/assets/icons/ungroup-icon.svg"
 import useCoreHandler from "@/editorApp/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/editorApp/components/Canvas/hooks"
 
 const GroupManager = () => {
-  const { activeObject } = useCanvasContext()
-  const { cloneActiveObject } = useCoreHandler()
+  const { canvas } = useCanvasContext()
+  const { unGroupObjects, groupedObjects } = useCoreHandler()
+  const [isGrouped, setIsGrouped] = useState(
+    canvas?.getActiveObject()?.type === "group"
+  )
+  const handleGroupUnGroup = () => {
+    if (canvas?.getActiveObject()?.type !== "activeSelection") {
+      unGroupObjects()
+      setIsGrouped(false)
+    } else {
+      groupedObjects()
+      setIsGrouped(true)
+    }
+  }
+  useEffect(() => {
+    if (canvas?.getActiveObject()?.type === "group") setIsGrouped(true)
+  }, [canvas])
 
-  return (
-    <CustomToolTip label="Group">
+  return canvas?.getActiveObject()?.type === "activeSelection" ||
+    canvas?.getActiveObject()?.type === "group" ? (
+    <CustomToolTip label={isGrouped ? "UnGroup" : "Group"}>
       <IconButton
-        aria-label="copy-icon"
-        icon={<GroupIcon width={24} height={24} />}
+        onClick={handleGroupUnGroup}
+        aria-label={isGrouped ? "unGroup-icon" : "group-icon"}
+        icon={
+          isGrouped ? (
+            <UnGroupIcon width={24} height={24} />
+          ) : (
+            <GroupIcon width={24} height={24} />
+          )
+        }
         padding={0}
         color="gray.400"
         variant="outline"
@@ -34,10 +59,9 @@ const GroupManager = () => {
         }}
         size="sm"
         fontSize={24}
-        disabled={!activeObject}
       />
     </CustomToolTip>
-  )
+  ) : null
 }
 
 export default GroupManager

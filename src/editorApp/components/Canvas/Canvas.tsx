@@ -49,7 +49,7 @@ function Canvas() {
       backgroundColor: "#E1E3E9",
       fireRightClick: true,
     })
-    console.log("canvas", canvas)
+
     setCanvas(canvas)
 
     const initialHeight = containerRef.current?.clientHeight
@@ -99,8 +99,6 @@ function Canvas() {
         height: initialHeight! - 32,
       })
     }
-    console.log("Pages", pages)
-    console.group("ActiveId", activePageId)
   }, [activePageId])
 
   useEffect(() => {
