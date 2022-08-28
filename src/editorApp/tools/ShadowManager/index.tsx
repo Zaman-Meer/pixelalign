@@ -63,7 +63,7 @@ const ShadowManager = () => {
 
   return (
     <IconMenuWrapper
-      tLabel="shadow"
+      tLabel="Shadow"
       Icon={ShadowIcon}
       disabled={!activeObject}
       minMenuW={"auto"}

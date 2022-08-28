@@ -51,8 +51,8 @@ interface ICanvasContext {
   //setActiveObject: (object: fabric.Object | null) => void
   workArea: fabric.Rect | null
   setWorkArea: (workArea: fabric.Rect) => void
-  nonSelectableObjects: fabric.Object[]
-  setNonSelectableObjects: (objects: fabric.Object[] | []) => void
+  nonSelectableObjectsIds: string[]
+  setNonSelectableObjectsIds: (ids: string[]) => void
   removeActiveObject: (object?: fabric.Object) => void
   removeSelectedObjects: () => void
   togglePagesPanel: () => void
@@ -70,6 +70,8 @@ interface ICanvasContext {
   formatType: string | null
   setCanvasContainerDem: (width: number, height: number) => void
   canvasContainer: { width: number; height: number }
+  clickedObject: any
+  setClickedObject: (obj: any) => void
 }
 
 type ContextMenuType = "canvas" | "object"
@@ -109,8 +111,8 @@ export const CanvasContext = createContext<ICanvasContext>({
   setGrid: () => {},
   workArea: null,
   setWorkArea: () => {},
-  nonSelectableObjects: [] as fabric.Object[],
-  setNonSelectableObjects: () => {},
+  nonSelectableObjectsIds: [],
+  setNonSelectableObjectsIds: () => {},
   removeActiveObject: () => {},
   removeSelectedObjects: () => {},
   togglePagesPanel: () => {},
@@ -128,6 +130,8 @@ export const CanvasContext = createContext<ICanvasContext>({
   formatType: null,
   setCanvasContainerDem: () => {},
   canvasContainer: { width: 0, height: 0 },
+  clickedObject: null,
+  setClickedObject: () => {},
 })
 
 export const CanvasProvider: FC = ({ children }) => {
@@ -136,9 +140,10 @@ export const CanvasProvider: FC = ({ children }) => {
   const [activeObject, setActiveObject] = useState<FabricObject | null>(null)
   const [zoomRatio, setZoomRatio] = useState(1)
   const [zoomFitRatio, setZoomFitRatio] = useState(1)
-  const [nonSelectableObjects, setNonSelectableObjects] = useState<
-    fabric.Object[] | []
+  const [nonSelectableObjectsIds, setNonSelectableObjectsIds] = useState<
+    string[]
   >([])
+  const [clickedObject, setClickedObject] = useState(null)
   const [workArea, setWorkArea] = useState<fabric.Object | null>(null)
   const [clipBoards, setClipBoards] = useState<fabric.Object[]>([])
   const [grid, setGrid] = useState(defaultGrid)
@@ -264,8 +269,8 @@ export const CanvasProvider: FC = ({ children }) => {
     setGrid,
     removeActiveObject,
     removeSelectedObjects,
-    nonSelectableObjects,
-    setNonSelectableObjects,
+    nonSelectableObjectsIds,
+    setNonSelectableObjectsIds,
     workArea,
     setWorkArea,
     isPagesPanelOpen,
@@ -283,6 +288,8 @@ export const CanvasProvider: FC = ({ children }) => {
     formatType,
     setCanvasContainerDem,
     canvasContainer,
+    clickedObject,
+    setClickedObject,
   }
 
   return (

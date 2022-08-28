@@ -11,6 +11,7 @@ function useEventHandlers() {
     contextMenu,
     setContextMenu,
     setClipBoards,
+    setClickedObject,
   } = useCanvasContext()
 
   /**
@@ -110,9 +111,9 @@ function useEventHandlers() {
 
   const onSelect = useCallback(
     ({ selected }) => {
+      console.log("SEE", selected)
       if (selected) {
         if (canvas) {
-          console.log("ActiveObjects", canvas.getActiveObject())
           setActiveObject(canvas.getActiveObject())
         }
       } else {
@@ -122,7 +123,28 @@ function useEventHandlers() {
     [canvas]
   )
 
+  /**
+   * Canvas object clicked
+   */
+
+  const onObjectClicked = useCallback(
+    ({ target }) => {
+      console.log("Target", target)
+      if (target?.objectId) {
+        if (canvas) {
+          setClickedObject(target)
+        }
+      } else {
+        //setActiveObject(null)
+        setClickedObject(null)
+      }
+    },
+    [canvas]
+  )
+
   useEffect(() => {
+    //@ts-ignore
+    canvas?.on("mouse:down", onObjectClicked)
     canvas?.on("selection:created", onSelect)
     canvas?.on("selection:cleared", onSelect)
     canvas?.on("selection:updated", onSelect)

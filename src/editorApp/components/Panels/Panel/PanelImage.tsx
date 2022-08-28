@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { fabric } from "fabric"
+import { v4 as uuidv4 } from "uuid"
 import Masonry from "react-masonry-css"
 import { Scrollbars } from "react-custom-scrollbars-2"
 import { getPixabayImages } from "@services/pixabay"
@@ -19,7 +20,6 @@ function PanelImage() {
   const [images, setImages] = useState<ImageType[]>([])
   const [query, setQuery] = useState("")
   const [value] = useDebounce(query, 1500)
-  const { addObject } = useCoreHandler()
 
   useEffect(() => {
     if (value) {
@@ -52,6 +52,8 @@ function PanelImage() {
         objectsImage.scale(0.4)
         canvas?.add(objectsImage)
         objectsImage.clipPath = workarea
+        //@ts-ignore
+        objectsImage.objectId = uuidv4()
         objectsImage.center()
         canvas?.setActiveObject(objectsImage)
         canvas?.renderAll()

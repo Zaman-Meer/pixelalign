@@ -1,50 +1,85 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import CustomToolTip from "../../components/common/CustomToolTip"
-import { Button } from "@chakra-ui/react"
-import { ReactComponent as Lock } from "@/assets/icons/lock-icon.svg"
-import { ReactComponent as Unlock } from "@/assets/icons/unlock-icon.svg"
+import { IconButton } from "@chakra-ui/react"
+import { ReactComponent as Lock } from "@/assets/icons/lock-on.svg"
+import { ReactComponent as Unlock } from "@/assets/icons/lock-off.svg"
 import useCoreHandler from "@/editorApp/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/editorApp/components/Canvas/hooks"
 
 const ObjectLockManager = () => {
   const {
     activeObject,
+    clickedObject,
     canvas,
-    nonSelectableObjects,
-    setNonSelectableObjects,
+    nonSelectableObjectsIds,
+    setNonSelectableObjectsIds,
   } = useCanvasContext()
-  const { setProperty, getProperty } = useCoreHandler()
-  const [isLocked, setIsLock] = useState(getProperty("selectable"))
+  const { setProperty } = useCoreHandler()
+  const [isLocked, setIsLock] = useState(false)
+
   const handleLock = () => {
-    if (nonSelectableObjects.length === 0) {
-      setProperty("selectable", !isLocked)
-      setIsLock(getProperty("selectable"))
+    if (!nonSelectableObjectsIds?.includes(clickedObject?.objectId)) {
+      //@ts-ignore
+      setNonSelectableObjectsIds([
+        ...nonSelectableObjectsIds,
+        //@ts-ignore
+        activeObject?.objectId,
+      ])
+      setProperty("selectable", false)
+      setIsLock(true)
       canvas?.discardActiveObject()
-    } else {
-      if (nonSelectableObjects.length > 0) {
-        nonSelectableObjects[0]?.set("selectable", true)
-        nonSelectableObjects[0].setCoords()
-        setNonSelectableObjects([])
-        canvas?.setActiveObject(nonSelectableObjects[0])
-        canvas?.requestRenderAll()
-      }
+    } else if (nonSelectableObjectsIds?.includes(clickedObject?.objectId)) {
+      //@ts-ignore
+      const newIds = nonSelectableObjectsIds?.filter(
+        (id) => id !== clickedObject?.objectId
+      )
+      setNonSelectableObjectsIds(newIds)
+      clickedObject?.set("selectable", true)
+      clickedObject?.setCoords()
+      canvas?.requestRenderAll()
+      canvas?.setActiveObject(clickedObject)
+
+      canvas?.requestRenderAll()
     }
   }
+
+  useEffect(() => {
+    //@ts-ignore
+    setIsLock(
+      nonSelectableObjectsIds?.includes(
+        //@ts-ignore
+        activeObject?.objectId || clickedObject?.objectId
+      )
+    )
+  }, [nonSelectableObjectsIds, clickedObject, activeObject])
+
   return (
-    <CustomToolTip label={isLocked ? "Lock" : "Unlock"}>
-      <Button
-        aria-label="Options"
+    <CustomToolTip label={isLocked ? "UnLock" : "Lock"}>
+      <IconButton
+        onClick={handleLock}
+        disabled={
+          !activeObject &&
+          !nonSelectableObjectsIds?.includes(clickedObject?.objectId)
+        }
+        aria-label="copy-icon"
+        icon={
+          isLocked ? (
+            <Unlock width={24} height={24} />
+          ) : (
+            <Lock width={24} height={24} />
+          )
+        }
         padding={0}
         color="gray.400"
         variant="outline"
         border="2px"
-        borderColor={"gray.200"}
-        _hover={{ bg: "gray.50", borderColor: "gray.400" }}
+        borderColor="teal.200"
+        _hover={{ bg: "teal.50", borderColor: "teal.400" }}
         _active={{
-          bg: "gray.50",
+          bg: "teal.50",
           border: "2px",
-          borderColor: "gray.400",
-          color: "gray.400",
+          borderColor: "teal.400",
+          color: "teal.400",
         }}
         _disabled={{
           cursor: "default",
@@ -55,15 +90,7 @@ const ObjectLockManager = () => {
         }}
         size="sm"
         fontSize={24}
-        onClick={handleLock}
-        disabled={nonSelectableObjects?.includes(activeObject as fabric.Object)}
-      >
-        {isLocked ? (
-          <Lock width={24} height={24} />
-        ) : (
-          <Unlock width={24} height={24} />
-        )}
-      </Button>
+      />
     </CustomToolTip>
   )
 }
