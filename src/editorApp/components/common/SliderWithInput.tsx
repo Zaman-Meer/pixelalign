@@ -20,6 +20,7 @@ interface Props {
   max: number
   textWidth?: number
   isNegative?: boolean
+  filterSlider?: boolean
 }
 
 const SliderWithInput: React.FC<Props> = (props) => {
@@ -32,6 +33,7 @@ const SliderWithInput: React.FC<Props> = (props) => {
     step,
     min,
     max,
+    filterSlider = false,
   } = props
 
   const [inputValue, setInputValue] = useState<number | string | undefined>(
@@ -105,7 +107,7 @@ const SliderWithInput: React.FC<Props> = (props) => {
       >
         <SliderTrack bg="gray.400" margin={0}>
           <Box position="relative" />
-          <SliderFilledTrack bg="teal" />
+          <SliderFilledTrack bg={filterSlider ? "none" : "teal"} />
         </SliderTrack>
         <SliderThumb boxSize={4} bg="teal.400" />
       </Slider>

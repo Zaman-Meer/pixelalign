@@ -8,7 +8,7 @@ module.exports = {
       "@": resloveSrc(),
       "@assets": resloveSrc("assets"),
       "@constants": resloveSrc("constants"),
-      "@components": resloveSrc("components"),
+      "@components": resloveSrc("editorApp/components"),
       "@scenes": resloveSrc("scenes"),
       "@store": resloveSrc("store"),
       "@services": resloveSrc("services"),
@@ -19,7 +19,7 @@ module.exports = {
       "@routes": resloveSrc("routes"),
       "@icons": resloveSrc("icons"),
       "@site-components": resloveSrc("site-components"),
-      "@tools": resloveSrc("tools"),
+      "@tools": resloveSrc("editorApp/tools"),
     },
   },
 }

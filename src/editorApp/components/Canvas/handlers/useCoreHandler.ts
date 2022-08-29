@@ -269,9 +269,7 @@ function useCoreHandler() {
   }, [canvas, activeObject, clipBoards])
 
   const deleteObject = useCallback(() => {
-    console.log("OBjects1", activeObject?._objects)
     if (activeObject?._objects) {
-      console.log("OBjects", activeObject?._objects)
       activeObject?._objects?.forEach((value) => canvas?.remove(value))
     } else canvas?.remove(activeObject as fabric.Object)
     canvas?.discardActiveObject()

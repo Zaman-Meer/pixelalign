@@ -46,6 +46,10 @@ function useCanvasContext() {
     canvasContainer,
     clickedObject,
     setClickedObject,
+    settingPanel,
+    setSettingPanel,
+    openSettingPanelType,
+    setOpenSettingPanelType,
   } = useContext(CanvasContext)
 
   return {
@@ -92,6 +96,10 @@ function useCanvasContext() {
     canvasContainer,
     clickedObject,
     setClickedObject,
+    settingPanel,
+    setSettingPanel,
+    openSettingPanelType,
+    setOpenSettingPanelType,
   }
 }
 

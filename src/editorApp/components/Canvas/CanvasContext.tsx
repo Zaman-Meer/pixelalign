@@ -72,6 +72,10 @@ interface ICanvasContext {
   canvasContainer: { width: number; height: number }
   clickedObject: any
   setClickedObject: (obj: any) => void
+  settingPanel: string | null
+  setSettingPanel: (panel: string | null) => void
+  openSettingPanelType: string | null
+  setOpenSettingPanelType: (panel: string | null) => void
 }
 
 type ContextMenuType = "canvas" | "object"
@@ -132,6 +136,10 @@ export const CanvasContext = createContext<ICanvasContext>({
   canvasContainer: { width: 0, height: 0 },
   clickedObject: null,
   setClickedObject: () => {},
+  settingPanel: null,
+  setSettingPanel: () => {},
+  openSettingPanelType: null,
+  setOpenSettingPanelType: () => {},
 })
 
 export const CanvasProvider: FC = ({ children }) => {
@@ -144,6 +152,10 @@ export const CanvasProvider: FC = ({ children }) => {
     string[]
   >([])
   const [clickedObject, setClickedObject] = useState(null)
+  const [settingPanel, setSettingPanel] = useState<string | null>(null)
+  const [openSettingPanelType, setOpenSettingPanelType] = useState<
+    string | null
+  >(null)
   const [workArea, setWorkArea] = useState<fabric.Object | null>(null)
   const [clipBoards, setClipBoards] = useState<fabric.Object[]>([])
   const [grid, setGrid] = useState(defaultGrid)
@@ -290,6 +302,10 @@ export const CanvasProvider: FC = ({ children }) => {
     canvasContainer,
     clickedObject,
     setClickedObject,
+    settingPanel,
+    setSettingPanel,
+    openSettingPanelType,
+    setOpenSettingPanelType,
   }
 
   return (
