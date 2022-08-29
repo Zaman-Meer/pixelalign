@@ -12,6 +12,8 @@ function useEventHandlers() {
     setContextMenu,
     setClipBoards,
     setClickedObject,
+    setSettingPanel,
+    setOpenSettingPanelType,
   } = useCanvasContext()
 
   /**
@@ -111,13 +113,20 @@ function useEventHandlers() {
 
   const onSelect = useCallback(
     ({ selected }) => {
-      console.log("SEE", selected)
       if (selected) {
         if (canvas) {
           setActiveObject(canvas.getActiveObject())
+          if (
+            canvas?.getActiveObject()?.type !== "activeSelection" &&
+            canvas?.getActiveObject()?.type !== "group"
+          ) {
+            setSettingPanel(canvas?.getActiveObject()?.type as string)
+          }
         }
       } else {
         setActiveObject(null)
+        setSettingPanel(null)
+        setOpenSettingPanelType(null)
       }
     },
     [canvas]
@@ -129,7 +138,6 @@ function useEventHandlers() {
 
   const onObjectClicked = useCallback(
     ({ target }) => {
-      console.log("Target", target)
       if (target?.objectId) {
         if (canvas) {
           setClickedObject(target)
@@ -143,7 +151,6 @@ function useEventHandlers() {
   )
 
   useEffect(() => {
-    //@ts-ignore
     canvas?.on("mouse:down", onObjectClicked)
     canvas?.on("selection:created", onSelect)
     canvas?.on("selection:cleared", onSelect)

@@ -40,17 +40,28 @@ interface Props {
 }
 
 function PanelListItem({ name, icon, setActiveTab, activeTab, label }: Props) {
-  const { toggleSidePanel } = useCanvasContext()
+  const {
+    toggleSidePanel,
+    setSettingPanel,
+    setOpenSettingPanelType,
+    openSettingPanelType,
+  } = useCanvasContext()
   const isActive = name === activeTab
   const handleActive = (name: string) => {
     toggleSidePanel(true)
     setActiveTab(name)
+    setSettingPanel(null)
+    setOpenSettingPanelType(null)
   }
   return (
     <Container isActive={isActive}>
       <ItemContainer
         isActive={isActive}
-        className={`${isActive ? "PanelListItem active" : "PanelListItem"}`}
+        className={`${
+          !openSettingPanelType && isActive
+            ? "PanelListItem active"
+            : "PanelListItem"
+        }`}
         key={name}
         onClick={() => handleActive(name)}
       >
