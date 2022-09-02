@@ -14,7 +14,7 @@ import {
 import PanelContainer from "../../PanelContainer/PanelContainer"
 import useCoreHandler from "@/editorApp/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/editorApp/components/Canvas/hooks"
-import ImageEffectManager from "@components/common/ImageEffectManager"
+import ImageEffectManager from "@tools/ImageEffectManager"
 
 function PanelEditImage() {
   const { canvas, isSidePanelOpen } = useCanvasContext()
@@ -57,15 +57,10 @@ function PanelEditImage() {
           </TabList>
         </Box>
 
-        <Scrollbars autoHide>
+        <Scrollbars autoHide autoHeight autoHeightMin={400}>
           <Box padding={5} overflow="auto">
             <TabPanels>
-              <TabPanel
-                padding={0}
-                margin={2}
-                boxSizing="border-box"
-                gap="10px"
-              >
+              <TabPanel padding={0} margin={2}>
                 <ImageEffectManager
                   label="Brightness"
                   filterType="brightness"
@@ -80,6 +75,54 @@ function PanelEditImage() {
                   min={-0.5}
                   max={0.5}
                   step={0.01}
+                  defaultValue={0}
+                />
+                <ImageEffectManager
+                  label="Saturation"
+                  filterType="saturation"
+                  min={-1}
+                  max={1}
+                  step={0.001}
+                  defaultValue={0}
+                />
+                <ImageEffectManager
+                  label="Emboss"
+                  filterType="emboss"
+                  min={0}
+                  max={1}
+                  step={0.5}
+                  defaultValue={0}
+                />
+                <ImageEffectManager
+                  label="Hue"
+                  filterType="hue"
+                  min={-1}
+                  max={1}
+                  step={0.01}
+                  defaultValue={0}
+                />
+                <ImageEffectManager
+                  label="Vibrance"
+                  filterType="vibrance"
+                  min={-1}
+                  max={1}
+                  step={0.01}
+                  defaultValue={0}
+                />
+                <ImageEffectManager
+                  label="Sharpen"
+                  filterType="sharpen"
+                  min={0}
+                  max={10}
+                  step={1}
+                  defaultValue={0}
+                />
+                <ImageEffectManager
+                  label="Noise"
+                  filterType="noise"
+                  min={0}
+                  max={200}
+                  step={1}
                   defaultValue={0}
                 />
               </TabPanel>
