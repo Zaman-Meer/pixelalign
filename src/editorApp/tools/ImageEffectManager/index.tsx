@@ -3,6 +3,7 @@ import { fabric } from "fabric"
 import { Box, Text } from "@chakra-ui/react"
 import SliderWithInput from "@components/common/SliderWithInput"
 import { useCanvasContext } from "@components/Canvas/hooks"
+import SliderWithColorPicker from "@/editorApp/components/common/SliderWithColorPicker"
 
 type FilterType =
   | "brightness"
@@ -13,6 +14,9 @@ type FilterType =
   | "vibrance"
   | "sharpen"
   | "noise"
+  | "blur"
+  | "pixelate"
+  | "tint"
 
 interface Props {
   label: string
@@ -35,6 +39,7 @@ const ImageEffectManager: React.FC<Props> = ({
   const [inputValue, setInputValue] = useState<
     string | number | undefined | null
   >(0)
+  const [color, setColor] = useState("#ff0000")
   const filters = fabric.Image.filters
 
   const handleFilterChange = (value: number) => {
@@ -133,9 +138,16 @@ const ImageEffectManager: React.FC<Props> = ({
       canvas?.requestRenderAll()
     } else if (filterType?.trim()?.toLocaleLowerCase() === "sharpen") {
       if (value) {
+        const sharpenValue: any = {
+          1: 5,
+          2: 6,
+          3: 7,
+          4: 8,
+          5: 9,
+        }
         //@ts-ignore
         activeObject.filters[6] = new filters.Convolute({
-          matrix: [0, -1, 0, -1, value, -1, 0, -1, 0],
+          matrix: [0, -1, 0, -1, sharpenValue[value], -1, 0, -1, 0],
         })
       } else {
         //@ts-ignore
@@ -150,7 +162,7 @@ const ImageEffectManager: React.FC<Props> = ({
     } else if (filterType?.trim()?.toLocaleLowerCase() === "noise") {
       if (value) {
         //@ts-ignore
-        activeObject.filters[4] = new filters.Noise({
+        activeObject.filters[7] = new filters.Noise({
           noise: value,
         })
       } else {
@@ -163,6 +175,62 @@ const ImageEffectManager: React.FC<Props> = ({
       //@ts-ignore
       activeObject.applyFilters()
       canvas?.requestRenderAll()
+    } else if (filterType?.trim()?.toLocaleLowerCase() === "blur") {
+      if (value) {
+        //@ts-ignore
+        activeObject.filters[8] = new filters.Blur({
+          blur: value,
+        })
+      } else {
+        //@ts-ignore
+        activeObject.filters = activeObject?.filters?.filter(
+          (filter: any, index: number) => index !== 8
+        )
+      }
+      //@ts-ignore
+      activeObject.applyFilters()
+      canvas?.requestRenderAll()
+    } else if (filterType?.trim()?.toLocaleLowerCase() === "pixelate") {
+      if (value) {
+        //@ts-ignore
+        activeObject.filters[9] = new filters.Pixelate({
+          blocksize: value,
+        })
+      } else {
+        //@ts-ignore
+        activeObject.filters = activeObject?.filters?.filter(
+          (filter: any, index: number) => index !== 9
+        )
+      }
+      //@ts-ignore
+      activeObject.applyFilters()
+      canvas?.requestRenderAll()
+    }
+    //@ts-ignore
+    //console.log("Filters", activeObject?.filters)
+  }
+
+  const handleTintFilterChange = ({
+    value,
+    color,
+  }: {
+    value: number
+    color: string
+  }) => {
+    if (filterType?.trim()?.toLocaleLowerCase() === "tint") {
+      if (value) {
+        //@ts-ignore
+        activeObject.filters[10] = new filters.BlendColor({
+          color: color,
+          mode: "tint",
+          alpha: value,
+        })
+      } else {
+        //@ts-ignore
+        activeObject.filters = activeObject?.filters?.filter(
+          (filter: any, index: number) => index !== 10
+        )
+      }
     }
     //@ts-ignore
     console.log("Filters", activeObject?.filters)
@@ -170,16 +238,24 @@ const ImageEffectManager: React.FC<Props> = ({
 
   const initializeObjectFilter = () => {
     let filterValue: any
-    if (
-      filterType !== "emboss" &&
-      filterType !== "hue" &&
-      filterType !== "sharpen"
-    ) {
+    if (filterType === "brightness") {
       //@ts-ignore
       const filter =
         //@ts-ignore
-        activeObject?.filters?.filter((filter: any) => filter[filterType])[0]
-      filterValue = filter && Object?.values(filter)[0]
+        activeObject?.filters[0]
+      filterValue = filter?.brightness
+    } else if (filterType === "contrast") {
+      //@ts-ignore
+      const filter =
+        //@ts-ignore
+        activeObject?.filters[1]
+      filterValue = filter?.contrast
+    } else if (filterType === "saturation") {
+      //@ts-ignore
+      const filter =
+        //@ts-ignore
+        activeObject?.filters[2]
+      filterValue = filter?.saturation
     } else if (filterType === "emboss") {
       //@ts-ignore
       const filter = activeObject?.filters?.[3]
@@ -187,14 +263,33 @@ const ImageEffectManager: React.FC<Props> = ({
       filterValue = embossFilterValue && embossFilterValue[4]
     } else if (filterType === "hue") {
       //@ts-ignore
-      const filter = activeObject?.filters?.rotation
-      filterValue = filter && Object?.values(filter)[0]
+      const filter = activeObject?.filters?.[4]
+      filterValue = filter?.rotation
+    } else if (filterType === "vibrance") {
+      //@ts-ignore
+      const filter = activeObject?.filters?.[5]
+      filterValue = filter?.vibrance
     } else if (filterType === "sharpen") {
       //@ts-ignore
       const filter = activeObject?.filters[6]
 
       const sharpenFilterValue = filter && Object?.values(filter)[0]
       filterValue = sharpenFilterValue && sharpenFilterValue[4]
+    } else if (filterType === "noise") {
+      //@ts-ignore
+      const filter = activeObject?.filters[7]
+
+      filterValue = filter?.noise
+    } else if (filterType === "blur") {
+      //@ts-ignore
+      const filter = activeObject?.filters[8]
+
+      filterValue = filter?.blur
+    } else if (filterType === "pixelate") {
+      //@ts-ignore
+      const filter = activeObject?.filters[9]
+
+      filterValue = filter?.blocksize
     }
 
     console.log("GetFilter", filterValue, activeObject)
@@ -217,15 +312,27 @@ const ImageEffectManager: React.FC<Props> = ({
       <Text fontSize="sm" fontWeight="600" color="gray.600">
         {label}
       </Text>
-      <SliderWithInput
-        defaultValue={defaultValue}
-        min={min}
-        max={max}
-        step={step}
-        value={inputValue as number}
-        onChange={handleFilterChange}
-        filterSlider={true}
-      />
+      {filterType === "tint" ? (
+        <SliderWithColorPicker
+          defaultValue={defaultValue}
+          min={min}
+          max={max}
+          step={step}
+          value={{ value: inputValue as number, color: color }}
+          onChange={handleTintFilterChange}
+          filterSlider={true}
+        />
+      ) : (
+        <SliderWithInput
+          defaultValue={defaultValue}
+          min={min}
+          max={max}
+          step={step}
+          value={inputValue as number}
+          onChange={handleFilterChange}
+          filterSlider={true}
+        />
+      )}
     </Box>
   )
 }
