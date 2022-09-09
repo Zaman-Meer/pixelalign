@@ -7,6 +7,7 @@ interface ColorPickerProps {
   onChange: (color: any) => void
   size?: number
   disabled?: boolean
+  position?: "up" | "down" | "left" | "right"
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
@@ -14,6 +15,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   onChange,
   size = 25,
   disabled = false,
+  position,
 }) => {
   const handlePickerClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation()
@@ -43,7 +45,8 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
           onClick={handlePickerClick}
           zIndex={10}
           position="absolute"
-          top="0"
+          top={position && position !== "down" ? "" : "0"}
+          bottom={position && position !== "up" ? "" : "0"}
           right="0"
         >
           <Sketch color={color} onChange={onChange} />

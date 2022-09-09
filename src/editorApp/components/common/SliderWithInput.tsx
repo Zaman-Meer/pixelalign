@@ -9,7 +9,6 @@ import {
   SliderThumb,
   Input,
 } from "@chakra-ui/react"
-
 interface Props {
   tLabel?: string
   defaultValue: number
@@ -39,6 +38,7 @@ const SliderWithInput: React.FC<Props> = (props) => {
   const [inputValue, setInputValue] = useState<number | string | undefined>(
     value
   )
+
   const handleSliderChange = (sliderValue: number) => {
     setInputValue(sliderValue)
     if (onChange) {

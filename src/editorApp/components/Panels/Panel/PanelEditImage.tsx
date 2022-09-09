@@ -10,6 +10,7 @@ import {
   TabPanels,
   TabPanel,
   Text,
+  VStack,
 } from "@chakra-ui/react"
 import PanelContainer from "../../PanelContainer/PanelContainer"
 import useCoreHandler from "@/editorApp/components/Canvas/handlers/useCoreHandler"
@@ -57,74 +58,100 @@ function PanelEditImage() {
           </TabList>
         </Box>
 
-        <Scrollbars autoHide autoHeight autoHeightMin={400}>
+        <Scrollbars autoHide autoHeight autoHeightMin={`calc(100vh - 186px)`}>
           <Box padding={5} overflow="auto">
             <TabPanels>
               <TabPanel padding={0} margin={2}>
-                <ImageEffectManager
-                  label="Brightness"
-                  filterType="brightness"
-                  min={-0.5}
-                  max={0.5}
-                  step={0.1}
-                  defaultValue={0}
-                />
-                <ImageEffectManager
-                  label="Contrast"
-                  filterType="contrast"
-                  min={-0.5}
-                  max={0.5}
-                  step={0.01}
-                  defaultValue={0}
-                />
-                <ImageEffectManager
-                  label="Saturation"
-                  filterType="saturation"
-                  min={-1}
-                  max={1}
-                  step={0.001}
-                  defaultValue={0}
-                />
-                <ImageEffectManager
-                  label="Emboss"
-                  filterType="emboss"
-                  min={0}
-                  max={1}
-                  step={0.5}
-                  defaultValue={0}
-                />
-                <ImageEffectManager
-                  label="Hue"
-                  filterType="hue"
-                  min={-1}
-                  max={1}
-                  step={0.01}
-                  defaultValue={0}
-                />
-                <ImageEffectManager
-                  label="Vibrance"
-                  filterType="vibrance"
-                  min={-1}
-                  max={1}
-                  step={0.01}
-                  defaultValue={0}
-                />
-                <ImageEffectManager
-                  label="Sharpen"
-                  filterType="sharpen"
-                  min={0}
-                  max={10}
-                  step={1}
-                  defaultValue={0}
-                />
-                <ImageEffectManager
-                  label="Noise"
-                  filterType="noise"
-                  min={0}
-                  max={200}
-                  step={1}
-                  defaultValue={0}
-                />
+                <VStack spacing="8px">
+                  <ImageEffectManager
+                    label="Brightness"
+                    filterType="brightness"
+                    min={-0.5}
+                    max={0.5}
+                    step={0.1}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Contrast"
+                    filterType="contrast"
+                    min={-0.5}
+                    max={0.5}
+                    step={0.01}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Saturation"
+                    filterType="saturation"
+                    min={-1}
+                    max={1}
+                    step={0.001}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Emboss"
+                    filterType="emboss"
+                    min={0}
+                    max={1}
+                    step={0.5}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Hue"
+                    filterType="hue"
+                    min={-1}
+                    max={1}
+                    step={0.01}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Vibrance"
+                    filterType="vibrance"
+                    min={-1}
+                    max={1}
+                    step={0.01}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Sharpen"
+                    filterType="sharpen"
+                    min={0}
+                    max={5}
+                    step={1}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Noise"
+                    filterType="noise"
+                    min={0}
+                    max={200}
+                    step={1}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Blur"
+                    filterType="blur"
+                    min={0}
+                    max={2}
+                    step={0.01}
+                    defaultValue={0}
+                  />
+                  <ImageEffectManager
+                    label="Pixelate"
+                    filterType="pixelate"
+                    min={0}
+                    max={200}
+                    step={1}
+                    defaultValue={0}
+                  />
+                  {/* <ImageEffectManager
+                    label="Tint"
+                    filterType="tint"
+                    min={0}
+                    max={1}
+                    step={0.1}
+                    defaultValue={0}
+                  /> */}
+                </VStack>
               </TabPanel>
               <TabPanel>
                 <p>two!</p>
