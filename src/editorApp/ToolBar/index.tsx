@@ -65,7 +65,7 @@ const ToolBar = () => {
       backgroundColor="#ffffff"
     >
       <Box display="flex" justifyContent="flex-start" alignItems="center">
-        Tool
+        Tools
         {objectToolsOption}
       </Box>
       <HStack spacing="5px">

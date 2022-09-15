@@ -8,17 +8,13 @@ import {
 } from "@chakra-ui/react"
 import Resizer from "react-image-file-resizer"
 import { v4 as uuidv4 } from "uuid"
-import * as api from "@/services/api"
 import styled from "styled-components"
 import { Button } from "@chakra-ui/react"
 import { useCanvasContext } from "../Canvas/hooks"
-import logo from "@assets/images/logo-35.png"
-import { saveCanvas } from "@services/api"
 import axios from "axios"
 import Formats from "@constants/formats"
 import propertiesToInclude from "@constants/workspace"
 import useTemplateContext from "@/hooks/useTemplateContext"
-import { fabric } from "fabric"
 const Container = styled.div`
   height: 60px;
   border-bottom: 1px solid rgba(57, 76, 96, 0.15);
@@ -50,29 +46,33 @@ const resizeFile = (file: any, width: number, height: number) =>
 function Header() {
   const { canvas, formatSize } = useCanvasContext()
   const { addWorkspace } = useTemplateContext()
+
   const downloadImage = () => {
-    const activeObject = canvas
-      ?.getObjects()
+    if (canvas) {
+      const view = canvas.viewportTransform
+      canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
+      const activeObject = canvas
+        ?.getObjects()
+        //@ts-ignore
+        ?.find((obj) => obj?.id === "workarea")
+        ?.getBoundingRect()
+
+      const dataImage2 = canvas?.toDataURL({
+        format: "jpeg",
+        multiplier: 1,
+        quality: 1,
+        top: activeObject?.top,
+        left: activeObject?.left,
+        width: activeObject?.width,
+        height: activeObject?.height,
+      })
+
       //@ts-ignore
-      ?.find((obj) => obj?.id === "workarea")
-      ?.getBoundingRect()
-    //@ts-ignore
-    const height = activeObject?.width * activeObject?.scaleX
-    //@ts-ignore
-    const width = activeObject?.height * activeObject?.scaleY
-    const dataImage = canvas?.toDataURL({
-      format: "jpeg",
-      multiplier: 1,
-      quality: 1,
-      top: activeObject?.top,
-      left: activeObject?.left,
-      width: activeObject?.width,
-      height: activeObject?.height,
-    })
-    if (dataImage) {
+      canvas.setViewportTransform(view)
+
       const a = document.createElement("a")
-      a.href = dataImage
-      a.download = "drawing.png"
+      a.href = dataImage2
+      a.download = "image.jpeg"
       a.click()
     }
   }
@@ -168,7 +168,7 @@ function Header() {
               ))}
             </MenuList>
           </Menu>
-          <Button onClick={onSave}>Save</Button>
+          {/* <Button onClick={onSave}>Save</Button> */}
           <Menu>
             <MenuButton
               variant="outline"

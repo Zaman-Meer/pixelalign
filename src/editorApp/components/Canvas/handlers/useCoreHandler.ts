@@ -64,8 +64,10 @@ function useCoreHandler() {
       //ts-ignore
       const workArea = canvas
         ?.getObjects()
-        ?.find((obj) => obj.type === "workarea")
-      workArea && canvas?.sendToBack(workArea)
+        //@ts-ignore
+        ?.find((obj) => obj?.id === "workarea")
+      //@ts-ignore
+      canvas?.sendToBack(workArea)
       canvas?.requestRenderAll()
     },
     [activeObject, canvas]

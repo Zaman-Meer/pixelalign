@@ -74,14 +74,14 @@ const TemplateProvider: React.FC = ({ children }) => {
   const handleAddInitialPages = useCallback(() => {
     const staticCanvas = new fabric.StaticCanvas("staticCanvas1")
     staticCanvas.setDimensions({
-      width: 900,
-      height: 600,
+      width: 940,
+      height: 788,
     })
     const defaultWorkArea = new fabric.Rect({
       //@ts-ignore
       id: "workarea",
-      width: 900,
-      height: 600,
+      width: 940,
+      height: 788,
       absolutePositioned: true,
       fill: "#ffffff",
       selectable: false,
@@ -93,7 +93,7 @@ const TemplateProvider: React.FC = ({ children }) => {
       id: uuidv4(),
       size: {
         width: 940,
-        height: 600,
+        height: 788,
       },
       content: staticCanvas?.toJSON(propertiesToInclude),
     }

@@ -119,7 +119,8 @@ const SliderWithInput: React.FC<Props> = (props) => {
         onChange={handleInputChange}
         focusBorderColor="none"
         width="60px"
-        padding={2}
+        textAlign="center"
+        padding={1}
         borderRadius={5}
         style={{ textAlign: "center" }}
       />
