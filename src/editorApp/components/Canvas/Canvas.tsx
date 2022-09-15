@@ -48,6 +48,7 @@ function Canvas() {
       width: containerRef.current?.clientWidth,
       backgroundColor: "#E1E3E9",
       fireRightClick: true,
+      preserveObjectStacking: true,
     })
 
     setCanvas(canvas)

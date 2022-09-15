@@ -11,11 +11,13 @@ import {
   TabPanel,
   Text,
   VStack,
+  Grid,
 } from "@chakra-ui/react"
 import PanelContainer from "../../PanelContainer/PanelContainer"
 import useCoreHandler from "@/editorApp/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/editorApp/components/Canvas/hooks"
 import ImageEffectManager from "@tools/ImageEffectManager"
+import ImageFiltersManager from "@/editorApp/tools/ImageFiltersManager"
 
 function PanelEditImage() {
   const { canvas, isSidePanelOpen } = useCanvasContext()
@@ -153,8 +155,8 @@ function PanelEditImage() {
                   /> */}
                 </VStack>
               </TabPanel>
-              <TabPanel>
-                <p>two!</p>
+              <TabPanel padding={0}>
+                <ImageFiltersManager />
               </TabPanel>
             </TabPanels>
           </Box>

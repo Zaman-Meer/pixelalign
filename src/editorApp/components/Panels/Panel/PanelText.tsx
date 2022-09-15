@@ -1,16 +1,19 @@
 import { useState } from "react"
-import { useSelector } from "react-redux"
 import Masonry from "react-masonry-css"
 import { Scrollbars } from "react-custom-scrollbars-2"
-import { selectTextStyles } from "@store/reducers/text-style/selectors"
 import { useCoreHandler } from "@/editorApp/components/Canvas/handlers"
 import { Box, Input, Text, VStack, Image } from "@chakra-ui/react"
 import PanelContainer from "@/editorApp/components/PanelContainer"
+import { useQuery } from "react-query"
+import { getTextStyles } from "@/services/textApi"
 
 function PanelText() {
   const [query, setQuery] = useState("")
   const handleChange = (event: any) => setQuery(event.target.value)
-  const textStyles = useSelector(selectTextStyles)
+  const { status, data, error, isFetching } = useQuery(
+    "TextStyles",
+    getTextStyles
+  )
   const { addObject } = useCoreHandler()
 
   const addTextToCanvas = (json: string) => {
@@ -140,7 +143,7 @@ function PanelText() {
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column"
           >
-            {textStyles.map((textStyle) => (
+            {data?.map((textStyle) => (
               <Box
                 key={textStyle?.id}
                 border="1px"

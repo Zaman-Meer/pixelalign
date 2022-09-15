@@ -20,6 +20,7 @@ module.exports = {
       "@icons": resloveSrc("icons"),
       "@site-components": resloveSrc("site-components"),
       "@tools": resloveSrc("editorApp/tools"),
+      "@types": resloveSrc("src/types"),
     },
   },
 }

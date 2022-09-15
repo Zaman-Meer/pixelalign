@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback, memo } from "react"
 import { fabric } from "fabric"
 import { Box, Text } from "@chakra-ui/react"
 import SliderWithInput from "@components/common/SliderWithInput"
@@ -42,7 +42,7 @@ const ImageEffectManager: React.FC<Props> = ({
   const [color, setColor] = useState("#ff0000")
   const filters = fabric.Image.filters
 
-  const handleFilterChange = (value: number) => {
+  const handleFilterChange = useCallback((value: number) => {
     if (filterType?.trim()?.toLocaleLowerCase() === "brightness") {
       if (value) {
         //@ts-ignore
@@ -51,9 +51,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 0
-        )
+        activeObject.filters[0] = null
       }
       //@ts-ignore
       activeObject.applyFilters()
@@ -66,9 +64,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => filter !== 1
-        )
+        activeObject.filters[1] = null
       }
       //@ts-ignore
       activeObject.applyFilters()
@@ -81,9 +77,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 2
-        )
+        activeObject.filters[2] = null
       }
       //@ts-ignore
       activeObject.applyFilters()
@@ -96,9 +90,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 3
-        )
+        activeObject.filters[3] = null
       }
 
       //@ts-ignore
@@ -112,9 +104,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 4
-        )
+        activeObject.filters[4] = null
       }
 
       //@ts-ignore
@@ -128,9 +118,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 5
-        )
+        activeObject.filters[5] = null
       }
 
       //@ts-ignore
@@ -151,9 +139,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 6
-        )
+        activeObject.filters[6] = null
       }
 
       //@ts-ignore
@@ -167,9 +153,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 7
-        )
+        activeObject.filters[7] = null
       }
 
       //@ts-ignore
@@ -183,9 +167,7 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 8
-        )
+        activeObject.filters[8] = null
       }
       //@ts-ignore
       activeObject.applyFilters()
@@ -198,17 +180,13 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 9
-        )
+        activeObject.filters[9] = null
       }
       //@ts-ignore
       activeObject.applyFilters()
       canvas?.requestRenderAll()
     }
-    //@ts-ignore
-    //console.log("Filters", activeObject?.filters)
-  }
+  }, [])
 
   const handleTintFilterChange = ({
     value,
@@ -227,13 +205,10 @@ const ImageEffectManager: React.FC<Props> = ({
         })
       } else {
         //@ts-ignore
-        activeObject.filters = activeObject?.filters?.filter(
-          (filter: any, index: number) => index !== 10
-        )
+        activeObject.filters[10] = null
       }
     }
     //@ts-ignore
-    console.log("Filters", activeObject?.filters)
   }
 
   const initializeObjectFilter = () => {
@@ -291,8 +266,6 @@ const ImageEffectManager: React.FC<Props> = ({
 
       filterValue = filter?.blocksize
     }
-
-    console.log("GetFilter", filterValue, activeObject)
     if (filterValue) {
       setInputValue(filterValue as number)
     } else setInputValue(undefined)
@@ -337,4 +310,4 @@ const ImageEffectManager: React.FC<Props> = ({
   )
 }
 
-export default ImageEffectManager
+export default memo(ImageEffectManager)

@@ -9,7 +9,7 @@ import { useDebounce } from "use-debounce"
 import PanelContainer from "../../PanelContainer/PanelContainer"
 import useCoreHandler from "@/editorApp/components/Canvas/handlers/useCoreHandler"
 import { useCanvasContext } from "@/editorApp/components/Canvas/hooks"
-
+import NormalFilter from "@/assets/images/base-filter-image.jpg"
 interface ImageType {
   id: string
   preview: string
@@ -49,7 +49,8 @@ function PanelImage() {
       (objectsImage) => {
         //@ts-ignore
         const workarea = canvas.getObjects()[0]
-        objectsImage.scale(0.4)
+        // objectsImage.width = 200
+        // objectsImage.width = 259
         canvas?.add(objectsImage)
         objectsImage.clipPath = workarea
         //@ts-ignore
