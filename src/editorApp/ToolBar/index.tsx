@@ -13,8 +13,13 @@ import OpacityManager from "@tools/OpacityManager"
 import ShadowManager from "@tools/ShadowManager"
 
 const ToolBar = () => {
-  const { setOpenSettingPanelType, activeObject, setSettingPanel } =
-    useCanvasContext()
+  const {
+    isSidePanelOpen,
+    toggleSidePanel,
+    setOpenSettingPanelType,
+    activeObject,
+    setSettingPanel,
+  } = useCanvasContext()
   const objectType =
     activeObject?.type !== "activeSelection" &&
     activeObject?.type !== "group" &&
@@ -24,6 +29,7 @@ const ToolBar = () => {
     if (activeObject) {
       setOpenSettingPanelType(type)
       setSettingPanel(activeObject?.type as string)
+      toggleSidePanel(true)
     }
   }
 

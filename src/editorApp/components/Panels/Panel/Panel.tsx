@@ -27,12 +27,19 @@ function PanelsList({ activeTab }: Props) {
     isSidePanelOpen,
     toggleSidePanel,
     settingPanel,
+    setSettingPanel,
     openSettingPanelType,
+    setOpenSettingPanelType,
   } = useCanvasContext()
 
+  const handlePanelsClose = () => {
+    setSettingPanel(null)
+    toggleSidePanel(!isSidePanelOpen)
+    setOpenSettingPanelType(null)
+  }
   return (
     <Container collapse={isSidePanelOpen}>
-      <ClosePanel closePanel={() => toggleSidePanel(!isSidePanelOpen)} />
+      <ClosePanel closePanel={handlePanelsClose} />
       {(!settingPanel || !openSettingPanelType) &&
         Panels[activeTab as "formats"]}
       {settingPanel && openSettingPanelType === "image" && <PanelEditImage />}
