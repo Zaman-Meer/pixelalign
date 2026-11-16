@@ -58,7 +58,7 @@ function useEventHandlers() {
    */
 
   const onMouseWheel = useCallback(
-    (event) => {
+    (event: fabric.IEvent<WheelEvent>) => {
       if (canvas && event.e.ctrlKey) {
         const delta = event.e.deltaY
         let zoomRatio = canvas.getZoom()
@@ -102,7 +102,7 @@ function useEventHandlers() {
     }
     return () => {
       if (canvas) {
-        canvas.off("mouse:wheel", onMouseWheel)
+        canvas.off("mouse:wheel", onMouseWheel as any)
       }
     }
   }, [canvas])
@@ -112,7 +112,8 @@ function useEventHandlers() {
    */
 
   const onSelect = useCallback(
-    ({ selected }) => {
+    (event: fabric.IEvent) => {
+      const selected = event.selected
       if (selected) {
         if (canvas) {
           setActiveObject(canvas.getActiveObject())
@@ -137,7 +138,8 @@ function useEventHandlers() {
    */
 
   const onObjectClicked = useCallback(
-    ({ target }) => {
+    (event: fabric.IEvent) => {
+      const target = event.target as any
       if (target?.objectId) {
         if (canvas) {
           setClickedObject(target)
@@ -214,7 +216,7 @@ function useEventHandlers() {
   }, [activeObject, canvas])
 
   const onKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       isCtrlZ(e) && undo()
       isCtrlShiftZ(e) && redo()
       if (isArrow(e)) {

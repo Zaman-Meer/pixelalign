@@ -12,7 +12,7 @@ export const getTextStyles = createAsyncThunk(
       }
       const response = await api.getTextStyles()
       return response
-    } catch (err) {
+    } catch (err: any) {
       return rejectWithValue({ message: err.error })
     }
   }

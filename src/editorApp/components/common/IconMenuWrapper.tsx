@@ -7,6 +7,7 @@ interface Props {
   minMenuW?: number | string
   onClick?: () => void
   disabled?: boolean
+  children?: React.ReactNode
 }
 
 const IconMenuWrapper: React.FC<Props> = ({

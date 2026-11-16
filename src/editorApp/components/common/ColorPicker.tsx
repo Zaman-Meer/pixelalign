@@ -10,6 +10,10 @@ interface ColorPickerProps {
   position?: "up" | "down" | "left" | "right"
 }
 
+const PopoverTriggerWithChildren = PopoverTrigger as React.FC<{
+  children?: React.ReactNode
+}>
+
 const ColorPicker: React.FC<ColorPickerProps> = ({
   color,
   onChange,
@@ -22,7 +26,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   }
   return (
     <Popover placement="left" closeOnBlur={true}>
-      <PopoverTrigger>
+      <PopoverTriggerWithChildren>
         <Box
           width={`${size}px`}
           height={`${size}px`}
@@ -38,7 +42,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
             borderColor: "gray.500",
           }}
         />
-      </PopoverTrigger>
+      </PopoverTriggerWithChildren>
       {!disabled && (
         <PopoverContent
           width="auto"

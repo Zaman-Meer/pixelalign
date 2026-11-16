@@ -11,7 +11,7 @@ export interface PageType {
     width: number
     height: number
   }
-  content: string
+  content: any
 }
 
 export interface TemplateDesignType {

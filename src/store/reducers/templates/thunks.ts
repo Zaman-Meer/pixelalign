@@ -13,7 +13,7 @@ export const getTemplates = createAsyncThunk(
       }
       const response = await api.getTemplates()
       return response
-    } catch (err) {
+    } catch (err: any) {
       return rejectWithValue({ message: err.error })
     }
   }
@@ -26,7 +26,7 @@ export const addTemplate = createAsyncThunk(
       console.log("ADD")
       const response = await api.saveTemplate()
       return response
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue({ message: error.message })
     }
   }

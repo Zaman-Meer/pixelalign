@@ -12,7 +12,7 @@ import {
   useZoomHandler,
 } from "./handlers"
 import ContextMenu from "@/editorApp/components/ContextMenu/ContextMenu"
-import "fabric-history"
+import "./fabricHistory"
 
 function Canvas() {
   const {

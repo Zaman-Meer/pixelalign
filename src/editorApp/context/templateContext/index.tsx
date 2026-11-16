@@ -36,7 +36,9 @@ export const TemplateContext = createContext<ContextType>({
   handleAddBlankTemplatePage: () => {},
 })
 
-const TemplateProvider: React.FC = ({ children }) => {
+const TemplateProvider: React.FC<{ children?: React.ReactNode }> = ({
+  children,
+}) => {
   const {
     canvas,
     setCanvas,

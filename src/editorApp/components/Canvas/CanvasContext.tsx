@@ -1,4 +1,4 @@
-import { FC, createContext, useState } from "react"
+import { FC, ReactNode, createContext, useState } from "react"
 import { PageType } from "@/types/template"
 interface FabricObject extends fabric.Object {
   groupType?: string
@@ -142,7 +142,7 @@ export const CanvasContext = createContext<ICanvasContext>({
   setOpenSettingPanelType: () => {},
 })
 
-export const CanvasProvider: FC = ({ children }) => {
+export const CanvasProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [activeObject, setActiveObject] = useState<FabricObject | null>(null)

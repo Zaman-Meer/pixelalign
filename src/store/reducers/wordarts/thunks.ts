@@ -7,7 +7,7 @@ export const getWordArts = createAsyncThunk(
     try {
       const response = await api.getWordArts()
       return response
-    } catch (err) {
+    } catch (err: any) {
       return rejectWithValue({ message: err.error })
     }
   }
@@ -19,7 +19,7 @@ export const getWordArtCategories = createAsyncThunk(
     try {
       const response = await api.getWordArtCategories()
       return response
-    } catch (err) {
+    } catch (err: any) {
       return rejectWithValue({ message: err.error })
     }
   }
@@ -31,7 +31,7 @@ export const getWordArtSubcategories = createAsyncThunk(
     try {
       const response = await api.getWordArtSubcategories()
       return response
-    } catch (err) {
+    } catch (err: any) {
       return rejectWithValue({ message: err.error })
     }
   }

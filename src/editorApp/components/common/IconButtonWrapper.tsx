@@ -4,6 +4,7 @@ import CustomToolTip from "./CustomToolTip"
 
 interface Props extends ButtonProps {
   tLabel: string
+  children?: React.ReactNode
   tPosition?:
     | "top"
     | "top-start"

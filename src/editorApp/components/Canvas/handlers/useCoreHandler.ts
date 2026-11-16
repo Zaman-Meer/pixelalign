@@ -26,7 +26,7 @@ function useCoreHandler() {
 
   // Get object properties
   const getProperty = useCallback(
-    (property) => {
+    (property: any) => {
       if (activeObject) {
         return activeObject?.get(property)
       }
@@ -36,7 +36,7 @@ function useCoreHandler() {
 
   // Update properties, optional set metadata if present
   const setProperty = useCallback(
-    (property, value) => {
+    (property: any, value: any) => {
       if (activeObject) {
         activeObject.set(property, value)
         activeObject.setCoords()
@@ -153,7 +153,7 @@ function useCoreHandler() {
     if (!canvas?.getActiveObject()) {
       return
     }
-    if (canvas?.getActiveObject().type !== "activeSelection") {
+    if (canvas?.getActiveObject()?.type !== "activeSelection") {
       return
     }
     //@ts-ignore
@@ -168,7 +168,7 @@ function useCoreHandler() {
     if (!canvas?.getActiveObject()) {
       return
     }
-    if (canvas?.getActiveObject().type !== "group") {
+    if (canvas?.getActiveObject()?.type !== "group") {
       return
     }
     //@ts-ignore
@@ -223,7 +223,7 @@ function useCoreHandler() {
    * Add object to canvas
    */
   const addObject = useCallback(
-    async (options) => {
+    async (options: any) => {
       const { type, ...objectOptions } = options
       const object = await CanvasObjects[type as CanvasObjectType].create(
         objectOptions
@@ -280,7 +280,7 @@ function useCoreHandler() {
    * Update selected object
    */
   const updateObject = useCallback(
-    (key, value) => {
+    (key: any, value: any) => {
       if (canvas && activeObject) {
         activeObject.set(key, value)
         canvas.requestRenderAll()
@@ -373,7 +373,7 @@ function useCoreHandler() {
    */
 
   const setCanvasBackgroundColor = useCallback(
-    (color) => {
+    (color: any) => {
       if (canvas) {
         canvas.setBackgroundColor(color, () => {
           canvas.requestRenderAll()
